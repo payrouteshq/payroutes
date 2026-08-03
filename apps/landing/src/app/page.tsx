@@ -24,7 +24,7 @@ function TwitterIcon({ className }: { className?: string }) {
     </svg>
   );
 }
-import { PayroutesLogo } from "@/components/icons";
+import { PayroutesLogo } from "@payroutes/shared-ui";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 

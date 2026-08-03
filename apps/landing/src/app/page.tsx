@@ -1,5 +1,6 @@
-import Image from "next/image";
+import { PayroutesLogo } from "@payroutes/shared-ui";
 import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -24,7 +25,6 @@ function TwitterIcon({ className }: { className?: string }) {
     </svg>
   );
 }
-import { PayroutesLogo } from "@payroutes/shared-ui";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -88,28 +88,25 @@ const team = [
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="bg-background text-foreground min-h-screen">
       {/* Header */}
-      <header className="border-b border-border px-6 py-4">
+      <header className="border-border border-b px-6 py-4">
         <div className="mx-auto flex max-w-5xl items-center gap-3">
-          <PayroutesLogo className="h-7 w-7 text-foreground" />
-          <span className="text-sm font-semibold tracking-widest uppercase text-foreground">
-            PayRoutes
-          </span>
+          <PayroutesLogo className="text-foreground h-7 w-7" />
+          <span className="text-foreground text-sm font-semibold tracking-widest uppercase">PayRoutes</span>
         </div>
       </header>
 
       <main className="mx-auto max-w-5xl px-6">
         <section className="flex flex-col items-start gap-8 py-24 sm:py-32">
-          <PayroutesLogo className="h-14 w-14 text-foreground opacity-90" />
+          <PayroutesLogo className="text-foreground h-14 w-14 opacity-90" />
           <div className="max-w-2xl space-y-5">
-            <h1 className="text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-              The missing infrastructure between developers and payment
-              providers.
+            <h1 className="text-4xl leading-tight font-semibold tracking-tight sm:text-5xl">
+              The missing infrastructure between developers and payment providers.
             </h1>
-            <p className="text-lg leading-relaxed text-muted-foreground">
-              PayRoutes is a lab building open-source payment tooling — from
-              unified provider SDKs to blockchain-native primitives.
+            <p className="text-muted-foreground text-lg leading-relaxed">
+              PayRoutes is a lab building open-source payment tooling — from unified provider SDKs to blockchain-native
+              primitives.
             </p>
           </div>
         </section>
@@ -117,39 +114,35 @@ export default function Home() {
         <hr className="border-border" />
 
         <section className="py-20">
-          <h2 className="mb-10 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+          <h2 className="text-muted-foreground mb-10 text-xs font-semibold tracking-widest uppercase">
             What we&apos;ve built
           </h2>
           <div className="grid gap-5 sm:grid-cols-2">
             {projects.map((project) => (
               <div
                 key={project.name}
-                className="flex flex-col justify-between gap-8 rounded-xl border border-border bg-card p-6"
+                className="border-border bg-card flex flex-col justify-between gap-8 rounded-xl border p-6"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-mono text-sm font-semibold text-foreground">
-                      {project.name}
-                    </h3>
+                    <h3 className="text-foreground font-mono text-sm font-semibold">{project.name}</h3>
                     <a
                       href={project.href}
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`Open ${project.name} on GitHub`}
-                      className="text-muted-foreground transition-colors hover:text-foreground"
+                      className="text-muted-foreground hover:text-foreground transition-colors"
                     >
                       <ArrowUpRight className="h-4 w-4" />
                     </a>
                   </div>
-                  <p className="text-sm leading-relaxed text-muted-foreground">
-                    {project.description}
-                  </p>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{project.description}</p>
                 </div>
                 <a
                   href={project.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
+                  className="text-muted-foreground hover:text-foreground flex items-center gap-1.5 text-xs transition-colors"
                 >
                   <GithubIcon className="size-5" />
                 </a>
@@ -161,15 +154,10 @@ export default function Home() {
         <hr className="border-border" />
 
         <section className="py-20">
-          <h2 className="mb-10 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-            Team
-          </h2>
+          <h2 className="text-muted-foreground mb-10 text-xs font-semibold tracking-widest uppercase">Team</h2>
           <div className="grid gap-6 sm:grid-cols-2">
             {team.map((member) => (
-              <div
-                key={member.name}
-                className="flex items-start gap-4 rounded-xl border border-border bg-card p-5"
-              >
+              <div key={member.name} className="border-border bg-card flex items-start gap-4 rounded-xl border p-5">
                 {member.avatar ? (
                   <Image
                     src={member.avatar}
@@ -179,7 +167,7 @@ export default function Home() {
                     className="h-12 w-12 shrink-0 rounded-full object-cover"
                   />
                 ) : (
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-semibold text-muted-foreground">
+                  <div className="bg-muted text-muted-foreground flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-xs font-semibold">
                     {"initials" in member ? (member.initials as string) : ""}
                   </div>
                 )}
@@ -187,12 +175,8 @@ export default function Home() {
                 {/* Info */}
                 <div className="min-w-0 flex-1 space-y-2">
                   <div>
-                    <p className="truncate text-sm font-semibold text-foreground">
-                      {member.name}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      {member.role}
-                    </p>
+                    <p className="text-foreground truncate text-sm font-semibold">{member.name}</p>
+                    <p className="text-muted-foreground text-xs">{member.role}</p>
                   </div>
                   <div className="flex items-center gap-3">
                     {"twitter" in member.socials && member.socials.twitter && (
@@ -200,7 +184,7 @@ export default function Home() {
                         href={member.socials.twitter}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-muted-foreground transition-colors hover:text-foreground"
+                        className="text-muted-foreground hover:text-foreground transition-colors"
                         aria-label="X / Twitter"
                       >
                         <TwitterIcon className="h-3.5 w-3.5" />
@@ -211,7 +195,7 @@ export default function Home() {
                         href={member.socials.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-muted-foreground transition-colors hover:text-foreground"
+                        className="text-muted-foreground hover:text-foreground transition-colors"
                         aria-label="GitHub"
                       >
                         <GithubIcon className="h-3.5 w-3.5" />
@@ -221,7 +205,7 @@ export default function Home() {
                       href={member.socials.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-muted-foreground transition-colors hover:text-foreground"
+                      className="text-muted-foreground hover:text-foreground transition-colors"
                       aria-label="LinkedIn"
                     >
                       <LinkedinIcon className="h-3.5 w-3.5" />
@@ -235,11 +219,11 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border px-6 py-8">
+      <footer className="border-border border-t px-6 py-8">
         <div className="mx-auto flex max-w-5xl items-center justify-between">
           <div className="flex items-center gap-2">
-            <PayroutesLogo className="h-5 w-5 text-muted-foreground" />
-            <span className="text-xs text-muted-foreground">Payroutes</span>
+            <PayroutesLogo className="text-muted-foreground h-5 w-5" />
+            <span className="text-muted-foreground text-xs">Payroutes</span>
           </div>
         </div>
       </footer>

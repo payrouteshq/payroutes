@@ -27,6 +27,9 @@
   --summit-sky-40: #f3f9fd;
   --summit-sky-20: #f9fcfe;
 
+  --gradient-start: var(--signal-blue-80);
+  --gradient-end: var(--signal-blue-100);
+
   --background: var(--summit-sky-40);
   --foreground: var(--midnight-black-100);
   --card: var(--summit-sky-20);
@@ -43,9 +46,16 @@
   --accent-foreground: var(--signal-blue-100);
   --destructive: var(--core-indigo-100);
   --destructive-foreground: var(--summit-sky-20);
+  --success: #15803d;
+  --success-foreground: var(--summit-sky-20);
+  --warning: #b45309;
+  --warning-foreground: var(--summit-sky-20);
   --border: var(--summit-sky-80);
   --input: var(--summit-sky-80);
   --ring: var(--signal-blue-100);
+  --disabled: var(--core-indigo-20);
+  --disabled-foreground: var(--midnight-black-40);
+  --shadow-button-hover: 0 8px 16px -2px color-mix(in srgb, var(--primary) 40%, transparent);
   --chart-1: var(--signal-blue-100);
   --chart-2: var(--core-indigo-100);
   --chart-3: var(--summit-sky-100);
@@ -106,6 +116,9 @@
   --summit-sky-40: #f3f9fd;
   --summit-sky-20: #f9fcfe;
 
+  --gradient-start: var(--signal-blue-80);
+  --gradient-end: #19609a;
+
   --background: var(--core-indigo-100);
   --foreground: var(--summit-sky-20);
   --card: var(--core-indigo-80);
@@ -122,9 +135,16 @@
   --accent-foreground: var(--signal-blue-100);
   --destructive: var(--midnight-black-80);
   --destructive-foreground: var(--summit-sky-20);
+  --success: #0ABF53;
+  --success-foreground: var(--summit-sky-20);
+  --warning: #BF8A26;
+  --warning-foreground: var(--summit-sky-20);
   --border: var(--core-indigo-80);
   --input: var(--core-indigo-80);
   --ring: var(--signal-blue-100);
+  --disabled: var(--core-indigo-60);
+  --disabled-foreground: var(--core-indigo-40);
+  --shadow-button-hover: 0 8px 16px -2px color-mix(in srgb, var(--primary) 45%, transparent);
   --chart-1: var(--signal-blue-100);
   --chart-2: var(--summit-sky-100);
   --chart-3: var(--signal-blue-60);
@@ -163,6 +183,8 @@
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-gradient-start: var(--gradient-start);
+  --color-gradient-end: var(--gradient-end);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
@@ -171,9 +193,15 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-disabled: var(--disabled);
+  --color-disabled-foreground: var(--disabled-foreground);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -205,6 +233,7 @@
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
+  --shadow-button-hover: var(--shadow-button-hover);
 
   --tracking-tighter: calc(var(--tracking-normal) - 0.05em);
   --tracking-tight: calc(var(--tracking-normal) - 0.025em);

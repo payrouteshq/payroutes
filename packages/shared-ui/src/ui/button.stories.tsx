@@ -6,7 +6,7 @@ const variants = ["default", "outline", "ghost"] as const
 const sizes = ["default", "sm"] as const
 
 const meta: Meta<typeof Button> = {
-  title: "Components/Button",
+  title: "UI/Button",
   component: Button,
   args: {
     children: "Button",

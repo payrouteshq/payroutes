@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Switch } from "./switch"
 
 const meta: Meta<typeof Switch> = {
-  title: "Components/Switch",
+  title: "UI/Switch",
   component: Switch,
   argTypes: {
     defaultChecked: {

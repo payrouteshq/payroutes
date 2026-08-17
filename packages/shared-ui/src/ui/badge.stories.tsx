@@ -6,7 +6,7 @@ import { Badge } from "./badge"
 const variants = ["default", "secondary", "outline", "success", "warning", "destructive", "ghost", "link"] as const
 
 const meta: Meta<typeof Badge> = {
-  title: "Components/Badge",
+  title: "UI/Badge",
   component: Badge,
   args: {
     children: "Text",

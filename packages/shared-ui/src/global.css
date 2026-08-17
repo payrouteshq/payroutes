@@ -28,7 +28,7 @@
   --summit-sky-20: #f9fcfe;
 
   --gradient-start: var(--signal-blue-80);
-  --gradient-end: var(--signal-blue-100);
+  --gradient-end:  var(--signal-blue-100);
 
   --background: var(--summit-sky-40);
   --foreground: var(--midnight-black-100);
@@ -56,6 +56,7 @@
   --disabled: var(--core-indigo-20);
   --disabled-foreground: var(--midnight-black-40);
   --shadow-button-hover: 0 8px 16px -2px color-mix(in srgb, var(--primary) 40%, transparent);
+  --shadow-thumb: 0 4px 10px -2px color-mix(in srgb, var(--primary) 60%, transparent);
   --chart-1: var(--signal-blue-100);
   --chart-2: var(--core-indigo-100);
   --chart-3: var(--summit-sky-100);
@@ -145,6 +146,7 @@
   --disabled: var(--core-indigo-60);
   --disabled-foreground: var(--core-indigo-40);
   --shadow-button-hover: 0 8px 16px -2px color-mix(in srgb, var(--primary) 45%, transparent);
+  --shadow-thumb: 0 4px 10px -2px color-mix(in srgb, var(--primary) 60%, transparent);
   --chart-1: var(--signal-blue-100);
   --chart-2: var(--summit-sky-100);
   --chart-3: var(--signal-blue-60);
@@ -234,6 +236,7 @@
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
   --shadow-button-hover: var(--shadow-button-hover);
+  --shadow-thumb: var(--shadow-thumb);
 
   --tracking-tighter: calc(var(--tracking-normal) - 0.05em);
   --tracking-tight: calc(var(--tracking-normal) - 0.025em);

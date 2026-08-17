@@ -11,6 +11,9 @@ const config: StorybookConfig = {
     name: "@storybook/react-vite",
     options: {},
   },
+  docs: {
+    autodocs: true,
+  },
   staticDirs: ["../apps/landing/public"],
   async viteFinal(config) {
     const webRoot = path.resolve(projectRoot, "apps/landing");

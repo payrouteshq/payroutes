@@ -35,6 +35,9 @@
     "@base-ui/react": "^1.5.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "countries-list": "^3.4.1",
+    "country-flag-icons": "^1.6.20",
+    "libphonenumber-js": "^1.13.11",
     "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {

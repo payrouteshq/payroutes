@@ -1,22 +1,22 @@
-export { Button, buttonVariants } from "./ui/button";
-export { Badge, badgeVariants } from "./ui/badge";
-export { Checkbox } from "./ui/checkbox";
-export { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-export { Switch } from "./ui/switch";
-export { Slider } from "./ui/slider";
-export { Input } from "./ui/input";
-export { Textarea } from "./ui/textarea";
-export {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectScrollDownButton,
-  SelectScrollUpButton,
-  SelectSeparator,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
+// Icons
 export { PayroutesLogo } from "./icons";
+
 export { cn } from "./cn";
+export { splitProps } from "./lib/mixin";
+export type { MixinProps } from "./lib/mixin";
+
+// Custom blocks
+export * from "./components/phone-number-field";
+
+// UI primitives
+export * from "./ui/badge";
+export * from "./ui/button";
+export * from "./ui/checkbox";
+export * from "./ui/input";
+export * from "./ui/input-group";
+export * from "./ui/label";
+export * from "./ui/radio-group";
+export * from "./ui/select";
+export * from "./ui/slider";
+export * from "./ui/switch";
+export * from "./ui/textarea";

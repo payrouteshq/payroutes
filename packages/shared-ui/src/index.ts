@@ -9,6 +9,8 @@ export type { MixinProps } from "./lib/mixin";
 export * from "./components/field-stack";
 export * from "./components/phone-number-field";
 export * from "./components/resource-field";
+export * from "./components/rule-builder-condition-row";
+export * from "./components/rule-builder-destination-row";
 export * from "./components/search-field";
 export * from "./components/spinner";
 

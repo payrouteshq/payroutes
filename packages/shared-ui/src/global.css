@@ -71,8 +71,8 @@
   --ring-error: var(--crimson-red-20);
   --destructive: var(--error);
   --destructive-foreground: var(--error-foreground);
-  --border: var(--summit-sky-80);
-  --input: var(--summit-sky-80);
+  --border: var(--core-indigo-20);
+  --input: var(--core-indigo-20);
   --ring: var(--signal-blue-100);
   --disabled: var(--core-indigo-20);
   --disabled-foreground: var(--midnight-black-40);

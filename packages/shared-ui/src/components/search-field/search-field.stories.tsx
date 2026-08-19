@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { SearchField } from "./search-field"
+import { SearchField } from "./index"
 
 const meta: Meta<typeof SearchField> = {
-  title: "UI/SearchField",
+  title: "Components/SearchField",
   component: SearchField,
   args: {
     className: "w-80",

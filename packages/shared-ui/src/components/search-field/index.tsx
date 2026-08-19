@@ -1,13 +1,13 @@
 import type { ComponentProps } from "react"
 
-import { CloseX, Search } from "../icons"
-import { cn } from "../cn"
+import { CloseX, Search } from "../../icons"
+import { cn } from "../../cn"
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
-} from "./input-group"
+} from "../../ui/input-group"
 
 type SearchFieldProps = Omit<
   ComponentProps<typeof InputGroupInput>,

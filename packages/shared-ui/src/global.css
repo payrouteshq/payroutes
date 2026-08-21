@@ -76,6 +76,8 @@
   --ring: var(--signal-blue-100);
   --disabled: var(--core-indigo-20);
   --disabled-foreground: var(--midnight-black-40);
+  --code: var(--midnight-black-100);
+  --code-foreground: var(--summit-sky-20);
   --shadow-button-hover: 0 8px 16px -2px color-mix(in srgb, var(--primary) 40%, transparent);
   --shadow-thumb: 0 4px 10px -2px color-mix(in srgb, var(--primary) 60%, transparent);
   --shadow-ring-error: 0 0 0 4px var(--ring-error);
@@ -189,6 +191,8 @@
   --ring: var(--signal-blue-100);
   --disabled: var(--core-indigo-60);
   --disabled-foreground: var(--core-indigo-40);
+  --code: var(--midnight-black-100);
+  --code-foreground: var(--summit-sky-20);
   --shadow-button-hover: 0 8px 16px -2px color-mix(in srgb, var(--primary) 45%, transparent);
   --shadow-thumb: 0 4px 10px -2px color-mix(in srgb, var(--primary) 60%, transparent);
   --shadow-ring-error: 0 0 0 4px var(--ring-error);
@@ -253,6 +257,8 @@
   --color-ring: var(--ring);
   --color-disabled: var(--disabled);
   --color-disabled-foreground: var(--disabled-foreground);
+  --color-code: var(--code);
+  --color-code-foreground: var(--code-foreground);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);

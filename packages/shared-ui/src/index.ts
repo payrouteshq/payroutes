@@ -7,6 +7,7 @@ export type { MixinProps } from "./lib/mixin";
 
 // Custom blocks
 export * from "./components/app-modal";
+export * from "./components/code-block";
 export * from "./components/field-stack";
 export * from "./components/phone-number-field";
 export * from "./components/resource-field";
@@ -26,7 +27,9 @@ export * from "./ui/input-group";
 export * from "./ui/label";
 export * from "./ui/popover";
 export * from "./ui/radio-group";
+export * from "./ui/scroll-area";
 export * from "./ui/select";
 export * from "./ui/slider";
 export * from "./ui/switch";
 export * from "./ui/textarea";
+export * from "./ui/tooltip";

@@ -6,6 +6,7 @@ export { splitProps } from "./lib/mixin";
 export type { MixinProps } from "./lib/mixin";
 
 // Custom blocks
+export * from "./components/app-modal";
 export * from "./components/field-stack";
 export * from "./components/phone-number-field";
 export * from "./components/resource-field";
@@ -19,6 +20,7 @@ export * from "./ui/avatar";
 export * from "./ui/badge";
 export * from "./ui/button";
 export * from "./ui/checkbox";
+export * from "./ui/dialog";
 export * from "./ui/input";
 export * from "./ui/input-group";
 export * from "./ui/label";

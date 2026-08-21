@@ -37,6 +37,7 @@
     "clsx": "^2.1.1",
     "countries-list": "^3.4.1",
     "country-flag-icons": "^1.6.20",
+    "framer-motion": "^12.43.0",
     "libphonenumber-js": "^1.13.11",
     "react-useanimations": "^2.10.0",
     "tailwind-merge": "^3.6.0"

@@ -79,6 +79,7 @@
   --shadow-button-hover: 0 8px 16px -2px color-mix(in srgb, var(--primary) 40%, transparent);
   --shadow-thumb: 0 4px 10px -2px color-mix(in srgb, var(--primary) 60%, transparent);
   --shadow-ring-error: 0 0 0 4px var(--ring-error);
+  --shadow-elevation-md: 0px 10px 20px -30px color-mix(in srgb, var(--signal-blue-100) 20%, transparent);
   --chart-1: var(--signal-blue-100);
   --chart-2: var(--core-indigo-100);
   --chart-3: var(--summit-sky-100);
@@ -191,6 +192,7 @@
   --shadow-button-hover: 0 8px 16px -2px color-mix(in srgb, var(--primary) 45%, transparent);
   --shadow-thumb: 0 4px 10px -2px color-mix(in srgb, var(--primary) 60%, transparent);
   --shadow-ring-error: 0 0 0 4px var(--ring-error);
+  --shadow-elevation-md: 0px 10px 20px -30px color-mix(in srgb, var(--signal-blue-100) 20%, transparent);
   --chart-1: var(--signal-blue-100);
   --chart-2: var(--summit-sky-100);
   --chart-3: var(--signal-blue-60);
@@ -285,6 +287,7 @@
   --shadow-button-hover: var(--shadow-button-hover);
   --shadow-thumb: var(--shadow-thumb);
   --shadow-ring-error: var(--shadow-ring-error);
+  --shadow-elevation-md: var(--shadow-elevation-md);
 
   --tracking-tighter: calc(var(--tracking-normal) - 0.05em);
   --tracking-tight: calc(var(--tracking-normal) - 0.025em);

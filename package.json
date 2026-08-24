@@ -11,7 +11,8 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "build:packages": "pnpm --recursive --filter './packages/*' run build",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build:storybook": "storybook build",
+    "chromatic": "chromatic --build-script-name build:storybook"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
@@ -23,6 +24,7 @@
     "@trivago/prettier-plugin-sort-imports": "^6.0.0",
     "@types/react": "19.2.15",
     "@types/react-dom": "19.2.3",
+    "chromatic": "^18.5.0",
     "eslint-plugin-storybook": "^10.1.10",
     "prettier": "^3.7.4",
     "prettier-plugin-tailwindcss": "^0.7.2",

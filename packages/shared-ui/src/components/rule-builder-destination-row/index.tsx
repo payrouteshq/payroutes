@@ -79,7 +79,7 @@ function RuleBuilderDestinationRow<T>({
       {...container}
       className={cn("flex items-center gap-3", container.className)}
     >
-      <div className="min-w-0 flex-1">
+      <div className="relative z-10 min-w-0 flex-1">
         <Select
           value={destination ? getItemValue(destination) : null}
           onValueChange={(value) =>

@@ -8,9 +8,7 @@
     "build": "tsup && tsc --project tsconfig.build.json && tailwindcss -i ./src/global.css -o ./dist/output.css --minify && for f in dist/index.mjs dist/index.js; do { printf '\"use client\";\\n'; cat \"$f\"; } > \"${f}.tmp\" && mv \"${f}.tmp\" \"$f\"; done",
     "build:css": "tailwindcss -i ./src/global.css -o ./dist/output.css --minify",
     "dev": "tsup --watch",
-    "type-check": "tsc --noEmit",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "type-check": "tsc --noEmit"
   },
   "exports": {
     ".": {
@@ -33,12 +31,15 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",
+    "canvg": "^4.0.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "countries-list": "^3.4.1",
     "country-flag-icons": "^1.6.20",
     "framer-motion": "^12.43.0",
+    "heic-to": "^1.5.2",
     "libphonenumber-js": "^1.13.11",
+    "react-dropzone": "^20.1.1",
     "react-syntax-highlighter": "^16.1.1",
     "react-useanimations": "^2.10.0",
     "tailwind-merge": "^3.6.0"

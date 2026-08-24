@@ -8,14 +8,18 @@ export type { MixinProps } from "./lib/mixin";
 // Custom blocks
 export * from "./components/app-modal";
 export * from "./components/code-block";
+export * from "./components/conditional-field-row";
 export * from "./components/field-stack";
+export * from "./components/file-upload";
 export * from "./components/phone-number-field";
 export * from "./components/resource-field";
 export * from "./components/rule-builder-condition-row";
 export * from "./components/rule-builder-destination-row";
 export * from "./components/search-field";
 export * from "./components/spinner";
+export * from "./components/tag-input";
 export * from "./components/timeline";
+export * from "./components/wizard-stepper";
 
 // UI primitives
 export * from "./ui/accordion";
@@ -34,6 +38,7 @@ export * from "./ui/select";
 export * from "./ui/skeleton";
 export * from "./ui/slider";
 export * from "./ui/switch";
+export * from "./ui/tabs";
 export * from "./ui/textarea";
 export * from "./ui/toast";
 export * from "./ui/tooltip";

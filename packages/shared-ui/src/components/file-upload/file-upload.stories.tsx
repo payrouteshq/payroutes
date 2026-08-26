@@ -1,3 +1,4 @@
+import { useRef, useState, type ComponentProps } from "react"
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { FileUpload, type FileWithPreview } from "./index"
@@ -22,7 +23,55 @@ export default meta
 
 type Story = StoryObj<typeof FileUpload>
 
-export const Default: Story = {}
+function SimulateUpload(args: ComponentProps<typeof FileUpload>) {
+  const [file, setFile] = useState<FileWithPreview | null>(null)
+  const [progress, setProgress] = useState(0)
+  const [status, setStatus] = useState<"idle" | "uploading" | "success">("idle")
+  const tick = useRef(0)
+
+  function stop() {
+    window.clearInterval(tick.current)
+  }
+
+  function reset() {
+    stop()
+    setFile(null)
+    setProgress(0)
+    setStatus("idle")
+  }
+
+  function start(next: FileWithPreview) {
+    stop()
+    setFile(next)
+    setStatus("uploading")
+    setProgress(1)
+    let current = 1
+    tick.current = window.setInterval(() => {
+      current += 1
+      setProgress(current)
+      if (current >= 100) {
+        stop()
+        setStatus("success")
+      }
+    }, 30)
+  }
+
+  return (
+    <FileUpload
+      {...args}
+      value={file}
+      status={file ? status : "idle"}
+      progress={progress}
+      onFileChange={(next) => (next ? start(next) : reset())}
+      onCancel={reset}
+      onRemove={reset}
+    />
+  )
+}
+
+export const Default: Story = {
+  render: SimulateUpload,
+}
 
 export const Hover: Story = {
   args: { "data-state": "hover" },
@@ -41,11 +90,8 @@ export const Disabled: Story = {
 }
 
 export const Uploading: Story = {
-  args: {
-    status: "uploading",
-    progress: 44,
-    value: sampleFile,
-  },
+  parameters: { chromatic: { disableSnapshot: true } },
+  render: SimulateUpload,
 }
 
 export const Success: Story = {

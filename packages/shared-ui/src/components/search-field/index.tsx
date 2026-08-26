@@ -1,7 +1,16 @@
-import type { ComponentProps } from "react"
+import {
+  Children,
+  createContext,
+  useContext,
+  useRef,
+  useState,
+  type ComponentProps,
+  type ReactNode,
+} from "react"
 
-import { CloseX, Search } from "../../icons"
+import { CloseX, CornerDownLeft, Search } from "../../icons"
 import { cn } from "../../cn"
+import { Popover, PopoverContent } from "../../ui/popover"
 import {
   InputGroup,
   InputGroupAddon,
@@ -9,12 +18,19 @@ import {
   InputGroupInput,
 } from "../../ui/input-group"
 
+const SearchFieldClose = createContext<() => void>(() => {})
+
 type SearchFieldProps = Omit<
   ComponentProps<typeof InputGroupInput>,
   "type" | "className" | "data-state"
 > & {
   className?: string
   "data-state"?: "hover" | "focus"
+  children?: ReactNode
+  empty?: ReactNode
+  open?: boolean
+  defaultOpen?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
 function SearchField({
@@ -22,9 +38,29 @@ function SearchField({
   disabled,
   placeholder = "Search providers",
   "data-state": dataState,
+  children,
+  empty = "No results found",
+  open,
+  defaultOpen = false,
+  onOpenChange,
+  onChange,
+  onFocus,
   ...props
 }: SearchFieldProps) {
-  return (
+  const isControlled = open !== undefined
+  const [internalOpen, setInternalOpen] = useState(defaultOpen)
+  const [anchor, setAnchor] = useState<HTMLDivElement | null>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const resolvedOpen = isControlled ? open : internalOpen
+  const setOpen = (next: boolean) => {
+    if (!isControlled) setInternalOpen(next)
+    onOpenChange?.(next)
+  }
+  const close = () => {
+    setOpen(false)
+  }
+
+  const field = (
     <InputGroup
       data-state={dataState}
       className={cn(
@@ -46,11 +82,18 @@ function SearchField({
         </span>
       </InputGroupAddon>
       <InputGroupInput
+        ref={inputRef}
         type="search"
         disabled={disabled}
         placeholder={placeholder}
         className="[&::-webkit-search-cancel-button]:hidden"
         {...props}
+        onFocus={onFocus}
+        onChange={(event) => {
+          onChange?.(event)
+          if (disabled) return
+          setOpen(event.currentTarget.value.trim().length > 0)
+        }}
       />
       <InputGroupAddon
         align="inline-end"
@@ -64,7 +107,6 @@ function SearchField({
               .closest("[data-slot=input-group]")
               ?.querySelector("input")
             if (!(input instanceof HTMLInputElement)) return
-            // ponytail: native setter so React's value tracker still fires onChange
             Object.getOwnPropertyDescriptor(
               HTMLInputElement.prototype,
               "value"
@@ -78,7 +120,94 @@ function SearchField({
       </InputGroupAddon>
     </InputGroup>
   )
+
+  if (children === undefined) return field
+
+  return (
+    <SearchFieldClose.Provider value={close}>
+      <Popover open={resolvedOpen} onOpenChange={setOpen}>
+        <div ref={setAnchor} className="w-full">
+          {field}
+        </div>
+        <PopoverContent
+          align="start"
+          side="bottom"
+          anchor={anchor ?? undefined}
+          initialFocus={false}
+          finalFocus={false}
+          className="w-(--anchor-width) min-w-72 overflow-hidden border-2 border-ring p-1"
+        >
+          <div className="max-h-80 overflow-y-auto">
+            {Children.count(children) > 0 ? (
+              children
+            ) : (
+              <p className="px-3 py-4 text-center text-xs text-muted-foreground">
+                {empty}
+              </p>
+            )}
+          </div>
+        </PopoverContent>
+      </Popover>
+    </SearchFieldClose.Provider>
+  )
 }
 
-export { SearchField }
+function SearchFieldResult({
+  selected,
+  onSelect,
+  className,
+  children,
+  onClick,
+  onMouseDown,
+  ...props
+}: ComponentProps<"button"> & {
+  selected?: boolean
+  onSelect?: () => void
+}) {
+  const close = useContext(SearchFieldClose)
+
+  return (
+    <button
+      type="button"
+      data-slot="search-field-result"
+      data-selected={selected || undefined}
+      className={cn(
+        "group/item w-full cursor-pointer border-0 bg-transparent p-0 text-left outline-none",
+        className
+      )}
+      {...props}
+      onMouseDown={(event) => {
+        event.preventDefault()
+        onMouseDown?.(event)
+      }}
+      onClick={(event) => {
+        onClick?.(event)
+        onSelect?.()
+        close()
+      }}
+    >
+      <span
+        className={cn(
+          "group/row relative flex w-full items-center justify-between overflow-hidden rounded-md py-2.5 pr-3 pl-3.5 text-sm text-foreground",
+          "before:absolute before:inset-y-0 before:left-0 before:w-0.5 before:bg-primary before:opacity-0 before:content-['']",
+          "hover:bg-accent hover:before:opacity-100",
+          "group-hover/item:bg-accent group-hover/item:before:opacity-100",
+          "group-focus-visible/item:bg-accent group-focus-visible/item:before:opacity-100",
+          selected && "bg-accent before:opacity-100"
+        )}
+      >
+        <span className="min-w-0 truncate">{children}</span>
+        <CornerDownLeft
+          className={cn(
+            "size-4 shrink-0 text-primary opacity-0",
+            "group-hover/row:opacity-100 group-hover/item:opacity-100 group-focus-visible/item:opacity-100",
+            selected && "opacity-100"
+          )}
+        />
+      </span>
+    </button>
+  )
+}
+
+export { SearchField, SearchFieldResult }
 export type { SearchFieldProps }

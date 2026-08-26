@@ -102,7 +102,6 @@ export const Inline: Story = {
       <OperatorSelect defaultValue="gt" />
       <EmbeddedFieldRow when layout="inline">
         <Input defaultValue="100" className="flex-1" />
-        <EmbeddedFieldRow.Suffix>or more</EmbeddedFieldRow.Suffix>
       </EmbeddedFieldRow>
     </FieldStack>
   ),

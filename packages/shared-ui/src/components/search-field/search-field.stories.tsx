@@ -1,6 +1,16 @@
+import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { SearchField } from "./index"
+import { SearchField, SearchFieldResult } from "./index"
+
+const providers = [
+  "Stripe",
+  "Adyen",
+  "Checkout.com",
+  "Rivers",
+  "Razorpay",
+  "Braintree",
+]
 
 const meta: Meta<typeof SearchField> = {
   title: "Components/SearchField",
@@ -14,7 +24,51 @@ export default meta
 
 type Story = StoryObj<typeof SearchField>
 
-export const Default: Story = {}
+function SearchingField({
+  defaultValue = "",
+  defaultOpen = false,
+}: {
+  defaultValue?: string
+  defaultOpen?: boolean
+}) {
+  const [value, setValue] = useState(defaultValue)
+  const query = value.trim().toLowerCase()
+  const matches = providers.filter((item) =>
+    item.toLowerCase().includes(query)
+  )
+
+  return (
+    <SearchField
+      className="w-80"
+      value={value}
+      defaultOpen={defaultOpen}
+      onChange={(event) => setValue(event.target.value)}
+    >
+      {matches.length > 0 ? (
+        <>
+          {!query ? (
+            <p className="px-3 py-1.5 text-[10px] font-medium tracking-wider text-muted-foreground uppercase">
+              Recent
+            </p>
+          ) : null}
+          {matches.map((item) => (
+            <SearchFieldResult
+              key={item}
+              selected={item === value}
+              onSelect={() => setValue(item)}
+            >
+              {item}
+            </SearchFieldResult>
+          ))}
+        </>
+      ) : null}
+    </SearchField>
+  )
+}
+
+export const Default: Story = {
+  render: () => <SearchingField />,
+}
 
 export const Hover: Story = {
   args: { "data-state": "hover" },
@@ -26,6 +80,22 @@ export const Focused: Story = {
 
 export const Filled: Story = {
   args: { "data-state": "focus", defaultValue: "stripe2" },
+}
+
+export const Results: Story = {
+  render: () => (
+    <div className="min-h-72">
+      <SearchingField defaultValue="Rivers" defaultOpen />
+    </div>
+  ),
+}
+
+export const Empty: Story = {
+  render: () => (
+    <div className="min-h-40">
+      <SearchingField defaultValue="zzzz" defaultOpen />
+    </div>
+  ),
 }
 
 export const Disabled: Story = {

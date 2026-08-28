@@ -60,6 +60,18 @@ export const ArchiveBox = (props: React.SVGProps<SVGSVGElement>) => (
 </svg>
 );
 
+export const Cube = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M21 7.5L12 2.25L3 7.5M21 7.5L12 12.75M21 7.5V16.5L12 21.75M3 7.5L12 12.75M3 7.5V16.5L12 21.75M12 12.75V21.75"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="miter"
+      strokeLinecap="square"
+    />
+  </svg>
+);
+
 export const ArrowDown = (props: React.SVGProps<SVGSVGElement>) => (
   <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M11 19V5C11 4.44772 11.4477 4 12 4C12.5523 4 13 4.44772 13 5V19C13 19.5523 12.5523 20 12 20C11.4477 20 11 19.5523 11 19Z" fill="currentColor"/>

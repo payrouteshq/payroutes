@@ -6,6 +6,7 @@ export { splitProps } from "./lib/mixin";
 export type { MixinProps } from "./lib/mixin";
 
 // Custom blocks
+export * from "./components/app-connection";
 export * from "./components/app-modal";
 export * from "./components/code-block";
 export * from "./components/condition-chips";
@@ -13,8 +14,10 @@ export * from "./components/conditional-field-row";
 export * from "./components/data-table";
 export * from "./components/field-stack";
 export * from "./components/file-upload";
+export * from "./components/pagination";
 export * from "./components/phone-number-field";
 export * from "./components/resource-field";
+export * from "./components/resource-multi-select";
 export * from "./components/rule-builder-condition-group";
 export * from "./components/rule-builder-condition-row";
 export * from "./components/rule-builder-destination-row";

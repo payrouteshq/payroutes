@@ -243,7 +243,7 @@ function DataTable<TData, TValue>({
       {...container}
       className={cn("space-y-3", container.className)}
     >
-      <div className="overflow-hidden rounded-lg border border-border bg-card">
+      <div className="overflow-hidden border border-border bg-card">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -281,10 +281,10 @@ function DataTable<TData, TValue>({
               </TableRow>
             ))}
             {selectedRows.length > 0 && bulkActions?.length ? (
-              <TableRow className="bg-subtle hover:bg-subtle">
+              <TableRow className="bg-secondary hover:bg-secondary">
                 <TableHead
                   colSpan={tableColumns.length}
-                  className="h-auto bg-subtle px-4 py-3 first:pl-6 text-foreground"
+                  className="h-auto bg-secondary px-4 py-3 first:pl-6 text-foreground"
                 >
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
@@ -402,7 +402,7 @@ function DataTableSkeleton<TData, TValue>({
   const actionCount = Array.isArray(actions) ? actions.length : actions ? 1 : 0
 
   return (
-    <div className="overflow-hidden rounded-lg border border-border bg-card">
+    <div className="overflow-hidden border border-border bg-card">
       <Table>
         <TableHeader>
           <TableRow>

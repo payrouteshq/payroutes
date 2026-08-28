@@ -18,7 +18,7 @@ function TableHeader({ className, ...props }: ComponentProps<"thead">) {
   return (
     <thead
       data-slot="table-header"
-      className={cn("bg-subtle [&_tr]:border-b [&_tr]:hover:bg-subtle", className)}
+      className={cn("bg-subtle [&_tr]:border-b", className)}
       {...props}
     />
   )
@@ -52,7 +52,7 @@ function TableRow({ className, ...props }: ComponentProps<"tr">) {
     <tr
       data-slot="table-row"
       className={cn(
-        "border-b transition-colors hover:bg-subtle",
+        "border-b transition-colors hover:bg-subtle data-[state=selected]:bg-subtle",
         className
       )}
       {...props}
@@ -65,7 +65,7 @@ function TableHead({ className, ...props }: ComponentProps<"th">) {
     <th
       data-slot="table-head"
       className={cn(
-        "h-11 bg-subtle px-4 first:pl-6 text-left align-middle text-sm font-medium whitespace-nowrap text-muted-foreground",
+        "h-11 px-4 first:pl-6 text-left align-middle text-sm font-medium whitespace-nowrap text-muted-foreground",
         "has-[[role=checkbox]]:pr-0 *:[[role=checkbox]]:translate-y-0.5",
         className
       )}

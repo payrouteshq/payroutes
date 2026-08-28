@@ -60,6 +60,7 @@
   --secondary-foreground: var(--signal-blue-100);
   --muted: var(--summit-sky-60);
   --muted-foreground: var(--midnight-black-60);
+  --subtle: #f1f1f1;
   --accent: var(--signal-blue-20);
   --accent-foreground: var(--signal-blue-100);
   --success: var(--forest-green-100);
@@ -183,6 +184,7 @@
   --secondary-foreground: var(--summit-sky-20);
   --muted: var(--core-indigo-60);
   --muted-foreground: var(--core-indigo-20);
+  --subtle: #222222;
   --accent: var(--signal-blue-20);
   --accent-foreground: var(--signal-blue-100);
   --success: var(--forest-green-100);
@@ -257,6 +259,7 @@
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+  --color-subtle: var(--subtle);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);

@@ -1,7 +1,7 @@
 import type { ColumnDef } from "@tanstack/react-table"
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { ChevronDown, Link, Trash2 } from "../../icons"
+import { Link, Trash2 } from "../../icons"
 import { Badge } from "../../ui/badge"
 import { DataTable, type DataTableBulkAction, type TableAction } from "./index"
 
@@ -79,22 +79,18 @@ const rowActions: TableAction<Route>[] = [
 
 const bulkActions: DataTableBulkAction<Route>[] = [
   {
-    label: (
-      <>
-        Copy
-        <ChevronDown className="size-3.5" />
-      </>
-    ),
-    onClick: () => undefined,
+    label: "Copy",
+    items: [
+      { label: "Copy IDs", onClick: () => undefined },
+      { label: "Copy rows", onClick: () => undefined },
+    ],
   },
   {
-    label: (
-      <>
-        Export
-        <ChevronDown className="size-3.5" />
-      </>
-    ),
-    onClick: () => undefined,
+    label: "Export",
+    items: [
+      { label: "Export CSV", onClick: () => undefined },
+      { label: "Export JSON", onClick: () => undefined },
+    ],
   },
   {
     label: "Delete",

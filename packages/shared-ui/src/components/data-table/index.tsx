@@ -15,7 +15,7 @@ import {
   type SortingState,
 } from "@tanstack/react-table"
 
-import { ChevronsUpDown, MoreVertical } from "../../icons"
+import { ChevronDown, ChevronsUpDown, MoreVertical } from "../../icons"
 import { type MixinProps, splitProps } from "../../lib/mixin"
 import { cn } from "../../cn"
 import { Button } from "../../ui/button"
@@ -44,11 +44,18 @@ export interface TableAction<TData> {
   icon?: ReactNode
 }
 
-export interface DataTableBulkAction<TData> {
+export interface DataTableBulkActionItem<TData> {
   label: ReactNode
   onClick: (rows: TData[]) => void
+  variant?: "default" | "destructive"
+}
+
+export interface DataTableBulkAction<TData> {
+  label: ReactNode
+  onClick?: (rows: TData[]) => void
   variant?: "outline" | "destructive"
   icon?: ReactNode
+  items?: DataTableBulkActionItem<TData>[]
 }
 
 export interface DataTableProps<TData, TValue>
@@ -152,7 +159,13 @@ function DataTable<TData, TValue>({
             >
               <DropdownMenu>
                 <DropdownMenuTrigger
-                  render={<Button variant="ghost" size="icon-xs" />}
+                  render={
+                    <Button
+                      variant="ghost"
+                      size="icon-xs"
+                      className="text-muted-foreground"
+                    />
+                  }
                   aria-label="Open row actions"
                 >
                   <MoreVertical className="size-4" />
@@ -230,24 +243,7 @@ function DataTable<TData, TValue>({
       {...container}
       className={cn("space-y-3", container.className)}
     >
-      <div className="overflow-hidden rounded-lg border border-border bg-background">
-        {selectedRows.length > 0 && bulkActions?.length ? (
-          <div className="flex items-center gap-2 border-b px-3 py-2">
-            {bulkActions.map((action, index) => (
-              <Button
-                key={index}
-                type="button"
-                size="sm"
-                variant={action.variant === "destructive" ? "destructive" : "outline"}
-                className={cn(action.variant === "destructive" && "ml-auto")}
-                onClick={() => action.onClick(selectedRows)}
-              >
-                {action.icon}
-                {action.label}
-              </Button>
-            ))}
-          </div>
-        ) : null}
+      <div className="overflow-hidden rounded-lg border border-border bg-card">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -257,7 +253,9 @@ function DataTable<TData, TValue>({
                     key={header.id}
                     style={{
                       width:
-                        header.getSize() !== 150 ? header.getSize() : undefined,
+                        header.getSize() !== 150
+                          ? header.getSize()
+                          : undefined,
                     }}
                   >
                     {header.isPlaceholder ? null : header.column.getCanSort() ? (
@@ -282,6 +280,74 @@ function DataTable<TData, TValue>({
                 ))}
               </TableRow>
             ))}
+            {selectedRows.length > 0 && bulkActions?.length ? (
+              <TableRow className="bg-subtle hover:bg-subtle">
+                <TableHead
+                  colSpan={tableColumns.length}
+                  className="h-auto bg-subtle px-4 py-3 first:pl-6 text-foreground"
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      {bulkActions
+                        .filter((action) => action.items?.length)
+                        .map((action, index) => (
+                          <DropdownMenu key={index}>
+                            <DropdownMenuTrigger
+                              render={
+                                <Button
+                                  type="button"
+                                  size="sm"
+                                  variant="outline"
+                                  className="border-border bg-card text-foreground"
+                                />
+                              }
+                            >
+                              {action.icon}
+                              {action.label}
+                              <ChevronDown className="size-3.5" />
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="start">
+                              {action.items?.map((item, itemIndex) => (
+                                <DropdownMenuItem
+                                  key={itemIndex}
+                                  variant={item.variant}
+                                  onClick={() => item.onClick(selectedRows)}
+                                >
+                                  {item.label}
+                                </DropdownMenuItem>
+                              ))}
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        ))}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {bulkActions
+                        .filter((action) => !action.items?.length)
+                        .map((action, index) => (
+                          <Button
+                            key={index}
+                            type="button"
+                            size="sm"
+                            variant={
+                              action.variant === "destructive"
+                                ? "destructive"
+                                : "outline"
+                            }
+                            className={cn(
+                              action.variant !== "destructive" &&
+                                "border-border bg-card text-foreground"
+                            )}
+                            onClick={() => action.onClick?.(selectedRows)}
+                          >
+                            {action.icon}
+                            {action.label}
+                          </Button>
+                        ))}
+                    </div>
+                  </div>
+                </TableHead>
+              </TableRow>
+            ) : null}
           </TableHeader>
           <TableBody {...body}>
             {table.getRowModel().rows.length ? (
@@ -336,7 +402,7 @@ function DataTableSkeleton<TData, TValue>({
   const actionCount = Array.isArray(actions) ? actions.length : actions ? 1 : 0
 
   return (
-    <div className="overflow-hidden rounded-lg border border-border">
+    <div className="overflow-hidden rounded-lg border border-border bg-card">
       <Table>
         <TableHeader>
           <TableRow>

@@ -39,8 +39,9 @@ export interface RuleBuilderConditionRowProps<T>
   resources: T[]
   getItemValue: (item: T) => string
   getItemTitle: (item: T) => string
-  fieldKey: string
-  onFieldKeyChange: (value: string) => void
+  getHasKey?: (item: T) => boolean
+  fieldKey?: string
+  onFieldKeyChange?: (value: string) => void
   operator: string | null
   onOperatorChange: (value: string | null) => void
   operators?: { value: string; label: string }[]
@@ -57,7 +58,8 @@ function RuleBuilderConditionRow<T>({
   resources,
   getItemValue,
   getItemTitle,
-  fieldKey,
+  getHasKey,
+  fieldKey = "",
   onFieldKeyChange,
   operator,
   onOperatorChange,
@@ -90,6 +92,8 @@ function RuleBuilderConditionRow<T>({
     "remove"
   )
 
+  const showKey = resource ? (getHasKey?.(resource) ?? true) : false
+
   return (
     <div
       data-slot="rule-builder-condition-row"
@@ -99,11 +103,14 @@ function RuleBuilderConditionRow<T>({
       <div className="flex min-w-0 items-center gap-1">
         <Select
           value={resource ? getItemValue(resource) : null}
-          onValueChange={(next) =>
-            onResourceChange(
-              resources.find((item) => getItemValue(item) === next) ?? null
-            )
-          }
+          onValueChange={(next) => {
+            const item =
+              resources.find((entry) => getItemValue(entry) === next) ?? null
+            onResourceChange(item)
+            if (item && getHasKey && !getHasKey(item)) {
+              onFieldKeyChange?.("")
+            }
+          }}
           disabled={disabled}
         >
           <SelectTrigger
@@ -120,15 +127,19 @@ function RuleBuilderConditionRow<T>({
             ))}
           </SelectContent>
         </Select>
-        <span className="select-none text-muted-foreground">.</span>
-        <Input
-          {...keyProps}
-          disabled={disabled}
-          aria-label="Key"
-          value={fieldKey}
-          onChange={(event) => onFieldKeyChange(event.target.value)}
-          className={cn("h-9 w-28 font-mono md:text-sm", keyProps.className)}
-        />
+        {showKey ? (
+          <>
+            <span className="select-none text-muted-foreground">.</span>
+            <Input
+              {...keyProps}
+              disabled={disabled}
+              aria-label="Key"
+              value={fieldKey}
+              onChange={(event) => onFieldKeyChange?.(event.target.value)}
+              className={cn("h-9 w-28 font-mono md:text-sm", keyProps.className)}
+            />
+          </>
+        ) : null}
       </div>
 
       <Select

@@ -51,6 +51,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/react-syntax-highlighter": "^15.5.13",
+    "react-hook-form": "^7.86.0",
     "tailwindcss": "^4",
     "tsup": "^8",
     "typescript": "^5"

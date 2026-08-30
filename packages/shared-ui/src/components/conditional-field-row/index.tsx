@@ -65,7 +65,8 @@ function ConditionalFieldRow({
       <EmbeddedFieldRow
         when={showNested}
         layout="stack"
-        className="[&>[aria-hidden]]:border-ring"
+        className="pl-6"
+        connectorClassName="bottom-[18px] border-ring"
       >
         {children}
       </EmbeddedFieldRow>

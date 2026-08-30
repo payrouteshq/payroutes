@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { Controller, useFieldArray, useForm } from "react-hook-form"
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { RuleBuilderConditionGroup } from "../rule-builder-condition-group"
@@ -7,25 +7,29 @@ import { RuleBuilderConditionRow } from "./index"
 type Resource = {
   id: string
   title: string
+  kind: "object" | "string"
 }
 
 const resources: Resource[] = [
-  { id: "customer.metadata", title: "customer.metadata" },
-  { id: "customer.email", title: "customer.email" },
-  { id: "product.metadata", title: "product.metadata" },
-  { id: "payment.status", title: "payment.status" },
+  { id: "customer.metadata", title: "customer.metadata", kind: "object" },
+  { id: "customer.email", title: "customer.email", kind: "string" },
+  { id: "product.metadata", title: "product.metadata", kind: "object" },
+  { id: "payment.status", title: "payment.status", kind: "string" },
 ]
 
-type Row = {
-  id: string
+type Condition = {
   resourceId: string
   fieldKey: string
   operator: string
   value: string
 }
 
-const figRow = (id: string, overrides?: Partial<Row>): Row => ({
-  id,
+type FormValues = {
+  combinator: string
+  conditions: Condition[]
+}
+
+const figCondition = (overrides?: Partial<Condition>): Condition => ({
   resourceId: "customer.metadata",
   fieldKey: "plan_tier",
   operator: "is",
@@ -38,33 +42,34 @@ function findResource(id: string) {
 }
 
 function ConditionRow({
-  row,
+  value,
   onChange,
   onRemove,
   disabled,
 }: {
-  row: Row
-  onChange: (row: Row) => void
+  value: Condition
+  onChange: (value: Condition) => void
   onRemove?: () => void
   disabled?: boolean
 }) {
   return (
     <RuleBuilderConditionRow
-      resource={findResource(row.resourceId)}
+      resource={findResource(value.resourceId)}
       onResourceChange={(item) =>
-        onChange({ ...row, resourceId: item?.id ?? "" })
+        onChange({ ...value, resourceId: item?.id ?? "" })
       }
       resources={resources}
       getItemValue={(item) => item.id}
       getItemTitle={(item) => item.title}
-      fieldKey={row.fieldKey}
-      onFieldKeyChange={(fieldKey) => onChange({ ...row, fieldKey })}
-      operator={row.operator}
+      getHasKey={(item) => item.kind === "object"}
+      fieldKey={value.fieldKey}
+      onFieldKeyChange={(fieldKey) => onChange({ ...value, fieldKey })}
+      operator={value.operator}
       onOperatorChange={(operator) =>
-        onChange({ ...row, operator: operator ?? "is" })
+        onChange({ ...value, operator: operator ?? "is" })
       }
-      value={row.value}
-      onValueChange={(value) => onChange({ ...row, value })}
+      value={value.value}
+      onValueChange={(next) => onChange({ ...value, value: next })}
       onRemove={onRemove}
       disabled={disabled}
     />
@@ -73,44 +78,54 @@ function ConditionRow({
 
 function FlatGroupDemo({
   disabled,
-  initialRows,
+  defaultConditions,
 }: {
   disabled?: boolean
-  initialRows?: Row[]
+  defaultConditions?: Condition[]
 }) {
-  const [combinator, setCombinator] = useState("and")
-  const [rows, setRows] = useState<Row[]>(
-    initialRows ?? [
-      figRow("1"),
-      figRow("2", { fieldKey: "region", value: "eu" }),
-    ]
-  )
+  const form = useForm<FormValues>({
+    defaultValues: {
+      combinator: "and",
+      conditions: defaultConditions ?? [
+        figCondition(),
+        figCondition({
+          resourceId: "customer.email",
+          fieldKey: "",
+          value: "eu",
+        }),
+      ],
+    },
+  })
+
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "conditions",
+  })
 
   return (
     <RuleBuilderConditionGroup
-      combinator={combinator}
-      onCombinatorChange={(value) => setCombinator(value ?? "and")}
+      combinator={form.watch("combinator")}
+      onCombinatorChange={(value) =>
+        form.setValue("combinator", value ?? "and")
+      }
       onAddCondition={() =>
-        setRows((current) => [
-          ...current,
-          figRow(String(Date.now()), { fieldKey: "", value: "" }),
-        ])
+        append(figCondition({ fieldKey: "", value: "" }))
       }
       disabled={disabled}
     >
-      {rows.map((row) => (
-        <ConditionRow
-          key={row.id}
-          row={row}
-          disabled={disabled}
-          onChange={(next) =>
-            setRows((current) =>
-              current.map((item) => (item.id === next.id ? next : item))
-            )
-          }
-          onRemove={() =>
-            setRows((current) => current.filter((item) => item.id !== row.id))
-          }
+      {fields.map((field, index) => (
+        <Controller
+          key={field.id}
+          control={form.control}
+          name={`conditions.${index}`}
+          render={({ field: rowField }) => (
+            <ConditionRow
+              value={rowField.value}
+              onChange={rowField.onChange}
+              onRemove={() => remove(index)}
+              disabled={disabled}
+            />
+          )}
         />
       ))}
     </RuleBuilderConditionGroup>
@@ -137,8 +152,8 @@ export const Disabled: Story = {
 export const Empty: Story = {
   render: () => (
     <FlatGroupDemo
-      initialRows={[
-        figRow("1", { resourceId: "", fieldKey: "", operator: "is", value: "" }),
+      defaultConditions={[
+        figCondition({ resourceId: "", fieldKey: "", operator: "is", value: "" }),
       ]}
     />
   ),
@@ -146,13 +161,32 @@ export const Empty: Story = {
 
 export const Single: Story = {
   render: function SingleStory() {
-    const [row, setRow] = useState(figRow("1"))
+    const form = useForm<{ conditions: Condition[] }>({
+      defaultValues: { conditions: [figCondition()] },
+    })
+
+    const { fields, remove } = useFieldArray({
+      control: form.control,
+      name: "conditions",
+    })
+
     return (
-      <ConditionRow
-        row={row}
-        onChange={setRow}
-        onRemove={() => undefined}
-      />
+      <>
+        {fields.map((field, index) => (
+          <Controller
+            key={field.id}
+            control={form.control}
+            name={`conditions.${index}`}
+            render={({ field: rowField }) => (
+              <ConditionRow
+                value={rowField.value}
+                onChange={rowField.onChange}
+                onRemove={() => remove(index)}
+              />
+            )}
+          />
+        ))}
+      </>
     )
   },
 }

@@ -22,6 +22,7 @@ export interface EmbeddedFieldRowProps extends ComponentProps<"div"> {
   when: boolean
   children: ReactNode
   layout?: "inline" | "stack"
+  connectorClassName?: string
 }
 
 function EmbeddedFieldRowRoot({
@@ -29,6 +30,7 @@ function EmbeddedFieldRowRoot({
   children,
   layout = "inline",
   className,
+  connectorClassName,
   ...props
 }: EmbeddedFieldRowProps) {
   if (!when) return null
@@ -47,8 +49,9 @@ function EmbeddedFieldRowRoot({
       <div
         aria-hidden
         className={cn(
-          "pointer-events-none absolute left-0 w-4 rounded-bl border-b border-l border-border",
-          layout === "inline" ? "-top-3 h-[calc(50%+12px)]" : "-top-3 bottom-1.5"
+          "pointer-events-none absolute top-0 left-0 w-4 rounded-bl border-b border-l border-border",
+          layout === "inline" ? "h-1/2" : "bottom-0",
+          connectorClassName
         )}
       />
       {children}

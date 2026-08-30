@@ -7,13 +7,14 @@ import { RuleBuilderConditionGroup } from "./index"
 type Resource = {
   id: string
   title: string
+  kind: "object" | "string"
 }
 
 const resources: Resource[] = [
-  { id: "customer.metadata", title: "customer.metadata" },
-  { id: "customer.email", title: "customer.email" },
-  { id: "product.metadata", title: "product.metadata" },
-  { id: "payment.status", title: "payment.status" },
+  { id: "customer.metadata", title: "customer.metadata", kind: "object" },
+  { id: "customer.email", title: "customer.email", kind: "string" },
+  { id: "product.metadata", title: "product.metadata", kind: "object" },
+  { id: "payment.status", title: "payment.status", kind: "string" },
 ]
 
 type Row = {
@@ -57,6 +58,7 @@ function ConditionRow({
       resources={resources}
       getItemValue={(item) => item.id}
       getItemTitle={(item) => item.title}
+      getHasKey={(item) => item.kind === "object"}
       fieldKey={row.fieldKey}
       onFieldKeyChange={(fieldKey) => onChange({ ...row, fieldKey })}
       operator={row.operator}
@@ -75,7 +77,7 @@ function GroupDemo({ disabled }: { disabled?: boolean }) {
   const [combinator, setCombinator] = useState("and")
   const [rows, setRows] = useState<Row[]>([
     figRow("1"),
-    figRow("2", { fieldKey: "region", value: "eu" }),
+    figRow("2", { resourceId: "customer.email", fieldKey: "", value: "eu" }),
   ])
 
   return (

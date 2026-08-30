@@ -61,8 +61,6 @@ function RuleBuilderConditionGroup({
       "remove"
     )
 
-  const hasBody = Boolean(children) || Boolean(onAddCondition) || Boolean(onAddGroup)
-
   return (
     <FieldStack
       {...container}
@@ -110,9 +108,10 @@ function RuleBuilderConditionGroup({
       </div>
 
       <EmbeddedFieldRow
-        when={hasBody}
+        when={Boolean(children) || Boolean(onAddCondition) || Boolean(onAddGroup)}
         layout="stack"
-        className="[&>[aria-hidden]]:border-ring"
+        className="pl-6"
+        connectorClassName="bottom-4 border-ring"
       >
         {children}
         {onAddCondition || onAddGroup ? (

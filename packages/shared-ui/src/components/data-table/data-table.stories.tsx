@@ -1,19 +1,19 @@
-import type { ColumnDef } from "@tanstack/react-table"
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react";
+import type { ColumnDef } from "@tanstack/react-table";
 
-import { Link, Trash2 } from "../../icons"
-import { Badge } from "../../ui/badge"
-import { DataTable, type DataTableBulkAction, type TableAction } from "./index"
+import { Link, Trash2 } from "../../icons";
+import { Badge } from "../../ui/badge";
+import { DataTable, type DataTableBulkAction, type TableAction } from "./index";
 
 type Route = {
-  id: string
-  route: string
-  provider: string
-  authTrend: string
-  authRate: string
-  volume: string
-  status: string
-}
+  id: string;
+  route: string;
+  provider: string;
+  authTrend: string;
+  authRate: string;
+  volume: string;
+  status: string;
+};
 
 const routes: Route[] = [
   {
@@ -43,7 +43,7 @@ const routes: Route[] = [
     volume: "$198,220",
     status: "Text",
   },
-]
+];
 
 const columns: ColumnDef<Route>[] = [
   { accessorKey: "route", header: "Route" },
@@ -56,7 +56,7 @@ const columns: ColumnDef<Route>[] = [
     header: "Status",
     cell: ({ getValue }) => <Badge>{String(getValue())}</Badge>,
   },
-]
+];
 
 const rowActions: TableAction<Route>[] = [
   {
@@ -75,7 +75,7 @@ const rowActions: TableAction<Route>[] = [
     variant: "destructive",
     onClick: () => undefined,
   },
-]
+];
 
 const bulkActions: DataTableBulkAction<Route>[] = [
   {
@@ -98,28 +98,22 @@ const bulkActions: DataTableBulkAction<Route>[] = [
     variant: "destructive",
     onClick: () => undefined,
   },
-]
+];
 
 const meta: Meta<typeof DataTable<Route, unknown>> = {
   title: "Components/DataTable",
   component: DataTable,
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof DataTable<Route, unknown>>
+type Story = StoryObj<typeof DataTable<Route, unknown>>;
 
 export const Default: Story = {
   render: () => (
-    <DataTable
-      columns={columns}
-      data={routes}
-      enableBulkSelect
-      actions={rowActions}
-      bulkActions={bulkActions}
-    />
+    <DataTable columns={columns} data={routes} enableBulkSelect actions={rowActions} bulkActions={bulkActions} />
   ),
-}
+};
 
 export const Selected: Story = {
   render: () => (
@@ -132,25 +126,15 @@ export const Selected: Story = {
       defaultRowSelection={{ "1": true }}
     />
   ),
-}
+};
 
 export const Loading: Story = {
-  render: () => (
-    <DataTable
-      columns={columns}
-      data={[]}
-      enableBulkSelect
-      actions={rowActions}
-      isLoading
-    />
-  ),
-}
+  render: () => <DataTable columns={columns} data={[]} enableBulkSelect actions={rowActions} isLoading />,
+};
 
 export const Empty: Story = {
-  render: () => (
-    <DataTable columns={columns} data={[]} enableBulkSelect actions={rowActions} />
-  ),
-}
+  render: () => <DataTable columns={columns} data={[]} enableBulkSelect actions={rowActions} />,
+};
 
 export const Hover: Story = {
   render: () => (
@@ -162,4 +146,4 @@ export const Hover: Story = {
       defaultRowSelection={{ "1": true }}
     />
   ),
-}
+};

@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { Switch } from "./switch"
+import { Switch } from "./switch";
 
 const meta: Meta<typeof Switch> = {
   title: "UI/Switch",
@@ -17,17 +17,17 @@ const meta: Meta<typeof Switch> = {
       options: ["default", "sm"],
     },
   },
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Switch>
+type Story = StoryObj<typeof Switch>;
 
-export const Default: Story = {}
+export const Default: Story = {};
 
-export const Checked: Story = { args: { defaultChecked: true } }
+export const Checked: Story = { args: { defaultChecked: true } };
 
-export const Disabled: Story = { args: { disabled: true } }
+export const Disabled: Story = { args: { disabled: true } };
 
 export const States: Story = {
   render: () => (
@@ -38,14 +38,11 @@ export const States: Story = {
         { defaultChecked: true, disabled: true },
         { defaultChecked: false, disabled: true },
       ].map(({ defaultChecked, disabled }, index) => (
-        <label
-          key={index}
-          className={`flex items-center gap-2 text-lg ${disabled ? "text-muted-foreground" : ""}`}
-        >
+        <label key={index} className={`flex items-center gap-2 text-lg ${disabled ? "text-muted-foreground" : ""}`}>
           <Switch defaultChecked={defaultChecked} disabled={disabled} />
           Label
         </label>
       ))}
     </div>
   ),
-}
+};

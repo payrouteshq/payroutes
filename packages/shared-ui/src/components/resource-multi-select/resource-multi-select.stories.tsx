@@ -3,7 +3,45 @@ import type { Meta, StoryObj } from "@storybook/react"
 
 import { ResourceMultiSelect } from "./index"
 
-const plans = ["Pro plan", "Starter", "Enterprise"] as const
+const plans = ["Pro plan", "Starter", "Enterprise"]
+
+function DefaultDemo() {
+  const [selected, setSelected] = useState(["Pro plan", "Starter"])
+
+  function toggle(plan: string) {
+    setSelected((current) =>
+      current.includes(plan)
+        ? current.filter((item) => item !== plan)
+        : [...current, plan]
+    )
+  }
+
+  return (
+    <ResourceMultiSelect className="w-80">
+      {selected.length > 0 ? (
+        <ResourceMultiSelect.Tags>
+          {selected.map((plan) => (
+            <ResourceMultiSelect.Tag
+              key={plan}
+              onRemove={() => toggle(plan)}
+            >
+              {plan}
+            </ResourceMultiSelect.Tag>
+          ))}
+        </ResourceMultiSelect.Tags>
+      ) : null}
+      {plans.map((plan) => (
+        <ResourceMultiSelect.Row
+          key={plan}
+          checked={selected.includes(plan)}
+          onCheckedChange={() => toggle(plan)}
+        >
+          {plan}
+        </ResourceMultiSelect.Row>
+      ))}
+    </ResourceMultiSelect>
+  )
+}
 
 const meta: Meta<typeof ResourceMultiSelect> = {
   title: "Components/ResourceMultiSelect",
@@ -15,46 +53,10 @@ export default meta
 type Story = StoryObj<typeof ResourceMultiSelect>
 
 export const Default: Story = {
-  render: function DefaultStory() {
-    const [selected, setSelected] = useState<string[]>(["Pro plan", "Starter"])
-
-    function toggle(plan: string) {
-      setSelected((current) =>
-        current.includes(plan)
-          ? current.filter((item) => item !== plan)
-          : [...current, plan]
-      )
-    }
-
-    return (
-      <ResourceMultiSelect className="w-80">
-        {selected.length > 0 ? (
-          <ResourceMultiSelect.Tags>
-            {selected.map((plan) => (
-              <ResourceMultiSelect.Tag
-                key={plan}
-                onRemove={() => toggle(plan)}
-              >
-                {plan}
-              </ResourceMultiSelect.Tag>
-            ))}
-          </ResourceMultiSelect.Tags>
-        ) : null}
-        {plans.map((plan) => (
-          <ResourceMultiSelect.Row
-            key={plan}
-            checked={selected.includes(plan)}
-            onCheckedChange={() => toggle(plan)}
-          >
-            {plan}
-          </ResourceMultiSelect.Row>
-        ))}
-      </ResourceMultiSelect>
-    )
-  },
+  render: () => <DefaultDemo />,
 }
 
-export const Tag: Story = {
+export const Tags: Story = {
   render: () => (
     <div className="flex items-center gap-2">
       <ResourceMultiSelect.Tag>Pro plan</ResourceMultiSelect.Tag>
@@ -64,7 +66,7 @@ export const Tag: Story = {
   ),
 }
 
-export const Row: Story = {
+export const Rows: Story = {
   render: () => (
     <div className="w-80 overflow-hidden rounded-lg border border-border">
       <ResourceMultiSelect.Row checked>Pro plan</ResourceMultiSelect.Row>

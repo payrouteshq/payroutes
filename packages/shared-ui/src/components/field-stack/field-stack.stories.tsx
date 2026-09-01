@@ -1,37 +1,28 @@
-import { useState } from "react"
-import type { Meta, StoryObj } from "@storybook/react"
+import { useState } from "react";
 
-import { Input } from "../../ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../ui/select"
-import { EmbeddedFieldRow, FieldStack } from "./index"
+import type { Meta, StoryObj } from "@storybook/react";
+
+import { Input } from "../../ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select";
+import { EmbeddedFieldRow, FieldStack } from "./index";
 
 const operators = [
   { value: "gt", label: "Is greater than" },
   { value: "lt", label: "Is less than" },
   { value: "between", label: "Is between" },
-] as const
+] as const;
 
 function OperatorSelect({
   defaultValue,
   value,
   onValueChange,
 }: {
-  defaultValue?: string
-  value?: string
-  onValueChange?: (value: string | null) => void
+  defaultValue?: string;
+  value?: string;
+  onValueChange?: (value: string | null) => void;
 }) {
   return (
-    <Select
-      defaultValue={defaultValue}
-      value={value}
-      onValueChange={onValueChange}
-    >
+    <Select defaultValue={defaultValue} value={value} onValueChange={onValueChange}>
       <SelectTrigger className="w-80">
         <SelectValue placeholder="Select operator" />
       </SelectTrigger>
@@ -43,7 +34,7 @@ function OperatorSelect({
         ))}
       </SelectContent>
     </Select>
-  )
+  );
 }
 
 function BetweenFields() {
@@ -57,21 +48,19 @@ function BetweenFields() {
         <EmbeddedFieldRow.Label>Maximum</EmbeddedFieldRow.Label>
         <Input defaultValue="900" />
       </div>
-      <EmbeddedFieldRow.Suffix>
-        Both bounds are inclusive.
-      </EmbeddedFieldRow.Suffix>
+      <EmbeddedFieldRow.Suffix>Both bounds are inclusive.</EmbeddedFieldRow.Suffix>
     </>
-  )
+  );
 }
 
 const meta: Meta<typeof FieldStack> = {
   title: "Components/FieldStack",
   component: FieldStack,
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof FieldStack>
+type Story = StoryObj<typeof FieldStack>;
 
 export const Default: Story = {
   render: () => (
@@ -83,7 +72,7 @@ export const Default: Story = {
       </EmbeddedFieldRow>
     </FieldStack>
   ),
-}
+};
 
 export const Stack: Story = {
   render: () => (
@@ -94,7 +83,7 @@ export const Stack: Story = {
       </EmbeddedFieldRow>
     </FieldStack>
   ),
-}
+};
 
 export const Inline: Story = {
   render: () => (
@@ -105,11 +94,11 @@ export const Inline: Story = {
       </EmbeddedFieldRow>
     </FieldStack>
   ),
-}
+};
 
 export const Conditional: Story = {
   render: function ConditionalStory() {
-    const [operator, setOperator] = useState("between")
+    const [operator, setOperator] = useState("between");
 
     return (
       <FieldStack className="w-80">
@@ -118,6 +107,6 @@ export const Conditional: Story = {
           <BetweenFields />
         </EmbeddedFieldRow>
       </FieldStack>
-    )
+    );
   },
-}
+};

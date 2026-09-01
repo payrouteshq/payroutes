@@ -1,15 +1,15 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs";
 
 const meta: Meta<typeof Tabs> = {
   title: "UI/Tabs",
   component: Tabs,
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Tabs>
+type Story = StoryObj<typeof Tabs>;
 
 export const Default: Story = {
   render: () => (
@@ -22,4 +22,4 @@ export const Default: Story = {
       <TabsContent value="recurring" />
     </Tabs>
   ),
-}
+};

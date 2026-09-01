@@ -1,23 +1,15 @@
-import { useId, useState, type ComponentProps } from "react"
-import type { Meta, StoryObj } from "@storybook/react"
+import { type ComponentProps, useId, useState } from "react";
 
-import { PhoneNumberField, type PhoneNumber } from "./index"
+import type { Meta, StoryObj } from "@storybook/react";
 
-const emptyValue: PhoneNumber = { number: "", countryCode: "US" }
+import { type PhoneNumber, PhoneNumberField } from "./index";
 
-function PhoneFieldDemo(
-  props: Omit<ComponentProps<typeof PhoneNumberField>, "value" | "onChange">
-) {
-  const id = useId()
-  const [value, setValue] = useState<PhoneNumber>(emptyValue)
-  return (
-    <PhoneNumberField
-      id={id}
-      value={value}
-      onChange={setValue}
-      {...props}
-    />
-  )
+const emptyValue: PhoneNumber = { number: "", countryCode: "US" };
+
+function PhoneFieldDemo(props: Omit<ComponentProps<typeof PhoneNumberField>, "value" | "onChange">) {
+  const id = useId();
+  const [value, setValue] = useState<PhoneNumber>(emptyValue);
+  return <PhoneNumberField id={id} value={value} onChange={setValue} {...props} />;
 }
 
 const meta: Meta<typeof PhoneNumberField> = {
@@ -28,27 +20,27 @@ const meta: Meta<typeof PhoneNumberField> = {
     label: "Phone Number",
   },
   render: (args) => <PhoneFieldDemo {...args} />,
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof PhoneNumberField>
+type Story = StoryObj<typeof PhoneNumberField>;
 
-export const Default: Story = {}
+export const Default: Story = {};
 
 export const Focused: Story = {
   args: { "data-state": "focus" },
-}
+};
 
 export const Invalid: Story = {
   args: {
     error: "Error message",
   },
-}
+};
 
 export const Disabled: Story = {
   args: { disabled: true },
-}
+};
 
 export const CountryOpen: Story = {
   parameters: {
@@ -59,7 +51,7 @@ export const CountryOpen: Story = {
       <PhoneFieldDemo {...args} defaultOpen />
     </div>
   ),
-}
+};
 
 export const States: Story = {
   render: () => (
@@ -70,4 +62,4 @@ export const States: Story = {
       <PhoneFieldDemo disabled />
     </div>
   ),
-}
+};

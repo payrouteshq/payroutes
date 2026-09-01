@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { Input } from "./input"
+import { Input } from "./input";
 
 const meta: Meta<typeof Input> = {
   title: "UI/Input",
@@ -9,17 +9,17 @@ const meta: Meta<typeof Input> = {
     placeholder: "Placeholder",
     className: "w-72",
   },
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Input>
+type Story = StoryObj<typeof Input>;
 
-export const Default: Story = {}
+export const Default: Story = {};
 
 export const Focused: Story = {
   render: (args) => <Input {...args} data-state="focus" />,
-}
+};
 
 export const Invalid: Story = {
   render: (args) => (
@@ -28,9 +28,9 @@ export const Invalid: Story = {
       <p className="text-error text-xs">Error message</p>
     </div>
   ),
-}
+};
 
-export const Disabled: Story = { args: { disabled: true } }
+export const Disabled: Story = { args: { disabled: true } };
 
 export const States: Story = {
   render: () => (
@@ -44,4 +44,4 @@ export const States: Story = {
       <Input placeholder="Placeholder" disabled />
     </div>
   ),
-}
+};

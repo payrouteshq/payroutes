@@ -1,13 +1,13 @@
-import { Toast as ToastPrimitive } from "@base-ui/react/toast"
-import { cva } from "class-variance-authority"
+import { Toast as ToastPrimitive } from "@base-ui/react/toast";
+import { cva } from "class-variance-authority";
 
-import { Check, CloseX } from "../icons"
-import { cn } from "../cn"
-import { Button } from "./button"
+import { cn } from "../cn";
+import { Check, CloseX } from "../icons";
+import { Button } from "./button";
 
-export type ToastType = "info" | "success" | "warning" | "error" | "copy" | "loading"
+export type ToastType = "info" | "success" | "warning" | "error" | "copy" | "loading";
 
-const toast = ToastPrimitive.createToastManager()
+const toast = ToastPrimitive.createToastManager();
 
 const toastSurfaceVariants = cva("rounded-xl outline-none", {
   variants: {
@@ -27,28 +27,22 @@ const toastSurfaceVariants = cva("rounded-xl outline-none", {
   defaultVariants: {
     type: "info",
   },
-})
+});
 
 function resolveToastType(type: string | undefined): ToastType {
-  if (
-    type === "success" ||
-    type === "warning" ||
-    type === "error" ||
-    type === "copy" ||
-    type === "loading"
-  ) {
-    return type
+  if (type === "success" || type === "warning" || type === "error" || type === "copy" || type === "loading") {
+    return type;
   }
 
-  return "info"
+  return "info";
 }
 
 function ToastProvider({ ...props }: ToastPrimitive.Provider.Props) {
-  return <ToastPrimitive.Provider {...props} />
+  return <ToastPrimitive.Provider {...props} />;
 }
 
 function ToastPortal({ ...props }: ToastPrimitive.Portal.Props) {
-  return <ToastPrimitive.Portal data-slot="toast-portal" {...props} />
+  return <ToastPrimitive.Portal data-slot="toast-portal" {...props} />;
 }
 
 function ToastViewport({ className, ...props }: ToastPrimitive.Viewport.Props) {
@@ -61,15 +55,11 @@ function ToastViewport({ className, ...props }: ToastPrimitive.Viewport.Props) {
       )}
       {...props}
     />
-  )
+  );
 }
 
-function Toast({
-  className,
-  toast: toastItem,
-  ...props
-}: ToastPrimitive.Root.Props) {
-  const type = resolveToastType(toastItem.type)
+function Toast({ className, toast: toastItem, ...props }: ToastPrimitive.Root.Props) {
+  const type = resolveToastType(toastItem.type);
 
   return (
     <ToastPrimitive.Root
@@ -89,13 +79,13 @@ function Toast({
         "data-ending-style:data-[swipe-direction=left]:[transform:translateX(calc(var(--toast-swipe-movement-x)-150%))_translateY(var(--offset-y))]",
         "data-ending-style:data-[swipe-direction=right]:[transform:translateX(calc(var(--toast-swipe-movement-x)+150%))_translateY(var(--offset-y))]",
         "data-ending-style:data-[swipe-direction=up]:[transform:translateY(calc(var(--toast-swipe-movement-y)-150%))]",
-        "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
+        "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-3",
         toastSurfaceVariants({ type }),
         className
       )}
       {...props}
     />
-  )
+  );
 }
 
 function ToastContent({ className, ...props }: ToastPrimitive.Content.Props) {
@@ -109,7 +99,7 @@ function ToastContent({ className, ...props }: ToastPrimitive.Content.Props) {
       )}
       {...props}
     />
-  )
+  );
 }
 
 function ToastTitle({ className, ...props }: ToastPrimitive.Title.Props) {
@@ -119,20 +109,17 @@ function ToastTitle({ className, ...props }: ToastPrimitive.Title.Props) {
       className={cn("text-[13px] leading-5 font-semibold text-(--toast-accent)", className)}
       {...props}
     />
-  )
+  );
 }
 
-function ToastDescription({
-  className,
-  ...props
-}: ToastPrimitive.Description.Props) {
+function ToastDescription({ className, ...props }: ToastPrimitive.Description.Props) {
   return (
     <ToastPrimitive.Description
       data-slot="toast-description"
-      className={cn("mt-0.5 text-xs leading-4 font-normal text-muted-foreground", className)}
+      className={cn("text-muted-foreground mt-0.5 text-xs leading-4 font-normal", className)}
       {...props}
     />
-  )
+  );
 }
 
 function ToastAction({
@@ -141,48 +128,39 @@ function ToastAction({
   ...props
 }: ToastPrimitive.Action.Props) {
   return (
-    <ToastPrimitive.Action
-      data-slot="toast-action"
-      render={render}
-      className={cn("shrink-0", className)}
-      {...props}
-    />
-  )
+    <ToastPrimitive.Action data-slot="toast-action" render={render} className={cn("shrink-0", className)} {...props} />
+  );
 }
 
-function ToastClose({
-  className,
-  children,
-  ...props
-}: ToastPrimitive.Close.Props) {
+function ToastClose({ className, children, ...props }: ToastPrimitive.Close.Props) {
   return (
     <ToastPrimitive.Close
       data-slot="toast-close"
       aria-label="Close toast"
       className={cn(
-        "relative -mr-0.5 shrink-0 rounded-md text-muted-foreground outline-none",
-        "focus-visible:ring-3 focus-visible:ring-ring/50",
+        "text-muted-foreground relative -mr-0.5 shrink-0 rounded-md outline-none",
+        "focus-visible:ring-ring/50 focus-visible:ring-3",
         className
       )}
       {...props}
     >
       {children ?? <CloseX className="size-3.5" aria-hidden="true" />}
     </ToastPrimitive.Close>
-  )
+  );
 }
 
 function ToastIcon({ type }: { type: string | undefined }) {
-  const resolved = resolveToastType(type)
+  const resolved = resolveToastType(type);
 
   if (resolved === "copy") {
     return (
       <span
         data-slot="toast-icon"
-        className="inline-flex size-4 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground"
+        className="bg-primary text-primary-foreground inline-flex size-4 shrink-0 items-center justify-center rounded-full"
       >
         <Check className="size-2.5" aria-hidden="true" />
       </span>
-    )
+    );
   }
 
   if (resolved === "loading") {
@@ -192,7 +170,7 @@ function ToastIcon({ type }: { type: string | undefined }) {
         className="mt-0.5 size-4 shrink-0 animate-spin rounded-full border-2 border-current border-t-transparent"
         aria-hidden="true"
       />
-    )
+    );
   }
 
   return (
@@ -201,7 +179,7 @@ function ToastIcon({ type }: { type: string | undefined }) {
       className="mt-1.5 size-1.5 shrink-0 rounded-full bg-(--toast-accent)"
       aria-hidden="true"
     />
-  )
+  );
 }
 
 function ToastCard({
@@ -211,13 +189,13 @@ function ToastCard({
   className,
   onClose,
 }: {
-  type?: ToastType
-  title: string
-  description?: string
-  className?: string
-  onClose?: () => void
+  type?: ToastType;
+  title: string;
+  description?: string;
+  className?: string;
+  onClose?: () => void;
 }) {
-  const isCopy = type === "copy"
+  const isCopy = type === "copy";
 
   return (
     <div
@@ -230,34 +208,25 @@ function ToastCard({
         className
       )}
     >
-      <div
-        className={cn(
-          "flex items-start gap-2 px-3.5 py-3",
-          isCopy && "items-center px-3 py-1.5"
-        )}
-      >
+      <div className={cn("flex items-start gap-2 px-3.5 py-3", isCopy && "items-center px-3 py-1.5")}>
         <ToastIcon type={type} />
         <div className="min-w-0 flex-1">
           <p
             className={cn(
-              isCopy
-                ? "text-sm font-medium text-primary"
-                : "text-[13px] leading-5 font-semibold text-(--toast-accent)"
+              isCopy ? "text-primary text-sm font-medium" : "text-[13px] leading-5 font-semibold text-(--toast-accent)"
             )}
           >
             {title}
           </p>
           {description ? (
-            <p className="mt-0.5 text-xs leading-4 font-normal text-muted-foreground">
-              {description}
-            </p>
+            <p className="text-muted-foreground mt-0.5 text-xs leading-4 font-normal">{description}</p>
           ) : null}
         </div>
         {!isCopy ? (
           <button
             type="button"
             aria-label="Close toast"
-            className="relative -mr-0.5 shrink-0 rounded-md text-muted-foreground outline-none"
+            className="text-muted-foreground relative -mr-0.5 shrink-0 rounded-md outline-none"
             onClick={onClose}
           >
             <CloseX className="size-3.5" aria-hidden="true" />
@@ -265,36 +234,32 @@ function ToastCard({
         ) : null}
       </div>
     </div>
-  )
+  );
 }
 
 function ToastList() {
-  const { toasts } = ToastPrimitive.useToastManager()
+  const { toasts } = ToastPrimitive.useToastManager();
 
   return toasts.map((toastItem) => {
-    const type = resolveToastType(toastItem.type)
+    const type = resolveToastType(toastItem.type);
 
     return (
       <Toast key={toastItem.id} toast={toastItem}>
         <ToastContent>
           <ToastIcon type={type} />
           <div className="min-w-0 flex-1">
-            <ToastTitle className={type === "copy" ? "text-sm font-medium text-primary" : undefined} />
+            <ToastTitle className={type === "copy" ? "text-primary text-sm font-medium" : undefined} />
             {toastItem.description ? <ToastDescription /> : null}
           </div>
           {toastItem.actionProps ? <ToastAction /> : null}
           {type !== "copy" ? <ToastClose /> : null}
         </ToastContent>
       </Toast>
-    )
-  })
+    );
+  });
 }
 
-function Toaster({
-  children,
-  toastManager = toast,
-  ...props
-}: ToastPrimitive.Provider.Props) {
+function Toaster({ children, toastManager = toast, ...props }: ToastPrimitive.Provider.Props) {
   return (
     <ToastProvider toastManager={toastManager} {...props}>
       {children}
@@ -304,11 +269,11 @@ function Toaster({
         </ToastViewport>
       </ToastPortal>
     </ToastProvider>
-  )
+  );
 }
 
-const createToastManager = ToastPrimitive.createToastManager
-const useToastManager = ToastPrimitive.useToastManager
+const createToastManager = ToastPrimitive.createToastManager;
+const useToastManager = ToastPrimitive.useToastManager;
 
 export {
   Toaster,
@@ -327,4 +292,4 @@ export {
   toast,
   toastSurfaceVariants,
   useToastManager,
-}
+};

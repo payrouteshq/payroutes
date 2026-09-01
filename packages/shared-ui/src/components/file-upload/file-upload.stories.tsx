@@ -1,7 +1,8 @@
-import { useRef, useState, type ComponentProps } from "react"
-import type { Meta, StoryObj } from "@storybook/react"
+import { type ComponentProps, useRef, useState } from "react";
 
-import { FileUpload, type FileWithPreview } from "./index"
+import type { Meta, StoryObj } from "@storybook/react";
+
+import { FileUpload, type FileWithPreview } from "./index";
 
 const sampleFile = {
   name: "pro-plan-hero.png",
@@ -9,7 +10,7 @@ const sampleFile = {
   type: "image/png",
   width: 1600,
   height: 900,
-} as FileWithPreview
+} as FileWithPreview;
 
 const meta: Meta<typeof FileUpload> = {
   title: "Components/FileUpload",
@@ -17,43 +18,43 @@ const meta: Meta<typeof FileUpload> = {
   args: {
     className: "w-80",
   },
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof FileUpload>
+type Story = StoryObj<typeof FileUpload>;
 
 function SimulateUpload(args: ComponentProps<typeof FileUpload>) {
-  const [file, setFile] = useState<FileWithPreview | null>(null)
-  const [progress, setProgress] = useState(0)
-  const [status, setStatus] = useState<"idle" | "uploading" | "success">("idle")
-  const tick = useRef(0)
+  const [file, setFile] = useState<FileWithPreview | null>(null);
+  const [progress, setProgress] = useState(0);
+  const [status, setStatus] = useState<"idle" | "uploading" | "success">("idle");
+  const tick = useRef(0);
 
   function stop() {
-    window.clearInterval(tick.current)
+    window.clearInterval(tick.current);
   }
 
   function reset() {
-    stop()
-    setFile(null)
-    setProgress(0)
-    setStatus("idle")
+    stop();
+    setFile(null);
+    setProgress(0);
+    setStatus("idle");
   }
 
   function start(next: FileWithPreview) {
-    stop()
-    setFile(next)
-    setStatus("uploading")
-    setProgress(1)
-    let current = 1
+    stop();
+    setFile(next);
+    setStatus("uploading");
+    setProgress(1);
+    let current = 1;
     tick.current = window.setInterval(() => {
-      current += 1
-      setProgress(current)
+      current += 1;
+      setProgress(current);
       if (current >= 100) {
-        stop()
-        setStatus("success")
+        stop();
+        setStatus("success");
       }
-    }, 30)
+    }, 30);
   }
 
   return (
@@ -66,40 +67,40 @@ function SimulateUpload(args: ComponentProps<typeof FileUpload>) {
       onCancel={reset}
       onRemove={reset}
     />
-  )
+  );
 }
 
 export const Default: Story = {
   render: SimulateUpload,
-}
+};
 
 export const Hover: Story = {
   args: { "data-state": "hover" },
-}
+};
 
 export const Drag: Story = {
   args: { "data-state": "drag" },
-}
+};
 
 export const Error: Story = {
   args: { error: "That file is over 2MB. Try a smaller one." },
-}
+};
 
 export const Disabled: Story = {
   args: { disabled: true },
-}
+};
 
 export const Uploading: Story = {
   parameters: { chromatic: { disableSnapshot: true } },
   render: SimulateUpload,
-}
+};
 
 export const Success: Story = {
   args: {
     status: "success",
     value: sampleFile,
   },
-}
+};
 
 export const States: Story = {
   render: () => (
@@ -113,4 +114,4 @@ export const States: Story = {
       <FileUpload status="success" value={sampleFile} />
     </div>
   ),
-}
+};

@@ -1,9 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { CircleCheck } from "../icons"
-import { Badge } from "./badge"
+import { CircleCheck } from "../icons";
+import { Badge } from "./badge";
 
-const variants = ["default", "secondary", "outline", "success", "warning", "destructive", "ghost", "link"] as const
+const variants = ["default", "secondary", "outline", "success", "warning", "destructive", "ghost", "link"] as const;
 
 const meta: Meta<typeof Badge> = {
   title: "UI/Badge",
@@ -21,23 +21,23 @@ const meta: Meta<typeof Badge> = {
       options: ["default", "icon"],
     },
   },
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Badge>
+type Story = StoryObj<typeof Badge>;
 
-export const Default: Story = {}
+export const Default: Story = {};
 
-export const Secondary: Story = { args: { variant: "secondary" } }
+export const Secondary: Story = { args: { variant: "secondary" } };
 
-export const Outline: Story = { args: { variant: "outline" } }
+export const Outline: Story = { args: { variant: "outline" } };
 
-export const Success: Story = { args: { variant: "success" } }
+export const Success: Story = { args: { variant: "success" } };
 
-export const Warning: Story = { args: { variant: "warning" } }
+export const Warning: Story = { args: { variant: "warning" } };
 
-export const Destructive: Story = { args: { variant: "destructive" } }
+export const Destructive: Story = { args: { variant: "destructive" } };
 
 export const WithIcon: Story = {
   render: () => (
@@ -46,7 +46,7 @@ export const WithIcon: Story = {
       Text
     </Badge>
   ),
-}
+};
 
 export const States: Story = {
   render: () => (
@@ -74,4 +74,4 @@ export const States: Story = {
       </div>
     </div>
   ),
-}
+};

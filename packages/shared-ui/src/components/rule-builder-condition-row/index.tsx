@@ -1,55 +1,44 @@
-import type { ComponentProps } from "react"
+import type { ComponentProps } from "react";
 
-import { CloseX } from "../../icons"
-import { type MixinProps, splitProps } from "../../lib/mixin"
-import { cn } from "../../cn"
-import { Button } from "../../ui/button"
-import { Input } from "../../ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../ui/select"
+import { cn } from "../../cn";
+import { CloseX } from "../../icons";
+import { type MixinProps, splitProps } from "../../lib/mixin";
+import { Button } from "../../ui/button";
+import { Input } from "../../ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select";
 
 const DEFAULT_OPERATORS = [
   { value: "is", label: "is" },
   { value: "is_not", label: "is not" },
   { value: "contains", label: "contains" },
-] as const
+] as const;
 
 export interface RuleBuilderConditionRowProps<T>
-  extends MixinProps<"container", ComponentProps<"div">>,
+  extends
+    MixinProps<"container", ComponentProps<"div">>,
     MixinProps<"trigger", Omit<ComponentProps<typeof SelectTrigger>, "children">>,
     MixinProps<"content", Omit<ComponentProps<typeof SelectContent>, "children">>,
     MixinProps<"key", Omit<ComponentProps<typeof Input>, "value" | "onChange">>,
-    MixinProps<
-      "operatorTrigger",
-      Omit<ComponentProps<typeof SelectTrigger>, "children">
-    >,
-    MixinProps<
-      "operatorContent",
-      Omit<ComponentProps<typeof SelectContent>, "children">
-    >,
+    MixinProps<"operatorTrigger", Omit<ComponentProps<typeof SelectTrigger>, "children">>,
+    MixinProps<"operatorContent", Omit<ComponentProps<typeof SelectContent>, "children">>,
     MixinProps<"input", Omit<ComponentProps<typeof Input>, "value" | "onChange">>,
     MixinProps<"remove", Omit<ComponentProps<typeof Button>, "children">> {
-  resource: T | null
-  onResourceChange: (value: T | null) => void
-  resources: T[]
-  getItemValue: (item: T) => string
-  getItemTitle: (item: T) => string
-  getHasKey?: (item: T) => boolean
-  fieldKey?: string
-  onFieldKeyChange?: (value: string) => void
-  operator: string | null
-  onOperatorChange: (value: string | null) => void
-  operators?: { value: string; label: string }[]
-  value: string
-  onValueChange: (value: string) => void
-  onRemove?: () => void
-  disabled?: boolean
-  placeholder?: string
+  resource: T | null;
+  onResourceChange: (value: T | null) => void;
+  resources: T[];
+  getItemValue: (item: T) => string;
+  getItemTitle: (item: T) => string;
+  getHasKey?: (item: T) => boolean;
+  fieldKey?: string;
+  onFieldKeyChange?: (value: string) => void;
+  operator: string | null;
+  onOperatorChange: (value: string | null) => void;
+  operators?: { value: string; label: string }[];
+  value: string;
+  onValueChange: (value: string) => void;
+  onRemove?: () => void;
+  disabled?: boolean;
+  placeholder?: string;
 }
 
 function RuleBuilderConditionRow<T>({
@@ -90,9 +79,9 @@ function RuleBuilderConditionRow<T>({
     "operatorContent",
     "input",
     "remove"
-  )
+  );
 
-  const showKey = resource ? (getHasKey?.(resource) ?? true) : false
+  const showKey = resource ? (getHasKey?.(resource) ?? true) : false;
 
   return (
     <div
@@ -104,19 +93,12 @@ function RuleBuilderConditionRow<T>({
         <Select
           value={resource ? getItemValue(resource) : null}
           onValueChange={(next) => {
-            const item =
-              resources.find((entry) => getItemValue(entry) === next) ?? null
-            onResourceChange(item)
-            if (item && getHasKey && !getHasKey(item)) {
-              onFieldKeyChange?.("")
-            }
+            const item = resources.find((entry) => getItemValue(entry) === next) ?? null;
+            onResourceChange(item);
           }}
           disabled={disabled}
         >
-          <SelectTrigger
-            {...trigger}
-            className={cn("w-fit font-mono", trigger.className)}
-          >
+          <SelectTrigger {...trigger} className={cn("w-fit font-mono", trigger.className)}>
             <SelectValue placeholder={placeholder} />
           </SelectTrigger>
           <SelectContent {...content}>
@@ -129,7 +111,7 @@ function RuleBuilderConditionRow<T>({
         </Select>
         {showKey ? (
           <>
-            <span className="select-none text-muted-foreground">.</span>
+            <span className="text-muted-foreground select-none">.</span>
             <Input
               {...keyProps}
               disabled={disabled}
@@ -142,15 +124,8 @@ function RuleBuilderConditionRow<T>({
         ) : null}
       </div>
 
-      <Select
-        value={operator}
-        onValueChange={onOperatorChange}
-        disabled={disabled}
-      >
-        <SelectTrigger
-          {...operatorTrigger}
-          className={cn("w-fit", operatorTrigger.className)}
-        >
+      <Select value={operator} onValueChange={onOperatorChange} disabled={disabled}>
+        <SelectTrigger {...operatorTrigger} className={cn("w-fit", operatorTrigger.className)}>
           <SelectValue placeholder="is" />
         </SelectTrigger>
         <SelectContent {...operatorContent}>
@@ -179,17 +154,17 @@ function RuleBuilderConditionRow<T>({
           aria-label="Remove condition"
           disabled={disabled}
           {...remove}
-          className={cn("shrink-0 text-muted-foreground", remove.className)}
+          className={cn("text-muted-foreground shrink-0", remove.className)}
           onClick={(event) => {
-            remove.onClick?.(event)
-            onRemove()
+            remove.onClick?.(event);
+            onRemove();
           }}
         >
           <CloseX className="size-4" />
         </Button>
       ) : null}
     </div>
-  )
+  );
 }
 
-export { RuleBuilderConditionRow }
+export { RuleBuilderConditionRow };

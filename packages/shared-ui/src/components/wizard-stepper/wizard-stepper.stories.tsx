@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { WizardStep, WizardStepper } from "./index"
+import { WizardStep, WizardStepper } from "./index";
 
-const steps = ["Welcome", "Organization", "Provider", "Routing", "Checkout", "Finish"]
+const steps = ["Welcome", "Organization", "Provider", "Routing", "Checkout", "Finish"];
 
 const meta: Meta<typeof WizardStepper> = {
   title: "Components/WizardStepper",
@@ -12,17 +12,17 @@ const meta: Meta<typeof WizardStepper> = {
     current: 2,
     className: "w-full",
   },
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof WizardStepper>
+type Story = StoryObj<typeof WizardStepper>;
 
-export const Default: Story = {}
+export const Default: Story = {};
 
-export const First: Story = { args: { current: 0 } }
+export const First: Story = { args: { current: 0 } };
 
-export const Complete: Story = { args: { current: steps.length } }
+export const Complete: Story = { args: { current: steps.length } };
 
 export const Steps: Story = {
   render: () => (
@@ -32,4 +32,4 @@ export const Steps: Story = {
       <WizardStep status="upcoming" step={4} label="Routing" />
     </div>
   ),
-}
+};

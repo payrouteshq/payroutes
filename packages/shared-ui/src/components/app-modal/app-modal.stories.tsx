@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { Button } from "../../ui/button"
-import { Input } from "../../ui/input"
-import { AppModal } from "./index"
+import { Button } from "../../ui/button";
+import { Input } from "../../ui/input";
+import { AppModal } from "./index";
 
 const meta: Meta = {
   title: "Components/AppModal",
@@ -13,11 +13,11 @@ const meta: Meta = {
       </div>
     ),
   ],
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj
+type Story = StoryObj;
 
 export const Small: Story = {
   render: () => (
@@ -26,8 +26,7 @@ export const Small: Story = {
         AppModal.open({
           size: "small",
           title: "Enable live routing",
-          description:
-            "Traffic will start following this rule immediately. You can pause it later from the rule list.",
+          description: "Traffic will start following this rule immediately. You can pause it later from the rule list.",
           primaryButton: { children: "Enable" },
           secondaryButton: { children: "Cancel" },
         })
@@ -36,7 +35,7 @@ export const Small: Story = {
       Open small modal
     </Button>
   ),
-}
+};
 
 export const Medium: Story = {
   render: () => (
@@ -45,11 +44,8 @@ export const Medium: Story = {
         AppModal.open({
           size: "medium",
           title: "Invite a teammate",
-          description:
-            "They’ll get access to this workspace’s routing rules and destination weights.",
-          content: (
-            <Input type="email" placeholder="nina.v@example.com" aria-label="Email" />
-          ),
+          description: "They’ll get access to this workspace’s routing rules and destination weights.",
+          content: <Input type="email" placeholder="nina.v@example.com" aria-label="Email" />,
           primaryButton: { children: "Send invite" },
           secondaryButton: { children: "Cancel" },
         })
@@ -58,7 +54,7 @@ export const Medium: Story = {
       Open medium modal
     </Button>
   ),
-}
+};
 
 export const Full: Story = {
   render: () => (
@@ -70,7 +66,7 @@ export const Full: Story = {
           description:
             "Build the full routing rule in a dedicated canvas. Save when the conditions and destinations look right.",
           content: (
-            <div className="rounded-lg border border-border bg-card p-4 text-sm text-muted-foreground">
+            <div className="border-border bg-card text-muted-foreground rounded-lg border p-4 text-sm">
               Condition and destination rows go here.
             </div>
           ),
@@ -82,7 +78,7 @@ export const Full: Story = {
       Open full-screen modal
     </Button>
   ),
-}
+};
 
 export const CustomFooter: Story = {
   render: () => (
@@ -110,7 +106,7 @@ export const CustomFooter: Story = {
       Open with custom footer
     </Button>
   ),
-}
+};
 
 export const Destructive: Story = {
   render: () => (
@@ -119,8 +115,7 @@ export const Destructive: Story = {
       onClick={() =>
         AppModal.open({
           title: "Delete this rule?",
-          description:
-            "This can’t be undone. Live traffic using this rule will fall back to the default route.",
+          description: "This can’t be undone. Live traffic using this rule will fall back to the default route.",
           primaryButton: {
             children: "Delete rule",
             variant: "destructive",
@@ -133,7 +128,7 @@ export const Destructive: Story = {
       Open delete confirmation
     </Button>
   ),
-}
+};
 
 export const NoCloseButton: Story = {
   render: () => (
@@ -143,8 +138,7 @@ export const NoCloseButton: Story = {
         AppModal.open({
           showCloseButton: false,
           title: "Processing payout",
-          description:
-            "Don’t close this window until the export finishes. You’ll get a download when it’s ready.",
+          description: "Don’t close this window until the export finishes. You’ll get a download when it’s ready.",
           primaryButton: {
             children: "Stay on this page",
             onClick: () => AppModal.close(),
@@ -155,7 +149,7 @@ export const NoCloseButton: Story = {
       Open (no X button)
     </Button>
   ),
-}
+};
 
 export const Steps: Story = {
   render: () => (
@@ -165,8 +159,7 @@ export const Steps: Story = {
         AppModal.open({
           step: "Step 1 of 2",
           title: "Modal title",
-          description:
-            "Body copy sits here. Footer keeps one primary and a quiet secondary.",
+          description: "Body copy sits here. Footer keeps one primary and a quiet secondary.",
           primaryButton: {
             children: "Continue",
             onClick: () =>
@@ -187,4 +180,4 @@ export const Steps: Story = {
       Open step flow
     </Button>
   ),
-}
+};

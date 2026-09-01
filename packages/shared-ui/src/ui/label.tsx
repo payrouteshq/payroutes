@@ -1,18 +1,18 @@
-import type { ComponentProps } from "react"
+import type { ComponentProps } from "react";
 
-import { cn } from "../cn"
+import { cn } from "../cn";
 
 function Label({ className, ...props }: ComponentProps<"label">) {
   return (
     <label
       data-slot="label"
       className={cn(
-        "flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:text-disabled-foreground peer-disabled:cursor-not-allowed peer-disabled:text-disabled-foreground",
+        "group-data-[disabled=true]:text-disabled-foreground peer-disabled:text-disabled-foreground flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none peer-disabled:cursor-not-allowed",
         className
       )}
       {...props}
     />
-  )
+  );
 }
 
-export { Label }
+export { Label };

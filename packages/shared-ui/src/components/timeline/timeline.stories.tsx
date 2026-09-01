@@ -1,16 +1,16 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { Timeline, type TimelineStatus } from "./index"
+import { Timeline, type TimelineStatus } from "./index";
 
 type SampleItem = {
-  id: string
-  title: string
-  date: string
-  source?: string
-  description?: string
-  status?: TimelineStatus
-  data?: Record<string, unknown>
-}
+  id: string;
+  title: string;
+  date: string;
+  source?: string;
+  description?: string;
+  status?: TimelineStatus;
+  data?: Record<string, unknown>;
+};
 
 const figmaItems: SampleItem[] = [
   {
@@ -42,7 +42,7 @@ const figmaItems: SampleItem[] = [
     date: "Jul 14",
     description: "Description text goes here",
   },
-]
+];
 
 const dataItems: SampleItem[] = [
   {
@@ -71,7 +71,7 @@ const dataItems: SampleItem[] = [
     date: "Jan 10, 2025 at 9:15 AM",
     data: { planId: "plan_pro", status: "active" },
   },
-]
+];
 
 const meta: Meta<typeof Timeline> = {
   title: "Components/Timeline",
@@ -82,11 +82,11 @@ const meta: Meta<typeof Timeline> = {
     limit: 0,
     skeletonRowCount: 3,
   },
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Timeline>
+type Story = StoryObj<typeof Timeline>;
 
 const renderItem = (item: SampleItem) => ({
   key: item.id,
@@ -96,7 +96,7 @@ const renderItem = (item: SampleItem) => ({
   description: item.description,
   status: item.status,
   data: item.data,
-})
+});
 
 export const Default: Story = {
   render: (args) => (
@@ -104,7 +104,7 @@ export const Default: Story = {
       <Timeline {...args} items={figmaItems} renderItem={renderItem} />
     </div>
   ),
-}
+};
 
 export const WithData: Story = {
   render: (args) => (
@@ -112,7 +112,7 @@ export const WithData: Story = {
       <Timeline {...args} items={dataItems} renderItem={renderItem} />
     </div>
   ),
-}
+};
 
 export const WithLimit: Story = {
   render: (args) => (
@@ -120,7 +120,7 @@ export const WithLimit: Story = {
       <Timeline {...args} items={figmaItems} renderItem={renderItem} limit={2} />
     </div>
   ),
-}
+};
 
 export const Loading: Story = {
   render: (args) => (
@@ -128,7 +128,7 @@ export const Loading: Story = {
       <Timeline {...args} items={[]} renderItem={renderItem} isLoading skeletonRowCount={4} />
     </div>
   ),
-}
+};
 
 export const Empty: Story = {
   render: (args) => (
@@ -136,4 +136,4 @@ export const Empty: Story = {
       <Timeline {...args} items={[]} renderItem={renderItem} emptyMessage="No activity yet" />
     </div>
   ),
-}
+};

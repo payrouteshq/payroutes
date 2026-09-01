@@ -1,72 +1,70 @@
-import { useCallback, useEffect, useState, type ComponentProps, type ReactNode } from "react"
-import { type DropzoneOptions, type FileRejection, useDropzone } from "react-dropzone"
+import { type ComponentProps, type ReactNode, useCallback, useEffect, useState } from "react";
 
-import { ArrowUp, CloseX, Image, TriangleAlert } from "../../icons"
-import { ImageTransformer, type MimeType, type TransformOptions } from "../../integrations/image-transformer"
-import { type MixinProps, splitProps } from "../../lib/mixin"
-import { cn } from "../../cn"
-import { Spinner } from "../spinner"
+import { type DropzoneOptions, type FileRejection, useDropzone } from "react-dropzone";
+
+import { cn } from "../../cn";
+import { ArrowUp, CloseX, Image, TriangleAlert } from "../../icons";
+import { ImageTransformer, type MimeType, type TransformOptions } from "../../integrations/image-transformer";
+import { type MixinProps, splitProps } from "../../lib/mixin";
+import { Spinner } from "../spinner";
 
 export interface FileWithPreview extends File {
-  preview?: string
-  width?: number
-  height?: number
+  preview?: string;
+  width?: number;
+  height?: number;
 }
- 
-type FileUploadState = "hover" | "drag"
+
+type FileUploadState = "hover" | "drag";
 
 export interface FileUploadProps
-  extends MixinProps<"dropzone", Omit<DropzoneOptions, "onDrop" | "disabled"> & { className?: string }>,
+  extends
+    MixinProps<"dropzone", Omit<DropzoneOptions, "onDrop" | "disabled"> & { className?: string }>,
     MixinProps<"label", Omit<ComponentProps<"p">, "children">>,
     MixinProps<"error", Omit<ComponentProps<"p">, "children">> {
-  id?: string
-  value?: FileWithPreview | null
-  onFileChange?: (file: FileWithPreview | null) => void
-  onFileRejected?: (rejections: FileRejection[]) => void
-  onCancel?: () => void
-  onRemove?: () => void
-  progress?: number
-  status?: "idle" | "uploading" | "success"
-  hint?: string
-  error?: ReactNode
-  label?: ReactNode
-  disabled?: boolean
-  className?: string
-  enableTransformation?: boolean
-  targetFormat?: MimeType
-  maxDimension?: number
-  "data-state"?: FileUploadState
+  id?: string;
+  value?: FileWithPreview | null;
+  onFileChange?: (file: FileWithPreview | null) => void;
+  onFileRejected?: (rejections: FileRejection[]) => void;
+  onCancel?: () => void;
+  onRemove?: () => void;
+  progress?: number;
+  status?: "idle" | "uploading" | "success";
+  hint?: string;
+  error?: ReactNode;
+  label?: ReactNode;
+  disabled?: boolean;
+  className?: string;
+  enableTransformation?: boolean;
+  targetFormat?: MimeType;
+  maxDimension?: number;
+  "data-state"?: FileUploadState;
 }
 
 function formatBytes(bytes: number) {
-  if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))}KB`
-  return `${(bytes / (1024 * 1024)).toFixed(1)}MB`
+  if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))}KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)}MB`;
 }
 
 async function toFileWithPreview(file: File): Promise<FileWithPreview> {
-  const preview = URL.createObjectURL(file)
-  const next = Object.assign(file, { preview }) as FileWithPreview
+  const preview = URL.createObjectURL(file);
+  const next = Object.assign(file, { preview }) as FileWithPreview;
 
   await new Promise<void>((resolve) => {
-    const image = new window.Image()
+    const image = new window.Image();
     image.onload = () => {
-      next.width = image.naturalWidth
-      next.height = image.naturalHeight
-      resolve()
-    }
-    image.onerror = () => resolve()
-    image.src = preview
-  })
+      next.width = image.naturalWidth;
+      next.height = image.naturalHeight;
+      resolve();
+    };
+    image.onerror = () => resolve();
+    image.src = preview;
+  });
 
-  return next
+  return next;
 }
 
 function BrowseLabel({ className }: { className?: string }) {
-  return (
-    <span className={cn("underline underline-offset-2", className)}>
-      browse
-    </span>
-  )
+  return <span className={cn("underline underline-offset-2", className)}>browse</span>;
 }
 
 function DropHint({
@@ -76,19 +74,19 @@ function DropHint({
   titleClassName,
   hintClassName,
 }: {
-  title: ReactNode
-  hint?: ReactNode
-  icon: ReactNode
-  titleClassName?: string
-  hintClassName?: string
+  title: ReactNode;
+  hint?: ReactNode;
+  icon: ReactNode;
+  titleClassName?: string;
+  hintClassName?: string;
 }) {
   return (
     <div className="flex flex-col items-center gap-2 px-6 py-8 text-center">
       {icon}
-      <p className={cn("text-sm font-medium text-primary", titleClassName)}>{title}</p>
-      {hint ? <p className={cn("text-xs text-muted-foreground", hintClassName)}>{hint}</p> : null}
+      <p className={cn("text-primary text-sm font-medium", titleClassName)}>{title}</p>
+      {hint ? <p className={cn("text-muted-foreground text-xs", hintClassName)}>{hint}</p> : null}
     </div>
-  )
+  );
 }
 
 function FileUpload({
@@ -111,70 +109,63 @@ function FileUpload({
   "data-state": dataState,
   ...mixProps
 }: FileUploadProps) {
-  const { dropzone, label: labelProps, error: errorProps } = splitProps(
-    mixProps,
-    "dropzone",
-    "label",
-    "error"
-  )
-  const isControlled = value !== undefined
-  const [internalFile, setInternalFile] = useState<FileWithPreview | null>(null)
-  const [rejectionError, setRejectionError] = useState<ReactNode>(null)
-  const [isTransforming, setIsTransforming] = useState(false)
+  const { dropzone, label: labelProps, error: errorProps } = splitProps(mixProps, "dropzone", "label", "error");
+  const isControlled = value !== undefined;
+  const [internalFile, setInternalFile] = useState<FileWithPreview | null>(null);
+  const [rejectionError, setRejectionError] = useState<ReactNode>(null);
+  const [isTransforming, setIsTransforming] = useState(false);
 
-  const file = isControlled ? value : internalFile
-  const displayError = error ?? rejectionError
-  const resolvedStatus = status ?? (file ? "success" : "idle")
+  const file = isControlled ? value : internalFile;
+  const displayError = error ?? rejectionError;
+  const resolvedStatus = status ?? (file ? "success" : "idle");
 
   const commitFile = useCallback(
     (next: FileWithPreview | null) => {
-      if (!isControlled) setInternalFile(next)
-      onFileChange?.(next)
+      if (!isControlled) setInternalFile(next);
+      onFileChange?.(next);
     },
     [isControlled, onFileChange]
-  )
+  );
 
   const onDrop = useCallback(
     async (acceptedFiles: File[], fileRejections: FileRejection[]) => {
       if (fileRejections.length > 0) {
         const tooLarge = fileRejections.some((rejection) =>
           rejection.errors.some((item) => item.code === "file-too-large")
-        )
+        );
         setRejectionError(
-          tooLarge
-            ? "That file is over 2MB. Try a smaller one."
-            : "That file isn’t supported. Try a PNG or JPG."
-        )
-        onFileRejected?.(fileRejections)
-        if (acceptedFiles.length === 0) return
+          tooLarge ? "That file is over 2MB. Try a smaller one." : "That file isn’t supported. Try a PNG or JPG."
+        );
+        onFileRejected?.(fileRejections);
+        if (acceptedFiles.length === 0) return;
       } else {
-        setRejectionError(null)
+        setRejectionError(null);
       }
 
-      const source = acceptedFiles[0]
-      if (!source) return
+      const source = acceptedFiles[0];
+      if (!source) return;
 
-      setIsTransforming(true)
+      setIsTransforming(true);
       try {
-        let nextFile = source
+        let nextFile = source;
         if (enableTransformation) {
           try {
             nextFile = await new ImageTransformer().transform(source, {
               to: targetFormat,
               maxDimension,
-            })
+            });
           } catch (err) {
-            console.error("Transformation failed, falling back to original:", err)
+            console.error("Transformation failed, falling back to original:", err);
           }
         }
 
-        commitFile(await toFileWithPreview(nextFile))
+        commitFile(await toFileWithPreview(nextFile));
       } finally {
-        setIsTransforming(false)
+        setIsTransforming(false);
       }
     },
     [commitFile, enableTransformation, maxDimension, onFileRejected, targetFormat]
-  )
+  );
 
   const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     multiple: false,
@@ -196,26 +187,23 @@ function FileUpload({
     onDrop,
     disabled: disabled || isTransforming,
     noClick: resolvedStatus === "uploading" || resolvedStatus === "success",
-  })
+  });
 
   useEffect(() => {
     return () => {
-      if (file?.preview) URL.revokeObjectURL(file.preview)
-    }
-  }, [file?.preview])
+      if (file?.preview) URL.revokeObjectURL(file.preview);
+    };
+  }, [file?.preview]);
 
-  const isHover = dataState === "hover"
-  const isDrag = isDragActive || dataState === "drag"
-  const isUploading = resolvedStatus === "uploading"
-  const isSuccess = resolvedStatus === "success" && !!file
+  const isHover = dataState === "hover";
+  const isDrag = isDragActive || dataState === "drag";
+  const isUploading = resolvedStatus === "uploading";
+  const isSuccess = resolvedStatus === "success" && !!file;
 
   return (
     <div className={cn("w-full", className)}>
       {label ? (
-        <p
-          {...labelProps}
-          className={cn("mb-1.5 text-sm font-medium", labelProps.className)}
-        >
+        <p {...labelProps} className={cn("mb-1.5 text-sm font-medium", labelProps.className)}>
           {label}
         </p>
       ) : null}
@@ -232,7 +220,7 @@ function FileUpload({
           (isHover || isDrag) && !displayError && !disabled && "border-primary bg-accent",
           isDrag && !displayError && !disabled && "bg-accent",
           displayError && "border-error bg-error/10",
-          disabled && "cursor-not-allowed border-transparent bg-disabled text-disabled-foreground",
+          disabled && "bg-disabled text-disabled-foreground cursor-not-allowed border-transparent",
           !disabled && !isUploading && !isSuccess && "cursor-pointer",
           (isUploading || isSuccess) && "border-border bg-card",
           dropzone.className
@@ -251,25 +239,25 @@ function FileUpload({
         ) : isUploading && file ? (
           <div className="flex flex-col gap-2 px-4 py-3">
             <div className="flex items-center justify-between gap-3">
-              <p className="truncate text-sm font-medium text-foreground">{file.name}</p>
+              <p className="text-foreground truncate text-sm font-medium">{file.name}</p>
               <div className="flex shrink-0 items-center gap-2">
-                <span className="text-sm font-medium text-primary">{Math.round(progress)}%</span>
+                <span className="text-primary text-sm font-medium">{Math.round(progress)}%</span>
                 <button
                   type="button"
                   aria-label="Cancel upload"
                   className="text-muted-foreground outline-none"
                   onClick={(event) => {
-                    event.stopPropagation()
-                    onCancel?.()
+                    event.stopPropagation();
+                    onCancel?.();
                   }}
                 >
                   <CloseX className="size-4" />
                 </button>
               </div>
             </div>
-            <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
+            <div className="bg-muted h-1.5 w-full overflow-hidden rounded-full">
               <div
-                className="h-full rounded-full bg-primary transition-[width]"
+                className="bg-primary h-full rounded-full transition-[width]"
                 style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}
               />
             </div>
@@ -277,17 +265,13 @@ function FileUpload({
         ) : isSuccess && file ? (
           <div className="flex items-center gap-3 px-4 py-3">
             {file.preview ? (
-              <img
-                src={file.preview}
-                alt=""
-                className="size-10 shrink-0 rounded-md object-cover"
-              />
+              <img src={file.preview} alt="" className="size-10 shrink-0 rounded-md object-cover" />
             ) : (
-              <span className="size-10 shrink-0 rounded-md bg-muted" />
+              <span className="bg-muted size-10 shrink-0 rounded-md" />
             )}
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-semibold text-foreground">{file.name}</p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-foreground truncate text-sm font-semibold">{file.name}</p>
+              <p className="text-muted-foreground text-xs">
                 {formatBytes(file.size)}
                 {file.width && file.height ? ` - ${file.width}x${file.height}` : ""}
               </p>
@@ -297,8 +281,8 @@ function FileUpload({
                 type="button"
                 className="text-primary outline-none"
                 onClick={(event) => {
-                  event.stopPropagation()
-                  open()
+                  event.stopPropagation();
+                  open();
                 }}
               >
                 Replace
@@ -307,9 +291,9 @@ function FileUpload({
                 type="button"
                 className="text-error outline-none"
                 onClick={(event) => {
-                  event.stopPropagation()
-                  onRemove?.()
-                  commitFile(null)
+                  event.stopPropagation();
+                  onRemove?.();
+                  commitFile(null);
                 }}
               >
                 Remove
@@ -318,7 +302,7 @@ function FileUpload({
           </div>
         ) : displayError ? (
           <DropHint
-            icon={<TriangleAlert className="size-5 text-error" />}
+            icon={<TriangleAlert className="text-error size-5" />}
             title={displayError}
             titleClassName="text-error"
             hint={
@@ -358,8 +342,8 @@ function FileUpload({
         </p>
       ) : null}
     </div>
-  )
+  );
 }
 
-export { FileUpload, ImageTransformer }
-export type { FileRejection, FileUploadState, MimeType, TransformOptions }
+export { FileUpload, ImageTransformer };
+export type { FileRejection, FileUploadState, MimeType, TransformOptions };

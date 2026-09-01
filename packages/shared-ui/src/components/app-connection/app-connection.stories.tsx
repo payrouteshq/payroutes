@@ -1,17 +1,18 @@
-import { useState } from "react"
-import type { Meta, StoryObj } from "@storybook/react"
+import { useState } from "react";
 
-import { Button } from "../../ui/button"
-import { AppConnection } from "./index"
+import type { Meta, StoryObj } from "@storybook/react";
+
+import { Button } from "../../ui/button";
+import { AppConnection } from "./index";
 
 const meta: Meta<typeof AppConnection> = {
   title: "Components/AppConnection",
   component: AppConnection,
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof AppConnection>
+type Story = StoryObj<typeof AppConnection>;
 
 export const Default: Story = {
   render: () => (
@@ -45,7 +46,7 @@ export const Default: Story = {
       </AppConnection>
     </div>
   ),
-}
+};
 
 export const Disconnected: Story = {
   render: () => (
@@ -62,7 +63,7 @@ export const Disconnected: Story = {
       </AppConnection.Actions>
     </AppConnection>
   ),
-}
+};
 
 export const Connected: Story = {
   render: () => (
@@ -81,11 +82,11 @@ export const Connected: Story = {
       </AppConnection.Actions>
     </AppConnection>
   ),
-}
+};
 
 export const Interactive: Story = {
   render: function InteractiveStory() {
-    const [connected, setConnected] = useState(false)
+    const [connected, setConnected] = useState(false);
 
     return (
       <AppConnection className="w-56">
@@ -101,10 +102,7 @@ export const Interactive: Story = {
           {connected ? (
             <>
               <Button variant="outline">Open</Button>
-              <Button
-                variant="destructive"
-                onClick={() => setConnected(false)}
-              >
+              <Button variant="destructive" onClick={() => setConnected(false)}>
                 Disconnect
               </Button>
             </>
@@ -115,6 +113,6 @@ export const Interactive: Story = {
           )}
         </AppConnection.Actions>
       </AppConnection>
-    )
+    );
   },
-}
+};

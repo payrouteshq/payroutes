@@ -1,16 +1,16 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { CodeBlock } from "./index"
+import { CodeBlock } from "./index";
 
 const jsonSnippet = `{
   "plan_tier":
   "enterprise"
-}`
+}`;
 
 const tsSnippet = `export const route = {
   provider: "stripe",
   weight: 60,
-}`
+}`;
 
 const meta: Meta<typeof CodeBlock> = {
   title: "Components/CodeBlock",
@@ -23,28 +23,28 @@ const meta: Meta<typeof CodeBlock> = {
     children: jsonSnippet,
     className: "w-full",
   },
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof CodeBlock>
+type Story = StoryObj<typeof CodeBlock>;
 
-export const Default: Story = {}
+export const Default: Story = {};
 
 export const Hover: Story = {
   args: { copyState: "hover" },
-}
+};
 
 export const Copied: Story = {
   args: { copyState: "copied" },
-}
+};
 
 export const WithFilename: Story = {
   args: {
     filename: "route.json",
     language: "json",
   },
-}
+};
 
 export const TypeScript: Story = {
   args: {
@@ -52,14 +52,14 @@ export const TypeScript: Story = {
     filename: "route.ts",
     children: tsSnippet,
   },
-}
+};
 
 export const Shell: Story = {
   args: {
     language: "bash",
     children: "pnpm add @payroutes/shared-ui",
   },
-}
+};
 
 export const Scrollable: Story = {
   args: {
@@ -67,4 +67,4 @@ export const Scrollable: Story = {
     language: "typescript",
     children: `${tsSnippet}\n${tsSnippet}\n${tsSnippet}\n${tsSnippet}`,
   },
-}
+};

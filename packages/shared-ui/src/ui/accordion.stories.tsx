@@ -1,12 +1,8 @@
-import type { ComponentProps } from "react"
-import type { Meta, StoryObj } from "@storybook/react"
+import type { ComponentProps } from "react";
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "./accordion"
+import type { Meta, StoryObj } from "@storybook/react";
+
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./accordion";
 
 const items = [
   {
@@ -15,14 +11,10 @@ const items = [
     content: (
       <>
         <p>
-          This product features cutting-edge technology designed with precision.
-          Made from premium materials, it offers exceptional durability and
-          performance.
+          This product features cutting-edge technology designed with precision. Made from premium materials, it offers
+          exceptional durability and performance.
         </p>
-        <p>
-          The intuitive user interface ensures a seamless experience from setup
-          to everyday use.
-        </p>
+        <p>The intuitive user interface ensures a seamless experience from setup to everyday use.</p>
       </>
     ),
   },
@@ -31,14 +23,8 @@ const items = [
     title: "Shipping Details",
     content: (
       <>
-        <p>
-          We partner with trusted courier partners to ensure your order arrives
-          safely and on time.
-        </p>
-        <p>
-          Standard delivery typically takes 3-5 business days depending on your
-          location.
-        </p>
+        <p>We partner with trusted courier partners to ensure your order arrives safely and on time.</p>
+        <p>Standard delivery typically takes 3-5 business days depending on your location.</p>
       </>
     ),
   },
@@ -47,17 +33,14 @@ const items = [
     title: "Return Policy",
     content: (
       <>
-        <p>
-          We offer a 30-day return policy for unused items in their original
-          packaging.
-        </p>
+        <p>We offer a 30-day return policy for unused items in their original packaging.</p>
         <p>Return shipping is free for all eligible orders.</p>
       </>
     ),
   },
-] as const
+] as const;
 
-type AccordionRootProps = ComponentProps<typeof Accordion>
+type AccordionRootProps = ComponentProps<typeof Accordion>;
 
 function ProductAccordion(props: AccordionRootProps) {
   return (
@@ -69,43 +52,41 @@ function ProductAccordion(props: AccordionRootProps) {
         </AccordionItem>
       ))}
     </Accordion>
-  )
+  );
 }
 
 const meta: Meta<typeof Accordion> = {
   title: "UI/Accordion",
   component: Accordion,
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Accordion>
+type Story = StoryObj<typeof Accordion>;
 
 export const Default: Story = {
   render: () => <ProductAccordion />,
-}
+};
 
 export const ProductInformation: Story = {
   render: () => <ProductAccordion defaultValue={["product-information"]} />,
-}
+};
 
 export const ShippingDetails: Story = {
   render: () => <ProductAccordion defaultValue={["shipping-details"]} />,
-}
+};
 
 export const ReturnPolicy: Story = {
   render: () => <ProductAccordion defaultValue={["return-policy"]} />,
-}
+};
 
 export const Multiple: Story = {
-  render: () => (
-    <ProductAccordion multiple defaultValue={["product-information", "shipping-details"]} />
-  ),
-}
+  render: () => <ProductAccordion multiple defaultValue={["product-information", "shipping-details"]} />,
+};
 
 export const Disabled: Story = {
   render: () => <ProductAccordion disabled defaultValue={["product-information"]} />,
-}
+};
 
 export const States: Story = {
   render: () => (
@@ -116,4 +97,4 @@ export const States: Story = {
       <ProductAccordion defaultValue={["return-policy"]} />
     </div>
   ),
-}
+};

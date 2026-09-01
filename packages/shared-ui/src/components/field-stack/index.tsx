@@ -1,28 +1,24 @@
-import type { ComponentProps, ReactNode } from "react"
+import type { ComponentProps, ReactNode } from "react";
 
-import { cn } from "../../cn"
+import { cn } from "../../cn";
 
 export interface FieldStackProps extends ComponentProps<"div"> {
-  children: ReactNode
+  children: ReactNode;
 }
 
 function FieldStack({ children, className, ...props }: FieldStackProps) {
   return (
-    <div
-      data-slot="field-stack"
-      className={cn("flex flex-col gap-2", className)}
-      {...props}
-    >
+    <div data-slot="field-stack" className={cn("flex flex-col gap-2", className)} {...props}>
       {children}
     </div>
-  )
+  );
 }
 
 export interface EmbeddedFieldRowProps extends ComponentProps<"div"> {
-  when: boolean
-  children: ReactNode
-  layout?: "inline" | "stack"
-  connectorClassName?: string
+  when: boolean;
+  children: ReactNode;
+  layout?: "inline" | "stack";
+  connectorClassName?: string;
 }
 
 function EmbeddedFieldRowRoot({
@@ -33,7 +29,7 @@ function EmbeddedFieldRowRoot({
   connectorClassName,
   ...props
 }: EmbeddedFieldRowProps) {
-  if (!when) return null
+  if (!when) return null;
 
   return (
     <div
@@ -49,48 +45,35 @@ function EmbeddedFieldRowRoot({
       <div
         aria-hidden
         className={cn(
-          "pointer-events-none absolute top-0 left-0 w-4 rounded-bl border-b border-l border-border",
+          "border-border pointer-events-none absolute top-0 left-0 w-4 rounded-bl border-b border-l",
           layout === "inline" ? "h-1/2" : "bottom-0",
           connectorClassName
         )}
       />
       {children}
     </div>
-  )
+  );
 }
 
-function EmbeddedFieldRowLabel({
-  className,
-  ...props
-}: ComponentProps<"span">) {
+function EmbeddedFieldRowLabel({ className, ...props }: ComponentProps<"span">) {
   return (
     <span
       data-slot="embedded-field-row-label"
-      className={cn(
-        "text-sm font-medium text-muted-foreground shrink-0",
-        className
-      )}
+      className={cn("text-muted-foreground shrink-0 text-sm font-medium", className)}
       {...props}
     />
-  )
+  );
 }
 
-function EmbeddedFieldRowSuffix({
-  className,
-  ...props
-}: ComponentProps<"span">) {
+function EmbeddedFieldRowSuffix({ className, ...props }: ComponentProps<"span">) {
   return (
-    <span
-      data-slot="embedded-field-row-suffix"
-      className={cn("text-sm text-muted-foreground", className)}
-      {...props}
-    />
-  )
+    <span data-slot="embedded-field-row-suffix" className={cn("text-muted-foreground text-sm", className)} {...props} />
+  );
 }
 
 const EmbeddedFieldRow = Object.assign(EmbeddedFieldRowRoot, {
   Label: EmbeddedFieldRowLabel,
   Suffix: EmbeddedFieldRowSuffix,
-})
+});
 
-export { FieldStack, EmbeddedFieldRow }
+export { FieldStack, EmbeddedFieldRow };

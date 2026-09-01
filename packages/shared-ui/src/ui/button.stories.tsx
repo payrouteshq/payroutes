@@ -1,9 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { Button } from "./button"
+import { Button } from "./button";
 
-const variants = ["default", "outline", "ghost"] as const
-const sizes = ["default", "sm"] as const
+const variants = ["default", "outline", "ghost"] as const;
+const sizes = ["default", "sm"] as const;
 
 const meta: Meta<typeof Button> = {
   title: "UI/Button",
@@ -24,27 +24,27 @@ const meta: Meta<typeof Button> = {
       control: "boolean",
     },
   },
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Button>
+type Story = StoryObj<typeof Button>;
 
-export const Default: Story = {}
+export const Default: Story = {};
 
-export const Outline: Story = { args: { variant: "outline" } }
+export const Outline: Story = { args: { variant: "outline" } };
 
-export const Ghost: Story = { args: { variant: "ghost" } }
+export const Ghost: Story = { args: { variant: "ghost" } };
 
-export const Hover: Story = { args: { "data-state": "hover" } }
+export const Hover: Story = { args: { "data-state": "hover" } };
 
-export const Disabled: Story = { args: { disabled: true } }
+export const Disabled: Story = { args: { disabled: true } };
 
-export const Secondary: Story = { args: { variant: "secondary" } }
+export const Secondary: Story = { args: { variant: "secondary" } };
 
-export const Destructive: Story = { args: { variant: "destructive" } }
+export const Destructive: Story = { args: { variant: "destructive" } };
 
-export const Link: Story = { args: { variant: "link" } }
+export const Link: Story = { args: { variant: "link" } };
 
 export const AllVariants: Story = {
   render: (args) => (
@@ -54,7 +54,7 @@ export const AllVariants: Story = {
       ))}
     </div>
   ),
-}
+};
 
 export const AllSizes: Story = {
   render: (args) => (
@@ -64,7 +64,7 @@ export const AllSizes: Story = {
       ))}
     </div>
   ),
-}
+};
 
 export const States: Story = {
   render: () => (
@@ -88,4 +88,4 @@ export const States: Story = {
       ))}
     </div>
   ),
-}
+};

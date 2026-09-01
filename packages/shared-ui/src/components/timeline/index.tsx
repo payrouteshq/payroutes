@@ -1,55 +1,51 @@
-import { useMemo, useState, type ComponentType, type ReactNode } from "react"
+import { type ComponentType, type ReactNode, useMemo, useState } from "react";
 
-import { Check, ChevronDown, ChevronUp, ClockPlay, CloseX } from "../../icons"
-import { type MixinProps, splitProps } from "../../lib/mixin"
-import { cn } from "../../cn"
-import { Button } from "../../ui/button"
-import { Skeleton } from "../../ui/skeleton"
+import { cn } from "../../cn";
+import { Check, ChevronDown, ChevronUp, ClockPlay, CloseX } from "../../icons";
+import { type MixinProps, splitProps } from "../../lib/mixin";
+import { Button } from "../../ui/button";
+import { Skeleton } from "../../ui/skeleton";
 
 type LinkComponentType = ComponentType<{
-  href: string
-  className?: string
-  target?: string
-  rel?: string
-  children?: ReactNode
-}>
+  href: string;
+  className?: string;
+  target?: string;
+  rel?: string;
+  children?: ReactNode;
+}>;
 
 const DefaultLink: LinkComponentType = ({ href, children, ...props }) => (
   <a href={href} {...props}>
     {children}
   </a>
-)
+);
 
-export type TimelineStatus = "success" | "pending" | "error" | "complete"
+export type TimelineStatus = "success" | "pending" | "error" | "complete";
 
 export interface TimelineEntry {
-  title: ReactNode
-  date?: ReactNode
-  source?: ReactNode
-  description?: ReactNode
-  status?: TimelineStatus
-  data?: Record<string, unknown> | null
-  contentOverride?: ReactNode
-  key?: string | number
-  titleClassName?: string
+  title: ReactNode;
+  date?: ReactNode;
+  source?: ReactNode;
+  description?: ReactNode;
+  status?: TimelineStatus;
+  data?: Record<string, unknown> | null;
+  contentOverride?: ReactNode;
+  key?: string | number;
+  titleClassName?: string;
 }
 
-export interface TimelineProps<T>
-  extends MixinProps<"container", React.ComponentProps<"div">> {
-  items: T[]
-  renderItem: (item: T, index: number) => TimelineEntry
-  emptyMessage?: string
-  isLoading?: boolean
-  limit?: number
-  skeletonRowCount?: number
-  routeMap?: Record<string, (id: string) => string>
-  linkComponent?: LinkComponentType
+export interface TimelineProps<T> extends MixinProps<"container", React.ComponentProps<"div">> {
+  items: T[];
+  renderItem: (item: T, index: number) => TimelineEntry;
+  emptyMessage?: string;
+  isLoading?: boolean;
+  limit?: number;
+  skeletonRowCount?: number;
+  routeMap?: Record<string, (id: string) => string>;
+  linkComponent?: LinkComponentType;
 }
 
-const statusStyles: Record<
-  TimelineStatus,
-  { icon: typeof Check; className: string }
-> = {
+const statusStyles: Record<TimelineStatus, { icon: typeof Check; className: string }> = {
   success: {
     icon: Check,
     className: "bg-muted text-muted-foreground",
@@ -66,27 +62,24 @@ const statusStyles: Record<
     icon: Check,
     className: "bg-primary text-primary-foreground",
   },
-}
+};
 
 function formatLabel(key: string) {
-  return key.replace(/([A-Z])/g, " $1").replace(/^[a-z]/, (m) => m.toUpperCase())
+  return key.replace(/([A-Z])/g, " $1").replace(/^[a-z]/, (m) => m.toUpperCase());
 }
 
 function TimelineStatusIcon({ status }: { status: TimelineStatus }) {
-  const { icon: Icon, className } = statusStyles[status]
+  const { icon: Icon, className } = statusStyles[status];
 
   return (
     <span
       data-slot="timeline-status"
       data-status={status}
-      className={cn(
-        "relative z-10 inline-flex size-7 shrink-0 items-center justify-center rounded-full",
-        className
-      )}
+      className={cn("relative z-10 inline-flex size-7 shrink-0 items-center justify-center rounded-full", className)}
     >
       <Icon className="size-3.5" />
     </span>
-  )
+  );
 }
 
 function TimelineSummary({
@@ -95,28 +88,28 @@ function TimelineSummary({
   routeMap,
   LinkComponent,
 }: {
-  data?: Record<string, unknown> | null
-  manualContent?: ReactNode
-  routeMap?: Record<string, (id: string) => string>
-  LinkComponent: LinkComponentType
+  data?: Record<string, unknown> | null;
+  manualContent?: ReactNode;
+  routeMap?: Record<string, (id: string) => string>;
+  LinkComponent: LinkComponentType;
 }) {
   const summaryItems = useMemo(() => {
-    if (!data) return []
+    if (!data) return [];
 
     return Object.entries(data)
       .filter(([key, val]) => key !== "$changes" && val !== null && typeof val !== "object")
       .map(([key, val]) => {
-        const href = routeMap?.[key]?.(String(val))
+        const href = routeMap?.[key]?.(String(val));
 
         return (
           <span key={key} className="inline-flex items-center">
-            <span className="mr-1 font-medium text-muted-foreground">{formatLabel(key)}:</span>
+            <span className="text-muted-foreground mr-1 font-medium">{formatLabel(key)}:</span>
             {href ? (
               <LinkComponent
                 target={href.startsWith("http") ? "_blank" : undefined}
                 rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
                 href={href}
-                className="font-mono text-[13px] text-primary underline"
+                className="text-primary font-mono text-[13px] underline"
               >
                 {String(val)}
               </LinkComponent>
@@ -124,12 +117,12 @@ function TimelineSummary({
               <span className="text-foreground/80">{String(val)}</span>
             )}
           </span>
-        )
-      })
-  }, [data, routeMap, LinkComponent])
+        );
+      });
+  }, [data, routeMap, LinkComponent]);
 
-  if (manualContent) return <div className="text-sm text-foreground">{manualContent}</div>
-  if (!data || summaryItems.length === 0) return null
+  if (manualContent) return <div className="text-foreground text-sm">{manualContent}</div>;
+  if (!data || summaryItems.length === 0) return null;
 
   return (
     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm leading-relaxed">
@@ -147,52 +140,52 @@ function TimelineSummary({
         []
       )}
     </div>
-  )
+  );
 }
 
 function getDiffRows(changes: Record<string, unknown>) {
-  const previousAttributes = changes.previous_attributes
+  const previousAttributes = changes.previous_attributes;
 
   if (previousAttributes && typeof previousAttributes === "object") {
-    const previous = previousAttributes as Record<string, unknown>
-    const current = (changes.data as Record<string, unknown> | undefined) ?? {}
+    const previous = previousAttributes as Record<string, unknown>;
+    const current = (changes.data as Record<string, unknown> | undefined) ?? {};
     return Object.keys(previous).map((key) => ({
       key,
       from: previous[key],
       to: current[key],
-    }))
+    }));
   }
 
   return Object.entries(changes)
     .filter(([, val]) => val && typeof val === "object" && ("from" in val || "to" in val))
     .map(([key, val]) => {
-      const entry = val as { from?: unknown; to?: unknown }
-      return { key, from: entry.from, to: entry.to }
-    })
+      const entry = val as { from?: unknown; to?: unknown };
+      return { key, from: entry.from, to: entry.to };
+    });
 }
 
 function TimelineDiff({ changes }: { changes?: unknown }) {
-  if (!changes || typeof changes !== "object") return null
+  if (!changes || typeof changes !== "object") return null;
 
-  const rows = getDiffRows(changes as Record<string, unknown>)
-  if (rows.length === 0) return null
+  const rows = getDiffRows(changes as Record<string, unknown>);
+  if (rows.length === 0) return null;
 
   return (
-    <div className="mt-2 space-y-1.5 border-l-2 border-muted py-0.5 pl-3">
+    <div className="border-muted mt-2 space-y-1.5 border-l-2 py-0.5 pl-3">
       {rows.map((row) => (
         <div key={row.key} className="text-xs leading-tight">
-          <span className="font-medium text-foreground">{formatLabel(row.key)}: </span>
-          <span className="text-muted-foreground/60 italic line-through decoration-muted-foreground/40">
+          <span className="text-foreground font-medium">{formatLabel(row.key)}: </span>
+          <span className="text-muted-foreground/60 decoration-muted-foreground/40 italic line-through">
             {row.from === null || row.from === "" || row.from === undefined ? "none" : String(row.from)}
           </span>
-          <span className="mx-1.5 text-muted-foreground/40">→</span>
-          <span className="font-medium text-primary">
+          <span className="text-muted-foreground/40 mx-1.5">→</span>
+          <span className="text-primary font-medium">
             {row.to === null || row.to === "" || row.to === undefined ? "none" : String(row.to)}
           </span>
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 function TimelineItem({
@@ -201,49 +194,38 @@ function TimelineItem({
   routeMap,
   LinkComponent,
 }: {
-  entry: TimelineEntry
-  isLast: boolean
-  routeMap?: Record<string, (id: string) => string>
-  LinkComponent: LinkComponentType
+  entry: TimelineEntry;
+  isLast: boolean;
+  routeMap?: Record<string, (id: string) => string>;
+  LinkComponent: LinkComponentType;
 }) {
-  const status = entry.status ?? "success"
-  const isDetailed = Boolean(entry.description)
+  const status = entry.status ?? "success";
+  const isDetailed = Boolean(entry.description);
 
   return (
     <li data-slot="timeline-item" className="relative flex gap-3 pb-6 last:pb-0">
       <div className="relative flex w-7 shrink-0 justify-center">
-        {!isLast ? (
-          <span
-            className="absolute top-7 bottom-[-24px] w-px bg-border"
-            aria-hidden="true"
-          />
-        ) : null}
+        {!isLast ? <span className="bg-border absolute top-7 bottom-[-24px] w-px" aria-hidden="true" /> : null}
         <TimelineStatusIcon status={status} />
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col gap-0.5 pt-0.5">
         <div className="flex flex-wrap items-baseline gap-x-2">
-          <h4 className={cn("text-sm font-semibold text-foreground", entry.titleClassName)}>
-            {entry.title}
-          </h4>
+          <h4 className={cn("text-foreground text-sm font-semibold", entry.titleClassName)}>{entry.title}</h4>
           {isDetailed ? (
-            <span className="text-sm text-muted-foreground">
+            <span className="text-muted-foreground text-sm">
               {entry.date}
               {entry.date && entry.source ? " - " : null}
               {entry.source}
             </span>
           ) : entry.source ? (
-            <span className="text-sm text-muted-foreground">{entry.source}</span>
+            <span className="text-muted-foreground text-sm">{entry.source}</span>
           ) : null}
         </div>
 
-        {!isDetailed && entry.date ? (
-          <time className="text-xs text-muted-foreground">{entry.date}</time>
-        ) : null}
+        {!isDetailed && entry.date ? <time className="text-muted-foreground text-xs">{entry.date}</time> : null}
 
-        {entry.description ? (
-          <p className="text-sm text-muted-foreground">{entry.description}</p>
-        ) : null}
+        {entry.description ? <p className="text-muted-foreground text-sm">{entry.description}</p> : null}
 
         <TimelineSummary
           data={entry.data}
@@ -254,7 +236,7 @@ function TimelineItem({
         <TimelineDiff changes={entry.data?.$changes} />
       </div>
     </li>
-  )
+  );
 }
 
 function Timeline<T>({
@@ -268,22 +250,18 @@ function Timeline<T>({
   linkComponent: LinkComponent = DefaultLink,
   ...mixProps
 }: TimelineProps<T>) {
-  const [isExpanded, setIsExpanded] = useState(false)
-  const { container } = splitProps(mixProps, "container")
+  const [isExpanded, setIsExpanded] = useState(false);
+  const { container } = splitProps(mixProps, "container");
 
   if (isLoading) {
     return (
-      <div
-        data-slot="timeline"
-        {...container}
-        className={cn("relative flex flex-col", container.className)}
-      >
+      <div data-slot="timeline" {...container} className={cn("relative flex flex-col", container.className)}>
         <ul className="relative m-0 list-none p-0">
           {Array.from({ length: skeletonRowCount }).map((_, i) => (
             <li key={i} className="relative flex gap-3 pb-6 last:pb-0">
               <div className="relative flex w-7 shrink-0 justify-center">
                 {i < skeletonRowCount - 1 ? (
-                  <span className="absolute top-7 bottom-[-24px] w-px bg-border" aria-hidden="true" />
+                  <span className="bg-border absolute top-7 bottom-[-24px] w-px" aria-hidden="true" />
                 ) : null}
                 <Skeleton className="size-7 rounded-full" />
               </div>
@@ -295,7 +273,7 @@ function Timeline<T>({
           ))}
         </ul>
       </div>
-    )
+    );
   }
 
   if (!items?.length) {
@@ -303,24 +281,20 @@ function Timeline<T>({
       <div
         data-slot="timeline"
         {...container}
-        className={cn("py-10 text-center text-sm text-muted-foreground italic", container.className)}
+        className={cn("text-muted-foreground py-10 text-center text-sm italic", container.className)}
       >
         {emptyMessage}
       </div>
-    )
+    );
   }
 
-  const displayItems = limit > 0 && items.length > limit && !isExpanded ? items.slice(0, limit) : items
+  const displayItems = limit > 0 && items.length > limit && !isExpanded ? items.slice(0, limit) : items;
 
   return (
-    <div
-      data-slot="timeline"
-      {...container}
-      className={cn("relative flex flex-col", container.className)}
-    >
+    <div data-slot="timeline" {...container} className={cn("relative flex flex-col", container.className)}>
       <ul className="relative m-0 list-none p-0">
         {displayItems.map((item, index) => {
-          const entry = renderItem(item, index)
+          const entry = renderItem(item, index);
           return (
             <TimelineItem
               key={entry.key ?? index}
@@ -329,11 +303,11 @@ function Timeline<T>({
               routeMap={routeMap}
               LinkComponent={LinkComponent}
             />
-          )
+          );
         })}
 
         {limit > 0 && items.length > limit && !isExpanded ? (
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 flex h-32 items-end justify-center bg-linear-to-t from-background via-background/90 to-transparent pb-1">
+          <div className="from-background via-background/90 pointer-events-none absolute inset-x-0 bottom-0 flex h-32 items-end justify-center bg-linear-to-t to-transparent pb-1">
             <Button
               variant="secondary"
               size="sm"
@@ -357,8 +331,8 @@ function Timeline<T>({
         </Button>
       ) : null}
     </div>
-  )
+  );
 }
 
-export { Timeline, TimelineStatusIcon }
-export type { LinkComponentType }
+export { Timeline, TimelineStatusIcon };
+export type { LinkComponentType };

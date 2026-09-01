@@ -1,37 +1,21 @@
-import {
-  Children,
-  createContext,
-  useContext,
-  useRef,
-  useState,
-  type ComponentProps,
-  type ReactNode,
-} from "react"
+import { Children, type ComponentProps, type ReactNode, createContext, useContext, useRef, useState } from "react";
 
-import { CloseX, CornerDownLeft, Search } from "../../icons"
-import { cn } from "../../cn"
-import { Popover, PopoverContent } from "../../ui/popover"
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupInput,
-} from "../../ui/input-group"
+import { cn } from "../../cn";
+import { CloseX, CornerDownLeft, Search } from "../../icons";
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "../../ui/input-group";
+import { Popover, PopoverContent } from "../../ui/popover";
 
-const SearchFieldClose = createContext<() => void>(() => {})
+const SearchFieldClose = createContext<() => void>(() => {});
 
-type SearchFieldProps = Omit<
-  ComponentProps<typeof InputGroupInput>,
-  "type" | "className" | "data-state"
-> & {
-  className?: string
-  "data-state"?: "hover" | "focus"
-  children?: ReactNode
-  empty?: ReactNode
-  open?: boolean
-  defaultOpen?: boolean
-  onOpenChange?: (open: boolean) => void
-}
+type SearchFieldProps = Omit<ComponentProps<typeof InputGroupInput>, "type" | "className" | "data-state"> & {
+  className?: string;
+  "data-state"?: "hover" | "focus";
+  children?: ReactNode;
+  empty?: ReactNode;
+  open?: boolean;
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+};
 
 function SearchField({
   className,
@@ -47,31 +31,31 @@ function SearchField({
   onFocus,
   ...props
 }: SearchFieldProps) {
-  const isControlled = open !== undefined
-  const [internalOpen, setInternalOpen] = useState(defaultOpen)
-  const [anchor, setAnchor] = useState<HTMLDivElement | null>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
-  const resolvedOpen = isControlled ? open : internalOpen
+  const isControlled = open !== undefined;
+  const [internalOpen, setInternalOpen] = useState(defaultOpen);
+  const [anchor, setAnchor] = useState<HTMLDivElement | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const resolvedOpen = isControlled ? open : internalOpen;
   const setOpen = (next: boolean) => {
-    if (!isControlled) setInternalOpen(next)
-    onOpenChange?.(next)
-  }
+    if (!isControlled) setInternalOpen(next);
+    onOpenChange?.(next);
+  };
   const close = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
   const field = (
     <InputGroup
       data-state={dataState}
       className={cn(
-        "h-11 rounded-full pr-1.5 hover:border-ring has-[:focus-visible]:ring-0 data-[state=hover]:border-ring",
+        "hover:border-ring data-[state=hover]:border-ring h-11 rounded-full pr-1.5 has-[:focus-visible]:ring-0",
         className
       )}
     >
       <InputGroupAddon className="pl-1.5">
         <span
           className={cn(
-            "flex size-8 items-center justify-center rounded-full bg-secondary text-primary",
+            "bg-secondary text-primary flex size-8 items-center justify-center rounded-full",
             "group-has-[:focus-visible]/input-group:bg-primary group-has-[:focus-visible]/input-group:text-primary-foreground",
             "group-data-[state=focus]/input-group:bg-primary group-data-[state=focus]/input-group:text-primary-foreground",
             "group-has-[input:not(:placeholder-shown)]/input-group:bg-primary group-has-[input:not(:placeholder-shown)]/input-group:text-primary-foreground",
@@ -90,9 +74,9 @@ function SearchField({
         {...props}
         onFocus={onFocus}
         onChange={(event) => {
-          onChange?.(event)
-          if (disabled) return
-          setOpen(event.currentTarget.value.trim().length > 0)
+          onChange?.(event);
+          if (disabled) return;
+          setOpen(event.currentTarget.value.trim().length > 0);
         }}
       />
       <InputGroupAddon
@@ -103,25 +87,20 @@ function SearchField({
           aria-label="Clear search"
           size="icon-xs"
           onClick={(event) => {
-            const input = event.currentTarget
-              .closest("[data-slot=input-group]")
-              ?.querySelector("input")
-            if (!(input instanceof HTMLInputElement)) return
-            Object.getOwnPropertyDescriptor(
-              HTMLInputElement.prototype,
-              "value"
-            )?.set?.call(input, "")
-            input.dispatchEvent(new Event("input", { bubbles: true }))
-            input.focus()
+            const input = event.currentTarget.closest("[data-slot=input-group]")?.querySelector("input");
+            if (!(input instanceof HTMLInputElement)) return;
+            Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")?.set?.call(input, "");
+            input.dispatchEvent(new Event("input", { bubbles: true }));
+            input.focus();
           }}
         >
           <CloseX className="size-3.5" />
         </InputGroupButton>
       </InputGroupAddon>
     </InputGroup>
-  )
+  );
 
-  if (children === undefined) return field
+  if (children === undefined) return field;
 
   return (
     <SearchFieldClose.Provider value={close}>
@@ -135,21 +114,19 @@ function SearchField({
           anchor={anchor ?? undefined}
           initialFocus={false}
           finalFocus={false}
-          className="w-(--anchor-width) min-w-72 overflow-hidden border-2 border-ring p-1"
+          className="border-ring w-(--anchor-width) min-w-72 overflow-hidden border-2 p-1"
         >
           <div className="max-h-80 overflow-y-auto">
             {Children.count(children) > 0 ? (
               children
             ) : (
-              <p className="px-3 py-4 text-center text-xs text-muted-foreground">
-                {empty}
-              </p>
+              <p className="text-muted-foreground px-3 py-4 text-center text-xs">{empty}</p>
             )}
           </div>
         </PopoverContent>
       </Popover>
     </SearchFieldClose.Provider>
-  )
+  );
 }
 
 function SearchFieldResult({
@@ -161,35 +138,32 @@ function SearchFieldResult({
   onMouseDown,
   ...props
 }: ComponentProps<"button"> & {
-  selected?: boolean
-  onSelect?: () => void
+  selected?: boolean;
+  onSelect?: () => void;
 }) {
-  const close = useContext(SearchFieldClose)
+  const close = useContext(SearchFieldClose);
 
   return (
     <button
       type="button"
       data-slot="search-field-result"
       data-selected={selected || undefined}
-      className={cn(
-        "group/item w-full cursor-pointer border-0 bg-transparent p-0 text-left outline-none",
-        className
-      )}
+      className={cn("group/item w-full cursor-pointer border-0 bg-transparent p-0 text-left outline-none", className)}
       {...props}
       onMouseDown={(event) => {
-        event.preventDefault()
-        onMouseDown?.(event)
+        event.preventDefault();
+        onMouseDown?.(event);
       }}
       onClick={(event) => {
-        onClick?.(event)
-        onSelect?.()
-        close()
+        onClick?.(event);
+        onSelect?.();
+        close();
       }}
     >
       <span
         className={cn(
-          "group/row relative flex w-full items-center justify-between overflow-hidden rounded-md py-2.5 pr-3 pl-3.5 text-sm text-foreground",
-          "before:absolute before:inset-y-0 before:left-0 before:w-0.5 before:bg-primary before:opacity-0 before:content-['']",
+          "group/row text-foreground relative flex w-full items-center justify-between overflow-hidden rounded-md py-2.5 pr-3 pl-3.5 text-sm",
+          "before:bg-primary before:absolute before:inset-y-0 before:left-0 before:w-0.5 before:opacity-0 before:content-['']",
           "hover:bg-accent hover:before:opacity-100",
           "group-hover/item:bg-accent group-hover/item:before:opacity-100",
           "group-focus-visible/item:bg-accent group-focus-visible/item:before:opacity-100",
@@ -199,15 +173,15 @@ function SearchFieldResult({
         <span className="min-w-0 truncate">{children}</span>
         <CornerDownLeft
           className={cn(
-            "size-4 shrink-0 text-primary opacity-0",
-            "group-hover/row:opacity-100 group-hover/item:opacity-100 group-focus-visible/item:opacity-100",
+            "text-primary size-4 shrink-0 opacity-0",
+            "group-hover/item:opacity-100 group-hover/row:opacity-100 group-focus-visible/item:opacity-100",
             selected && "opacity-100"
           )}
         />
       </span>
     </button>
-  )
+  );
 }
 
-export { SearchField, SearchFieldResult }
-export type { SearchFieldProps }
+export { SearchField, SearchFieldResult };
+export type { SearchFieldProps };

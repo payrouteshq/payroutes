@@ -1,45 +1,39 @@
-import { useMemo, type ComponentProps } from "react"
-import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter"
-import bash from "react-syntax-highlighter/dist/esm/languages/prism/bash"
-import json from "react-syntax-highlighter/dist/esm/languages/prism/json"
-import tsx from "react-syntax-highlighter/dist/esm/languages/prism/tsx"
-import typescript from "react-syntax-highlighter/dist/esm/languages/prism/typescript"
-import {
-  oneDark,
-  oneLight,
-} from "react-syntax-highlighter/dist/esm/styles/prism"
+import { type ComponentProps, useMemo } from "react";
 
-import { Check, Copy } from "../../icons"
-import { useCopy } from "../../hooks/use-copy"
-import { type MixinProps, splitProps } from "../../lib/mixin"
-import { cn } from "../../cn"
-import { ScrollArea, ScrollBar } from "../../ui/scroll-area"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../../ui/tooltip"
+import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
+import bash from "react-syntax-highlighter/dist/esm/languages/prism/bash";
+import json from "react-syntax-highlighter/dist/esm/languages/prism/json";
+import tsx from "react-syntax-highlighter/dist/esm/languages/prism/tsx";
+import typescript from "react-syntax-highlighter/dist/esm/languages/prism/typescript";
+import { oneDark, oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 
-SyntaxHighlighter.registerLanguage("tsx", tsx)
-SyntaxHighlighter.registerLanguage("typescript", typescript)
-SyntaxHighlighter.registerLanguage("bash", bash)
-SyntaxHighlighter.registerLanguage("json", json)
+import { cn } from "../../cn";
+import { useCopy } from "../../hooks/use-copy";
+import { Check, Copy } from "../../icons";
+import { type MixinProps, splitProps } from "../../lib/mixin";
+import { ScrollArea, ScrollBar } from "../../ui/scroll-area";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../ui/tooltip";
 
-type Language = "tsx" | "typescript" | "bash" | "json" | "shell" | "sh" | "zsh"
+SyntaxHighlighter.registerLanguage("tsx", tsx);
+SyntaxHighlighter.registerLanguage("typescript", typescript);
+SyntaxHighlighter.registerLanguage("bash", bash);
+SyntaxHighlighter.registerLanguage("json", json);
+
+type Language = "tsx" | "typescript" | "bash" | "json" | "shell" | "sh" | "zsh";
 
 export interface CodeBlockProps
-  extends MixinProps<"container", ComponentProps<"div">>,
+  extends
+    MixinProps<"container", ComponentProps<"div">>,
     MixinProps<"copy", Omit<ComponentProps<"button">, "children" | "onClick">> {
-  language?: Language
-  children: string
-  filename?: string
-  logo?: string
-  showCopyButton?: boolean
-  maxHeight?: string | "none"
-  theme?: "light" | "dark"
-  className?: string
-  copyState?: "hover" | "copied"
+  language?: Language;
+  children: string;
+  filename?: string;
+  logo?: string;
+  showCopyButton?: boolean;
+  maxHeight?: string | "none";
+  theme?: "light" | "dark";
+  className?: string;
+  copyState?: "hover" | "copied";
 }
 
 function CopyAction({
@@ -49,12 +43,12 @@ function CopyAction({
   "data-state": dataState,
   ...props
 }: {
-  copied: boolean
-  onClick: () => void
-  className?: string
-  "data-state"?: "hover" | "copied"
+  copied: boolean;
+  onClick: () => void;
+  className?: string;
+  "data-state"?: "hover" | "copied";
 } & Omit<ComponentProps<"button">, "children" | "onClick" | "className">) {
-  const isCopied = copied || dataState === "copied"
+  const isCopied = copied || dataState === "copied";
 
   return (
     <Tooltip>
@@ -70,8 +64,7 @@ function CopyAction({
               "hover:bg-code-foreground hover:text-code",
               "data-[state=hover]:bg-code-foreground data-[state=hover]:text-code",
               "data-[state=copied]:bg-primary data-[state=copied]:text-primary-foreground",
-              isCopied &&
-                "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground",
+              isCopied && "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground",
               className
             )}
             onClick={onClick}
@@ -79,15 +72,11 @@ function CopyAction({
           />
         }
       >
-        {isCopied ? (
-          <Check className="size-3.5" />
-        ) : (
-          <Copy className="size-3.5" />
-        )}
+        {isCopied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
       </TooltipTrigger>
       <TooltipContent>{isCopied ? "Copied!" : "Copy code"}</TooltipContent>
     </Tooltip>
-  )
+  );
 }
 
 function CodeBlock({
@@ -102,16 +91,16 @@ function CodeBlock({
   copyState,
   ...mixProps
 }: CodeBlockProps) {
-  const { copied, copy } = useCopy()
-  const { container, copy: copyProps } = splitProps(mixProps, "container", "copy")
+  const { copied, copy } = useCopy();
+  const { container, copy: copyProps } = splitProps(mixProps, "container", "copy");
 
-  const isDark = theme === "dark"
-  const showHeader = Boolean(filename || logo)
-  const syntaxLanguage = language === "shell" || language === "sh" || language === "zsh" ? "bash" : language
+  const isDark = theme === "dark";
+  const showHeader = Boolean(filename || logo);
+  const syntaxLanguage = language === "shell" || language === "sh" || language === "zsh" ? "bash" : language;
 
   const syntaxTheme = useMemo(() => {
-    const base = isDark ? oneDark : oneLight
-    const bg = isDark ? "var(--code)" : "var(--muted)"
+    const base = isDark ? oneDark : oneLight;
+    const bg = isDark ? "var(--code)" : "var(--muted)";
 
     return {
       ...base,
@@ -130,8 +119,8 @@ function CodeBlock({
         fontSize: "0.875rem",
         fontFamily: "var(--font-mono), monospace",
       },
-    }
-  }, [isDark])
+    };
+  }, [isDark]);
 
   return (
     <TooltipProvider delay={200}>
@@ -158,9 +147,7 @@ function CodeBlock({
             )}
           >
             <div className="flex items-center gap-2">
-              {logo ? (
-                <img src={logo} alt="" width={14} height={14} className="object-contain" />
-              ) : null}
+              {logo ? <img src={logo} alt="" width={14} height={14} className="object-contain" /> : null}
               {filename ? (
                 <span
                   className={cn(
@@ -173,12 +160,7 @@ function CodeBlock({
               ) : null}
             </div>
             {showCopyButton ? (
-              <CopyAction
-                copied={copied}
-                onClick={() => copy(children)}
-                data-state={copyState}
-                {...copyProps}
-              />
+              <CopyAction copied={copied} onClick={() => copy(children)} data-state={copyState} {...copyProps} />
             ) : null}
           </div>
         ) : null}
@@ -195,19 +177,14 @@ function CodeBlock({
 
           {!showHeader && showCopyButton ? (
             <div className="absolute top-2 right-2 z-20">
-              <CopyAction
-                copied={copied}
-                onClick={() => copy(children)}
-                data-state={copyState}
-                {...copyProps}
-              />
+              <CopyAction copied={copied} onClick={() => copy(children)} data-state={copyState} {...copyProps} />
             </div>
           ) : null}
         </ScrollArea>
       </div>
     </TooltipProvider>
-  )
+  );
 }
 
-export { CodeBlock, CopyAction }
-export type { Language }
+export { CodeBlock, CopyAction };
+export type { Language };

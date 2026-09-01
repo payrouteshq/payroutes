@@ -1,80 +1,64 @@
+import { type ComponentProps, type ReactNode, useEffect, useMemo, useState } from "react";
+
 import {
-  useEffect,
-  useMemo,
-  useState,
-  type ComponentProps,
-  type ReactNode,
-} from "react"
-import {
+  type ColumnDef,
+  type RowSelectionState,
+  type SortingState,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
   useReactTable,
-  type ColumnDef,
-  type RowSelectionState,
-  type SortingState,
-} from "@tanstack/react-table"
+} from "@tanstack/react-table";
 
-import { ChevronDown, ChevronsUpDown, MoreVertical } from "../../icons"
-import { type MixinProps, splitProps } from "../../lib/mixin"
-import { cn } from "../../cn"
-import { Button } from "../../ui/button"
-import { Checkbox } from "../../ui/checkbox"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "../../ui/dropdown-menu"
-import { Skeleton } from "../../ui/skeleton"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../../ui/table"
+import { cn } from "../../cn";
+import { ChevronDown, ChevronsUpDown, MoreVertical } from "../../icons";
+import { type MixinProps, splitProps } from "../../lib/mixin";
+import { Button } from "../../ui/button";
+import { Checkbox } from "../../ui/checkbox";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../ui/dropdown-menu";
+import { Skeleton } from "../../ui/skeleton";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../ui/table";
 
 export interface TableAction<TData> {
-  label: string | ((row: TData) => string)
-  onClick: (row: TData) => void
-  variant?: "default" | "destructive"
-  when?: (row: TData) => boolean
-  icon?: ReactNode
+  label: string | ((row: TData) => string);
+  onClick: (row: TData) => void;
+  variant?: "default" | "destructive";
+  when?: (row: TData) => boolean;
+  icon?: ReactNode;
 }
 
 export interface DataTableBulkActionItem<TData> {
-  label: ReactNode
-  onClick: (rows: TData[]) => void
-  variant?: "default" | "destructive"
+  label: ReactNode;
+  onClick: (rows: TData[]) => void;
+  variant?: "default" | "destructive";
 }
 
 export interface DataTableBulkAction<TData> {
-  label: ReactNode
-  onClick?: (rows: TData[]) => void
-  variant?: "outline" | "destructive"
-  icon?: ReactNode
-  items?: DataTableBulkActionItem<TData>[]
+  label: ReactNode;
+  onClick?: (rows: TData[]) => void;
+  variant?: "outline" | "destructive";
+  icon?: ReactNode;
+  items?: DataTableBulkActionItem<TData>[];
 }
 
 export interface DataTableProps<TData, TValue>
-  extends MixinProps<"row", ComponentProps<typeof TableRow>>,
+  extends
+    MixinProps<"row", ComponentProps<typeof TableRow>>,
     MixinProps<"checkbox", ComponentProps<typeof Checkbox>>,
     MixinProps<"body", ComponentProps<typeof TableBody>>,
     MixinProps<"cell", ComponentProps<typeof TableCell>>,
     MixinProps<"container", ComponentProps<"div">> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
-  onRowClick?: (row: TData) => void
-  enableBulkSelect?: boolean
-  actions?: ((row: TData) => TableAction<TData>[]) | TableAction<TData>[]
-  bulkActions?: DataTableBulkAction<TData>[]
-  isLoading?: boolean
-  skeletonRowCount?: number
-  emptyMessage?: string
-  defaultRowSelection?: RowSelectionState
-  onRowSelectionChange?: (rows: TData[]) => void
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
+  onRowClick?: (row: TData) => void;
+  enableBulkSelect?: boolean;
+  actions?: ((row: TData) => TableAction<TData>[]) | TableAction<TData>[];
+  bulkActions?: DataTableBulkAction<TData>[];
+  isLoading?: boolean;
+  skeletonRowCount?: number;
+  emptyMessage?: string;
+  defaultRowSelection?: RowSelectionState;
+  onRowSelectionChange?: (rows: TData[]) => void;
 }
 
 function DataTable<TData, TValue>({
@@ -91,21 +75,12 @@ function DataTable<TData, TValue>({
   onRowSelectionChange,
   ...mixProps
 }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = useState<SortingState>([])
-  const [rowSelection, setRowSelection] = useState<RowSelectionState>(
-    defaultRowSelection ?? {}
-  )
-  const { row, checkbox, body, cell, container } = splitProps(
-    mixProps,
-    "row",
-    "checkbox",
-    "body",
-    "cell",
-    "container"
-  )
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>(defaultRowSelection ?? {});
+  const { row, checkbox, body, cell, container } = splitProps(mixProps, "row", "checkbox", "body", "cell", "container");
 
   const tableColumns = useMemo(() => {
-    const next = [...columns]
+    const next = [...columns];
 
     if (enableBulkSelect) {
       next.unshift({
@@ -115,13 +90,8 @@ function DataTable<TData, TValue>({
         header: ({ table }) => (
           <Checkbox
             checked={table.getIsAllPageRowsSelected()}
-            indeterminate={
-              table.getIsSomePageRowsSelected() &&
-              !table.getIsAllPageRowsSelected()
-            }
-            onCheckedChange={(value) =>
-              table.toggleAllPageRowsSelected(!!value)
-            }
+            indeterminate={table.getIsSomePageRowsSelected() && !table.getIsAllPageRowsSelected()}
+            onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
             aria-label="Select all"
             {...checkbox}
             className={cn("translate-y-0.5", checkbox.className)}
@@ -137,7 +107,7 @@ function DataTable<TData, TValue>({
             className={cn("translate-y-0.5", checkbox.className)}
           />
         ),
-      })
+      });
     }
 
     if (actions) {
@@ -147,25 +117,16 @@ function DataTable<TData, TValue>({
         enableSorting: false,
         header: () => null,
         cell: ({ row: tableRow }) => {
-          const rowActions = (
-            typeof actions === "function" ? actions(tableRow.original) : actions
-          ).filter((action) => !action.when || action.when(tableRow.original))
-          if (!rowActions.length) return null
+          const rowActions = (typeof actions === "function" ? actions(tableRow.original) : actions).filter(
+            (action) => !action.when || action.when(tableRow.original)
+          );
+          if (!rowActions.length) return null;
 
           return (
-            <div
-              className="flex justify-end"
-              onClick={(event) => event.stopPropagation()}
-            >
+            <div className="flex justify-end" onClick={(event) => event.stopPropagation()}>
               <DropdownMenu>
                 <DropdownMenuTrigger
-                  render={
-                    <Button
-                      variant="ghost"
-                      size="icon-xs"
-                      className="text-muted-foreground"
-                    />
-                  }
+                  render={<Button variant="ghost" size="icon-xs" className="text-muted-foreground" />}
                   aria-label="Open row actions"
                 >
                   <MoreVertical className="size-4" />
@@ -176,26 +137,24 @@ function DataTable<TData, TValue>({
                       key={index}
                       variant={action.variant}
                       onClick={(event) => {
-                        event.stopPropagation()
-                        action.onClick(tableRow.original)
+                        event.stopPropagation();
+                        action.onClick(tableRow.original);
                       }}
                     >
                       {action.icon}
-                      {typeof action.label === "function"
-                        ? action.label(tableRow.original)
-                        : action.label}
+                      {typeof action.label === "function" ? action.label(tableRow.original) : action.label}
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-          )
+          );
         },
-      })
+      });
     }
 
-    return next
-  }, [actions, checkbox, columns, enableBulkSelect])
+    return next;
+  }, [actions, checkbox, columns, enableBulkSelect]);
 
   const table = useReactTable({
     data,
@@ -203,28 +162,25 @@ function DataTable<TData, TValue>({
     state: { sorting, rowSelection },
     onSortingChange: setSorting,
     onRowSelectionChange: (updater) => {
-      const next =
-        typeof updater === "function" ? updater(rowSelection) : updater
-      setRowSelection(next)
+      const next = typeof updater === "function" ? updater(rowSelection) : updater;
+      setRowSelection(next);
     },
     enableRowSelection: enableBulkSelect,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getRowId: (original, index) => {
       if (original && typeof original === "object" && "id" in original) {
-        return String((original as { id: unknown }).id)
+        return String((original as { id: unknown }).id);
       }
-      return String(index)
+      return String(index);
     },
-  })
+  });
 
-  const selectedRows = table
-    .getFilteredSelectedRowModel()
-    .rows.map((tableRow) => tableRow.original)
+  const selectedRows = table.getFilteredSelectedRowModel().rows.map((tableRow) => tableRow.original);
 
   useEffect(() => {
-    onRowSelectionChange?.(selectedRows)
-  }, [rowSelection])
+    onRowSelectionChange?.(selectedRows);
+  }, [rowSelection]);
 
   if (isLoading) {
     return (
@@ -234,16 +190,12 @@ function DataTable<TData, TValue>({
         actions={actions}
         skeletonRowCount={skeletonRowCount}
       />
-    )
+    );
   }
 
   return (
-    <div
-      data-slot="data-table"
-      {...container}
-      className={cn("space-y-3", container.className)}
-    >
-      <div className="overflow-hidden border border-border bg-card">
+    <div data-slot="data-table" {...container} className={cn("space-y-3", container.className)}>
+      <div className="border-border bg-card overflow-hidden border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -252,10 +204,7 @@ function DataTable<TData, TValue>({
                   <TableHead
                     key={header.id}
                     style={{
-                      width:
-                        header.getSize() !== 150
-                          ? header.getSize()
-                          : undefined,
+                      width: header.getSize() !== 150 ? header.getSize() : undefined,
                     }}
                   >
                     {header.isPlaceholder ? null : header.column.getCanSort() ? (
@@ -264,17 +213,11 @@ function DataTable<TData, TValue>({
                         className="inline-flex items-center gap-1.5 select-none"
                         onClick={header.column.getToggleSortingHandler()}
                       >
-                        {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                        <ChevronsUpDown className="size-3.5 text-muted-foreground" />
+                        {flexRender(header.column.columnDef.header, header.getContext())}
+                        <ChevronsUpDown className="text-muted-foreground size-3.5" />
                       </button>
                     ) : (
-                      flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )
+                      flexRender(header.column.columnDef.header, header.getContext())
                     )}
                   </TableHead>
                 ))}
@@ -284,7 +227,7 @@ function DataTable<TData, TValue>({
               <TableRow className="bg-secondary hover:bg-secondary">
                 <TableHead
                   colSpan={tableColumns.length}
-                  className="h-auto bg-secondary px-4 py-3 first:pl-6 text-foreground"
+                  className="bg-secondary text-foreground h-auto px-4 py-3 first:pl-6"
                 >
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
@@ -328,15 +271,8 @@ function DataTable<TData, TValue>({
                             key={index}
                             type="button"
                             size="sm"
-                            variant={
-                              action.variant === "destructive"
-                                ? "destructive"
-                                : "outline"
-                            }
-                            className={cn(
-                              action.variant !== "destructive" &&
-                                "border-border bg-card text-foreground"
-                            )}
+                            variant={action.variant === "destructive" ? "destructive" : "outline"}
+                            className={cn(action.variant !== "destructive" && "border-border bg-card text-foreground")}
                             onClick={() => action.onClick?.(selectedRows)}
                           >
                             {action.icon}
@@ -360,25 +296,15 @@ function DataTable<TData, TValue>({
                   {...row}
                 >
                   {tableRow.getVisibleCells().map((tableCell) => (
-                    <TableCell
-                      key={tableCell.id}
-                      {...cell}
-                      className={cn(cell.className)}
-                    >
-                      {flexRender(
-                        tableCell.column.columnDef.cell,
-                        tableCell.getContext()
-                      )}
+                    <TableCell key={tableCell.id} {...cell} className={cn(cell.className)}>
+                      {flexRender(tableCell.column.columnDef.cell, tableCell.getContext())}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell
-                  colSpan={tableColumns.length}
-                  className="h-24 text-center text-muted-foreground"
-                >
+                <TableCell colSpan={tableColumns.length} className="text-muted-foreground h-24 text-center">
                   {emptyMessage}
                 </TableCell>
               </TableRow>
@@ -387,7 +313,7 @@ function DataTable<TData, TValue>({
         </Table>
       </div>
     </div>
-  )
+  );
 }
 
 function DataTableSkeleton<TData, TValue>({
@@ -395,14 +321,11 @@ function DataTableSkeleton<TData, TValue>({
   enableBulkSelect = false,
   actions,
   skeletonRowCount = 5,
-}: Pick<
-  DataTableProps<TData, TValue>,
-  "columns" | "enableBulkSelect" | "actions" | "skeletonRowCount"
->) {
-  const actionCount = Array.isArray(actions) ? actions.length : actions ? 1 : 0
+}: Pick<DataTableProps<TData, TValue>, "columns" | "enableBulkSelect" | "actions" | "skeletonRowCount">) {
+  const actionCount = Array.isArray(actions) ? actions.length : actions ? 1 : 0;
 
   return (
-    <div className="overflow-hidden border border-border bg-card">
+    <div className="border-border bg-card overflow-hidden border">
       <Table>
         <TableHeader>
           <TableRow>
@@ -447,7 +370,7 @@ function DataTableSkeleton<TData, TValue>({
         </TableBody>
       </Table>
     </div>
-  )
+  );
 }
 
-export { DataTable }
+export { DataTable };

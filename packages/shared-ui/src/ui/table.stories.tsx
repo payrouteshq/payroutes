@@ -1,24 +1,17 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { Badge } from "./badge"
-import { Checkbox } from "./checkbox"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "./table"
+import { Badge } from "./badge";
+import { Checkbox } from "./checkbox";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./table";
 
 const meta: Meta<typeof Table> = {
   title: "UI/Table",
   component: Table,
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Table>
+type Story = StoryObj<typeof Table>;
 
 export const Default: Story = {
   render: () => (
@@ -63,7 +56,7 @@ export const Default: Story = {
       </TableBody>
     </Table>
   ),
-}
+};
 
 export const Hover: Story = {
   render: () => (
@@ -86,4 +79,4 @@ export const Hover: Story = {
       </TableBody>
     </Table>
   ),
-}
+};

@@ -1,8 +1,8 @@
-import { useState } from "react"
+import { useState } from "react";
 
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { Slider } from "./slider"
+import { Slider } from "./slider";
 
 const meta: Meta<typeof Slider> = {
   title: "UI/Slider",
@@ -12,18 +12,18 @@ const meta: Meta<typeof Slider> = {
     max: 1000,
     defaultValue: [650],
   },
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Slider>
+type Story = StoryObj<typeof Slider>;
 
-export const Default: Story = {}
+export const Default: Story = {};
 
 export const WithLabels: Story = {
   render: (args) => {
     function SliderWithLabels() {
-      const [value, setValue] = useState(args.defaultValue as number[])
+      const [value, setValue] = useState(args.defaultValue as number[]);
 
       return (
         <div className="flex w-80 flex-col gap-2">
@@ -34,11 +34,11 @@ export const WithLabels: Story = {
             <span className="text-muted-foreground">$1k</span>
           </div>
         </div>
-      )
+      );
     }
 
-    return <SliderWithLabels />
+    return <SliderWithLabels />;
   },
-}
+};
 
-export const Disabled: Story = { args: { disabled: true } }
+export const Disabled: Story = { args: { disabled: true } };

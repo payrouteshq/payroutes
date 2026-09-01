@@ -1,40 +1,35 @@
-import type { ComponentProps, ReactNode } from "react"
+import type { ComponentProps, ReactNode } from "react";
 
-import { CloseX, Plus } from "../../icons"
-import { type MixinProps, splitProps } from "../../lib/mixin"
-import { cn } from "../../cn"
-import { Button } from "../../ui/button"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../ui/select"
-import { EmbeddedFieldRow, FieldStack } from "../field-stack"
+import { cn } from "../../cn";
+import { CloseX, Plus } from "../../icons";
+import { type MixinProps, splitProps } from "../../lib/mixin";
+import { Button } from "../../ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select";
+import { EmbeddedFieldRow, FieldStack } from "../field-stack";
 
 const DEFAULT_COMBINATORS = [
   { value: "and", label: "AND" },
   { value: "or", label: "OR" },
-] as const
+] as const;
 
 export interface RuleBuilderConditionGroupProps
-  extends MixinProps<"container", ComponentProps<"div">>,
+  extends
+    MixinProps<"container", ComponentProps<"div">>,
     MixinProps<"trigger", Omit<ComponentProps<typeof SelectTrigger>, "children">>,
     MixinProps<"content", Omit<ComponentProps<typeof SelectContent>, "children">>,
     MixinProps<"addCondition", Omit<ComponentProps<typeof Button>, "children">>,
     MixinProps<"addGroup", Omit<ComponentProps<typeof Button>, "children">>,
     MixinProps<"remove", Omit<ComponentProps<typeof Button>, "children">> {
-  combinator: string
-  onCombinatorChange: (value: string | null) => void
-  combinators?: { value: string; label: string }[]
-  children?: ReactNode
-  onAddCondition?: () => void
-  onAddGroup?: () => void
-  onRemove?: () => void
-  addConditionLabel?: ReactNode
-  addGroupLabel?: ReactNode
-  disabled?: boolean
+  combinator: string;
+  onCombinatorChange: (value: string | null) => void;
+  combinators?: { value: string; label: string }[];
+  children?: ReactNode;
+  onAddCondition?: () => void;
+  onAddGroup?: () => void;
+  onRemove?: () => void;
+  addConditionLabel?: ReactNode;
+  addGroupLabel?: ReactNode;
+  disabled?: boolean;
 }
 
 function RuleBuilderConditionGroup({
@@ -50,33 +45,21 @@ function RuleBuilderConditionGroup({
   disabled = false,
   ...mixProps
 }: RuleBuilderConditionGroupProps) {
-  const { container, trigger, content, addCondition, addGroup, remove } =
-    splitProps(
-      mixProps,
-      "container",
-      "trigger",
-      "content",
-      "addCondition",
-      "addGroup",
-      "remove"
-    )
+  const { container, trigger, content, addCondition, addGroup, remove } = splitProps(
+    mixProps,
+    "container",
+    "trigger",
+    "content",
+    "addCondition",
+    "addGroup",
+    "remove"
+  );
 
   return (
-    <FieldStack
-      {...container}
-      data-slot="rule-builder-condition-group"
-      className={cn(container.className)}
-    >
+    <FieldStack {...container} data-slot="rule-builder-condition-group" className={cn(container.className)}>
       <div className="flex items-center gap-2">
-        <Select
-          value={combinator}
-          onValueChange={onCombinatorChange}
-          disabled={disabled}
-        >
-          <SelectTrigger
-            {...trigger}
-            className={cn("w-fit font-medium", trigger.className)}
-          >
+        <Select value={combinator} onValueChange={onCombinatorChange} disabled={disabled}>
+          <SelectTrigger {...trigger} className={cn("w-fit font-medium", trigger.className)}>
             <SelectValue placeholder="AND" />
           </SelectTrigger>
           <SelectContent {...content}>
@@ -96,10 +79,10 @@ function RuleBuilderConditionGroup({
             aria-label="Remove group"
             disabled={disabled}
             {...remove}
-            className={cn("ml-auto shrink-0 text-muted-foreground", remove.className)}
+            className={cn("text-muted-foreground ml-auto shrink-0", remove.className)}
             onClick={(event) => {
-              remove.onClick?.(event)
-              onRemove()
+              remove.onClick?.(event);
+              onRemove();
             }}
           >
             <CloseX className="size-4" />
@@ -125,8 +108,8 @@ function RuleBuilderConditionGroup({
                 {...addCondition}
                 className={cn("text-primary", addCondition.className)}
                 onClick={(event) => {
-                  addCondition.onClick?.(event)
-                  onAddCondition()
+                  addCondition.onClick?.(event);
+                  onAddCondition();
                 }}
               >
                 <Plus className="size-3.5" />
@@ -142,8 +125,8 @@ function RuleBuilderConditionGroup({
                 {...addGroup}
                 className={cn("text-primary", addGroup.className)}
                 onClick={(event) => {
-                  addGroup.onClick?.(event)
-                  onAddGroup()
+                  addGroup.onClick?.(event);
+                  onAddGroup();
                 }}
               >
                 <Plus className="size-3.5" />
@@ -154,7 +137,7 @@ function RuleBuilderConditionGroup({
         ) : null}
       </EmbeddedFieldRow>
     </FieldStack>
-  )
+  );
 }
 
-export { RuleBuilderConditionGroup }
+export { RuleBuilderConditionGroup };

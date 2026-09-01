@@ -1,21 +1,16 @@
-import type { Meta, StoryObj } from "@storybook/react"
-import type { ComponentProps } from "react"
+import type { ComponentProps } from "react";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./select"
+import type { Meta, StoryObj } from "@storybook/react";
+
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select";
 
 const options = [
   { value: "auth-rate", label: "Auth-rate first" },
   { value: "lowest-cost", label: "Lowest cost" },
   { value: "lowest-latency", label: "Lowest latency" },
-] as const
+] as const;
 
-type SelectRootProps = ComponentProps<typeof Select>
+type SelectRootProps = ComponentProps<typeof Select>;
 
 function RoutingSelect({
   className = "w-56",
@@ -35,21 +30,21 @@ function RoutingSelect({
         ))}
       </SelectContent>
     </Select>
-  )
+  );
 }
 
 const meta: Meta<typeof Select> = {
   title: "UI/Select",
   component: Select,
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Select>
+type Story = StoryObj<typeof Select>;
 
 export const Default: Story = {
   render: () => <RoutingSelect />,
-}
+};
 
 export const Open: Story = {
   render: () => (
@@ -57,11 +52,11 @@ export const Open: Story = {
       <RoutingSelect defaultOpen defaultValue="auth-rate" />
     </div>
   ),
-}
+};
 
 export const Disabled: Story = {
   render: () => <RoutingSelect disabled />,
-}
+};
 
 export const States: Story = {
   render: () => (
@@ -71,4 +66,4 @@ export const States: Story = {
       <RoutingSelect disabled />
     </div>
   ),
-}
+};

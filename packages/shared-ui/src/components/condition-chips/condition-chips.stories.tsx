@@ -1,24 +1,20 @@
-import { Fragment, useState } from "react"
-import type { Meta, StoryObj } from "@storybook/react"
+import { Fragment, useState } from "react";
 
-import { SearchField, SearchFieldResult } from "../search-field"
-import { ConditionChips } from "./index"
+import type { Meta, StoryObj } from "@storybook/react";
 
-const suggestions = [
-  "amount > 500",
-  "currency = EUR",
-  "status = active",
-  "country = DE",
-]
+import { SearchField, SearchFieldResult } from "../search-field";
+import { ConditionChips } from "./index";
+
+const suggestions = ["amount > 500", "currency = EUR", "status = active", "country = DE"];
 
 const meta: Meta<typeof ConditionChips> = {
   title: "Components/ConditionChips",
   component: ConditionChips,
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof ConditionChips>
+type Story = StoryObj<typeof ConditionChips>;
 
 export const Default: Story = {
   render: () => (
@@ -28,7 +24,7 @@ export const Default: Story = {
       <ConditionChips.Add />
     </ConditionChips>
   ),
-}
+};
 
 export const And: Story = {
   render: () => (
@@ -40,7 +36,7 @@ export const And: Story = {
       <ConditionChips.Add />
     </ConditionChips>
   ),
-}
+};
 
 export const Or: Story = {
   render: () => (
@@ -52,7 +48,7 @@ export const Or: Story = {
       <ConditionChips.Add />
     </ConditionChips>
   ),
-}
+};
 
 export const Chain: Story = {
   render: () => (
@@ -66,7 +62,7 @@ export const Chain: Story = {
       <ConditionChips.Add />
     </ConditionChips>
   ),
-}
+};
 
 export const Keywords: Story = {
   render: () => (
@@ -77,26 +73,24 @@ export const Keywords: Story = {
       <ConditionChips.Keyword>THEN</ConditionChips.Keyword>
     </ConditionChips>
   ),
-}
+};
 
 export const Interactive: Story = {
   parameters: { chromatic: { disableSnapshot: true } },
   render: function InteractiveStory() {
-    const [chips, setChips] = useState(["amount > 500"])
-    const [combinators, setCombinators] = useState<string[]>([])
-    const [adding, setAdding] = useState(false)
-    const [query, setQuery] = useState("")
+    const [chips, setChips] = useState(["amount > 500"]);
+    const [combinators, setCombinators] = useState<string[]>([]);
+    const [adding, setAdding] = useState(false);
+    const [query, setQuery] = useState("");
     const matches = suggestions.filter(
-      (item) =>
-        !chips.includes(item) &&
-        item.toLowerCase().includes(query.trim().toLowerCase())
-    )
+      (item) => !chips.includes(item) && item.toLowerCase().includes(query.trim().toLowerCase())
+    );
 
     function addChip(value: string) {
-      setCombinators((current) => [...current, "AND"])
-      setChips((current) => [...current, value])
-      setQuery("")
-      setAdding(false)
+      setCombinators((current) => [...current, "AND"]);
+      setChips((current) => [...current, value]);
+      setQuery("");
+      setAdding(false);
     }
 
     return (
@@ -108,13 +102,7 @@ export const Interactive: Story = {
               <ConditionChips.Keyword
                 onClick={() =>
                   setCombinators((current) =>
-                    current.map((item, itemIndex) =>
-                      itemIndex === index - 1
-                        ? item === "AND"
-                          ? "OR"
-                          : "AND"
-                        : item
-                    )
+                    current.map((item, itemIndex) => (itemIndex === index - 1 ? (item === "AND" ? "OR" : "AND") : item))
                   )
                 }
               >
@@ -143,9 +131,9 @@ export const Interactive: Story = {
           <ConditionChips.Add onClick={() => setAdding(true)} />
         )}
       </ConditionChips>
-    )
+    );
   },
-}
+};
 
 export const Disabled: Story = {
   render: () => (
@@ -157,4 +145,4 @@ export const Disabled: Story = {
       <ConditionChips.Add disabled />
     </ConditionChips>
   ),
-}
+};

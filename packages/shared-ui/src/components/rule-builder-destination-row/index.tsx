@@ -1,40 +1,35 @@
-import type { ComponentProps, ReactNode } from "react"
+import type { ComponentProps, ReactNode } from "react";
 
-import { CloseX } from "../../icons"
-import { type MixinProps, splitProps } from "../../lib/mixin"
-import { cn } from "../../cn"
-import { Badge } from "../../ui/badge"
-import { Button } from "../../ui/button"
-import { Input } from "../../ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../ui/select"
+import { cn } from "../../cn";
+import { CloseX } from "../../icons";
+import { type MixinProps, splitProps } from "../../lib/mixin";
+import { Badge } from "../../ui/badge";
+import { Button } from "../../ui/button";
+import { Input } from "../../ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select";
 
 export interface RuleBuilderDestinationRowProps<T>
-  extends MixinProps<"container", ComponentProps<"div">>,
+  extends
+    MixinProps<"container", ComponentProps<"div">>,
     MixinProps<"trigger", Omit<ComponentProps<typeof SelectTrigger>, "children">>,
     MixinProps<"content", Omit<ComponentProps<typeof SelectContent>, "children">>,
     MixinProps<"input", Omit<ComponentProps<typeof Input>, "value" | "onChange">>,
     MixinProps<"suffix", Omit<ComponentProps<"span">, "children">>,
     MixinProps<"badge", Omit<ComponentProps<typeof Badge>, "children">>,
     MixinProps<"remove", Omit<ComponentProps<typeof Button>, "children">> {
-  destination: T | null
-  onDestinationChange: (value: T | null) => void
-  destinations: T[]
-  getItemValue: (item: T) => string
-  getItemTitle: (item: T) => string
-  share: string
-  onShareChange: (value: string) => void
-  suffix?: ReactNode
-  primary?: boolean
-  primaryLabel?: ReactNode
-  onRemove?: () => void
-  disabled?: boolean
-  placeholder?: string
+  destination: T | null;
+  onDestinationChange: (value: T | null) => void;
+  destinations: T[];
+  getItemValue: (item: T) => string;
+  getItemTitle: (item: T) => string;
+  share: string;
+  onShareChange: (value: string) => void;
+  suffix?: ReactNode;
+  primary?: boolean;
+  primaryLabel?: ReactNode;
+  onRemove?: () => void;
+  disabled?: boolean;
+  placeholder?: string;
 }
 
 function RuleBuilderDestinationRow<T>({
@@ -61,16 +56,7 @@ function RuleBuilderDestinationRow<T>({
     suffix: suffixProps,
     badge,
     remove,
-  } = splitProps(
-    mixProps,
-    "container",
-    "trigger",
-    "content",
-    "input",
-    "suffix",
-    "badge",
-    "remove"
-  )
+  } = splitProps(mixProps, "container", "trigger", "content", "input", "suffix", "badge", "remove");
 
   return (
     <div
@@ -83,16 +69,11 @@ function RuleBuilderDestinationRow<T>({
         <Select
           value={destination ? getItemValue(destination) : null}
           onValueChange={(value) =>
-            onDestinationChange(
-              destinations.find((item) => getItemValue(item) === value) ?? null
-            )
+            onDestinationChange(destinations.find((item) => getItemValue(item) === value) ?? null)
           }
           disabled={disabled}
         >
-          <SelectTrigger
-            {...trigger}
-            className={cn("w-full", trigger.className)}
-          >
+          <SelectTrigger {...trigger} className={cn("w-full", trigger.className)}>
             <SelectValue placeholder={placeholder} />
           </SelectTrigger>
           <SelectContent {...content}>
@@ -119,10 +100,7 @@ function RuleBuilderDestinationRow<T>({
         <span
           data-slot="rule-builder-destination-row-suffix"
           {...suffixProps}
-          className={cn(
-            "text-sm text-muted-foreground select-none",
-            suffixProps.className
-          )}
+          className={cn("text-muted-foreground text-sm select-none", suffixProps.className)}
         >
           {suffix}
         </span>
@@ -141,8 +119,8 @@ function RuleBuilderDestinationRow<T>({
             {...remove}
             className={cn("text-muted-foreground", remove.className)}
             onClick={(event) => {
-              remove.onClick?.(event)
-              onRemove()
+              remove.onClick?.(event);
+              onRemove();
             }}
           >
             <CloseX className="size-4" />
@@ -150,7 +128,7 @@ function RuleBuilderDestinationRow<T>({
         ) : null}
       </div>
     </div>
-  )
+  );
 }
 
-export { RuleBuilderDestinationRow }
+export { RuleBuilderDestinationRow };

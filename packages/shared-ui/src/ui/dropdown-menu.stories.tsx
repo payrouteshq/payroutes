@@ -1,32 +1,29 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { Link, MoreVertical } from "../icons"
-import { Button } from "./button"
+import { Link, MoreVertical } from "../icons";
+import { Button } from "./button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./dropdown-menu"
+} from "./dropdown-menu";
 
 const meta: Meta<typeof DropdownMenu> = {
   title: "UI/DropdownMenu",
   component: DropdownMenu,
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof DropdownMenu>
+type Story = StoryObj<typeof DropdownMenu>;
 
 function MenuDemo({ defaultOpen = false }: { defaultOpen?: boolean }) {
   return (
     <div className="flex justify-end">
       <DropdownMenu defaultOpen={defaultOpen}>
-        <DropdownMenuTrigger
-          render={<Button variant="ghost" size="icon-xs" />}
-          aria-label="Open menu"
-        >
+        <DropdownMenuTrigger render={<Button variant="ghost" size="icon-xs" />} aria-label="Open menu">
           <MoreVertical className="size-4" />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -46,12 +43,12 @@ function MenuDemo({ defaultOpen = false }: { defaultOpen?: boolean }) {
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
-  )
+  );
 }
 
 export const Default: Story = {
   render: () => <MenuDemo />,
-}
+};
 
 export const Open: Story = {
   parameters: {
@@ -62,4 +59,4 @@ export const Open: Story = {
       <MenuDemo defaultOpen />
     </div>
   ),
-}
+};

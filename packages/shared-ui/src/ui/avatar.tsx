@@ -1,23 +1,20 @@
-import { Avatar as AvatarPrimitive } from "@base-ui/react/avatar"
-import { cva, type VariantProps } from "class-variance-authority"
+import { Avatar as AvatarPrimitive } from "@base-ui/react/avatar";
+import { type VariantProps, cva } from "class-variance-authority";
 
-import { cn } from "../cn"
+import { cn } from "../cn";
 
-const avatarVariants = cva(
-  "relative flex shrink-0 overflow-hidden rounded-full select-none",
-  {
-    variants: {
-      size: {
-        sm: "size-8 text-xs",
-        default: "size-10 text-sm",
-        lg: "size-16 text-lg",
-      },
+const avatarVariants = cva("relative flex shrink-0 overflow-hidden rounded-full select-none", {
+  variants: {
+    size: {
+      sm: "size-8 text-xs",
+      default: "size-10 text-sm",
+      lg: "size-16 text-lg",
     },
-    defaultVariants: {
-      size: "default",
-    },
-  }
-)
+  },
+  defaultVariants: {
+    size: "default",
+  },
+});
 
 function Avatar({
   className,
@@ -31,7 +28,7 @@ function Avatar({
       className={cn(avatarVariants({ size }), className)}
       {...props}
     />
-  )
+  );
 }
 
 function AvatarImage({ className, ...props }: AvatarPrimitive.Image.Props) {
@@ -41,23 +38,20 @@ function AvatarImage({ className, ...props }: AvatarPrimitive.Image.Props) {
       className={cn("aspect-square size-full object-cover", className)}
       {...props}
     />
-  )
+  );
 }
 
-function AvatarFallback({
-  className,
-  ...props
-}: AvatarPrimitive.Fallback.Props) {
+function AvatarFallback({ className, ...props }: AvatarPrimitive.Fallback.Props) {
   return (
     <AvatarPrimitive.Fallback
       data-slot="avatar-fallback"
       className={cn(
-        "flex size-full items-center justify-center rounded-full bg-secondary font-medium text-foreground",
+        "bg-secondary text-foreground flex size-full items-center justify-center rounded-full font-medium",
         className
       )}
       {...props}
     />
-  )
+  );
 }
 
-export { Avatar, AvatarImage, AvatarFallback, avatarVariants }
+export { Avatar, AvatarImage, AvatarFallback, avatarVariants };

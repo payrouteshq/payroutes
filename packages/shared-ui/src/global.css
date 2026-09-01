@@ -8,7 +8,7 @@
   --signal-blue-60: #7dafd9;
   --signal-blue-40: #a8cae5;
   --signal-blue-20: #d4e4f2;
-  
+
   --core-indigo-100: #100022;
   --core-indigo-80: #40334e;
   --core-indigo-60: #70667a;
@@ -46,7 +46,7 @@
   --crimson-red-20: #f2d6d4;
 
   --gradient-start: var(--signal-blue-80);
-  --gradient-end:  var(--signal-blue-100);
+  --gradient-end: var(--signal-blue-100);
 
   --background: var(--summit-sky-40);
   --foreground: var(--midnight-black-100);

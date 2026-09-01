@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { Avatar, AvatarFallback, AvatarImage } from "./avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 
-const sizes = ["sm", "default", "lg"] as const
+const sizes = ["sm", "default", "lg"] as const;
 
 const meta: Meta<typeof Avatar> = {
   title: "UI/Avatar",
@@ -13,11 +13,11 @@ const meta: Meta<typeof Avatar> = {
       options: sizes,
     },
   },
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Avatar>
+type Story = StoryObj<typeof Avatar>;
 
 export const Default: Story = {
   render: (args) => (
@@ -25,7 +25,7 @@ export const Default: Story = {
       <AvatarFallback>AB</AvatarFallback>
     </Avatar>
   ),
-}
+};
 
 export const Fallback: Story = {
   render: (args) => (
@@ -33,7 +33,7 @@ export const Fallback: Story = {
       <AvatarFallback />
     </Avatar>
   ),
-}
+};
 
 export const Image: Story = {
   render: (args) => (
@@ -42,7 +42,7 @@ export const Image: Story = {
       <AvatarFallback>AB</AvatarFallback>
     </Avatar>
   ),
-}
+};
 
 export const Sizes: Story = {
   render: () => (
@@ -54,7 +54,7 @@ export const Sizes: Story = {
       ))}
     </div>
   ),
-}
+};
 
 export const States: Story = {
   render: () => (
@@ -71,4 +71,4 @@ export const States: Story = {
       ))}
     </div>
   ),
-}
+};

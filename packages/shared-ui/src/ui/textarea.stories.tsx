@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { Textarea } from "./textarea"
+import { Textarea } from "./textarea";
 
 const meta: Meta<typeof Textarea> = {
   title: "UI/Textarea",
@@ -9,17 +9,17 @@ const meta: Meta<typeof Textarea> = {
     placeholder: "Placeholder",
     className: "w-72",
   },
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Textarea>
+type Story = StoryObj<typeof Textarea>;
 
-export const Default: Story = {}
+export const Default: Story = {};
 
 export const Focused: Story = {
   render: (args) => <Textarea {...args} data-state="focus" />,
-}
+};
 
 export const Invalid: Story = {
   render: (args) => (
@@ -28,9 +28,9 @@ export const Invalid: Story = {
       <p className="text-error text-xs">Error message</p>
     </div>
   ),
-}
+};
 
-export const Disabled: Story = { args: { disabled: true } }
+export const Disabled: Story = { args: { disabled: true } };
 
 export const States: Story = {
   render: () => (
@@ -44,4 +44,4 @@ export const States: Story = {
       <Textarea placeholder="Placeholder" disabled />
     </div>
   ),
-}
+};

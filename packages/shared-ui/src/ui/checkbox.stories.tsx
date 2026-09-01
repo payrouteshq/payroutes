@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { Checkbox } from "./checkbox"
+import { Checkbox } from "./checkbox";
 
 const meta: Meta<typeof Checkbox> = {
   title: "UI/Checkbox",
@@ -13,17 +13,17 @@ const meta: Meta<typeof Checkbox> = {
       control: "boolean",
     },
   },
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Checkbox>
+type Story = StoryObj<typeof Checkbox>;
 
-export const Default: Story = {}
+export const Default: Story = {};
 
-export const Checked: Story = { args: { defaultChecked: true } }
+export const Checked: Story = { args: { defaultChecked: true } };
 
-export const Disabled: Story = { args: { disabled: true } }
+export const Disabled: Story = { args: { disabled: true } };
 
 export const States: Story = {
   render: () => (
@@ -41,4 +41,4 @@ export const States: Story = {
       ))}
     </div>
   ),
-}
+};

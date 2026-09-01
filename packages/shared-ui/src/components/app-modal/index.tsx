@@ -1,14 +1,10 @@
-import {
-  useCallback,
-  useEffect,
-  useState,
-  type ReactNode,
-} from "react"
-import { AnimatePresence, motion } from "framer-motion"
+import { type ReactNode, useCallback, useEffect, useState } from "react";
 
-import { CloseX } from "../../icons"
-import { cn } from "../../cn"
-import { Button, type ButtonProps } from "../../ui/button"
+import { AnimatePresence, motion } from "framer-motion";
+
+import { cn } from "../../cn";
+import { CloseX } from "../../icons";
+import { Button, type ButtonProps } from "../../ui/button";
 import {
   Dialog,
   DialogClose,
@@ -17,51 +13,48 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "../../ui/dialog"
+} from "../../ui/dialog";
 
 type ModalButtonProps = ButtonProps & {
-  children: ReactNode
-}
+  children: ReactNode;
+};
 
 export interface AppModalOptions {
-  title: string
-  step?: ReactNode
-  description?: string
-  content?: ReactNode
-  footer?: ReactNode
-  primaryButton?: ModalButtonProps
-  secondaryButton?: ModalButtonProps
-  size?: "small" | "medium" | "full"
-  showCloseButton?: boolean
-  onClose?: () => void
+  title: string;
+  step?: ReactNode;
+  description?: string;
+  content?: ReactNode;
+  footer?: ReactNode;
+  primaryButton?: ModalButtonProps;
+  secondaryButton?: ModalButtonProps;
+  size?: "small" | "medium" | "full";
+  showCloseButton?: boolean;
+  onClose?: () => void;
 }
 
-type ModalState = { open: boolean; config: AppModalOptions | null }
-type SetModalState = (value: ModalState | ((prev: ModalState) => ModalState)) => void
+type ModalState = { open: boolean; config: AppModalOptions | null };
+type SetModalState = (value: ModalState | ((prev: ModalState) => ModalState)) => void;
 
-let setGlobalState: SetModalState | null = null
+let setGlobalState: SetModalState | null = null;
 
 export const AppModal = {
-  open: (options: AppModalOptions) =>
-    setGlobalState?.({ open: true, config: options }),
+  open: (options: AppModalOptions) => setGlobalState?.({ open: true, config: options }),
   close: () => setGlobalState?.((prev) => ({ ...prev, open: false })),
   updateConfig: (partial: Partial<AppModalOptions>) =>
-    setGlobalState?.((prev) =>
-      prev.config ? { ...prev, config: { ...prev.config, ...partial } } : prev
-    ),
-}
+    setGlobalState?.((prev) => (prev.config ? { ...prev, config: { ...prev.config, ...partial } } : prev)),
+};
 
 export interface AppModalUIProps extends AppModalOptions {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  onExited?: () => void
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onExited?: () => void;
 }
 
 const sizeStyles = {
   small: "max-h-[90vh] sm:max-w-md",
   medium: "max-h-[90vh] sm:max-w-2xl",
   full: "h-full max-h-none w-full max-w-none rounded-none sm:max-w-none",
-}
+};
 
 function AppModalUI({
   open,
@@ -77,22 +70,20 @@ function AppModalUI({
   showCloseButton = true,
   onExited,
 }: AppModalUIProps) {
-  const [present, setPresent] = useState(open)
+  const [present, setPresent] = useState(open);
 
   useEffect(() => {
-    if (open) setPresent(true)
-  }, [open])
+    if (open) setPresent(true);
+  }, [open]);
 
   const generatedFooter =
     footer ??
-    ((primaryButton || secondaryButton) ? (
+    (primaryButton || secondaryButton ? (
       <>
         {primaryButton ? <Button size="lg" {...primaryButton} /> : null}
-        {secondaryButton ? (
-          <Button variant="ghost" size="lg" {...secondaryButton} />
-        ) : null}
+        {secondaryButton ? <Button variant="ghost" size="lg" {...secondaryButton} /> : null}
       </>
-    ) : null)
+    ) : null);
 
   return (
     <Dialog open={present} onOpenChange={onOpenChange}>
@@ -101,15 +92,15 @@ function AppModalUI({
         viewportClassName={size === "full" ? "p-0" : undefined}
         className={cn(
           "overflow-visible border-none bg-transparent p-0 shadow-none",
-          "data-open:animate-none data-closed:animate-none",
+          "data-closed:animate-none data-open:animate-none",
           sizeStyles[size]
         )}
       >
         <AnimatePresence
           onExitComplete={() => {
             if (!open) {
-              setPresent(false)
-              onExited?.()
+              setPresent(false);
+              onExited?.();
             }
           }}
         >
@@ -128,7 +119,7 @@ function AppModalUI({
                 transition: { duration: 0.12, ease: [0.32, 0.72, 0, 1] },
               }}
               className={cn(
-                "relative flex min-w-0 flex-col gap-3 overflow-hidden rounded-xl border border-ring bg-popover p-5 text-popover-foreground shadow-elevation-md",
+                "border-ring bg-popover text-popover-foreground shadow-elevation-md relative flex min-w-0 flex-col gap-3 overflow-hidden rounded-xl border p-5",
                 size === "full" && "h-full min-h-screen w-full rounded-none",
                 size !== "full" && "h-auto max-h-[90vh] w-full"
               )}
@@ -136,7 +127,7 @@ function AppModalUI({
               {showCloseButton ? (
                 <DialogClose
                   aria-label="Close"
-                  className="absolute top-4 right-4 inline-flex size-8 items-center justify-center rounded-md text-muted-foreground outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+                  className="text-muted-foreground hover:text-foreground focus-visible:ring-ring/50 absolute top-4 right-4 inline-flex size-8 items-center justify-center rounded-md outline-none focus-visible:ring-3"
                 >
                   <CloseX className="size-6" />
                 </DialogClose>
@@ -144,19 +135,12 @@ function AppModalUI({
 
               <DialogHeader className={cn(showCloseButton && "pr-10")}>
                 {step ? (
-                  <p
-                    data-slot="app-modal-step"
-                    className="text-xs font-medium tracking-wider text-primary uppercase"
-                  >
+                  <p data-slot="app-modal-step" className="text-primary text-xs font-medium tracking-wider uppercase">
                     {step}
                   </p>
                 ) : null}
                 <DialogTitle>{title}</DialogTitle>
-                {description ? (
-                  <DialogDescription className="text-base">
-                    {description}
-                  </DialogDescription>
-                ) : null}
+                {description ? <DialogDescription className="text-base">{description}</DialogDescription> : null}
               </DialogHeader>
 
               {content ? (
@@ -171,37 +155,35 @@ function AppModalUI({
               ) : null}
 
               {generatedFooter ? (
-                <DialogFooter className="border-t border-border pt-4">
-                  {generatedFooter}
-                </DialogFooter>
+                <DialogFooter className="border-border border-t pt-4">{generatedFooter}</DialogFooter>
               ) : null}
             </motion.div>
           ) : null}
         </AnimatePresence>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
 
 export function AppModalProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<ModalState>({
     open: false,
     config: null,
-  })
+  });
 
   useEffect(() => {
-    setGlobalState = setState
+    setGlobalState = setState;
     return () => {
-      setGlobalState = null
-    }
-  }, [])
+      setGlobalState = null;
+    };
+  }, []);
 
   const close = useCallback(() => {
     setState((prev) => {
-      prev.config?.onClose?.()
-      return { ...prev, open: false }
-    })
-  }, [])
+      prev.config?.onClose?.();
+      return { ...prev, open: false };
+    });
+  }, []);
 
   return (
     <>
@@ -211,7 +193,7 @@ export function AppModalProvider({ children }: { children: ReactNode }) {
           {...state.config}
           open={state.open}
           onOpenChange={(nextOpen) => {
-            if (!nextOpen) close()
+            if (!nextOpen) close();
           }}
           onExited={() => setState({ open: false, config: null })}
           secondaryButton={
@@ -219,8 +201,8 @@ export function AppModalProvider({ children }: { children: ReactNode }) {
               ? {
                   ...state.config.secondaryButton,
                   onClick: (event) => {
-                    state.config?.secondaryButton?.onClick?.(event)
-                    close()
+                    state.config?.secondaryButton?.onClick?.(event);
+                    close();
                   },
                 }
               : undefined
@@ -228,8 +210,8 @@ export function AppModalProvider({ children }: { children: ReactNode }) {
         />
       ) : null}
     </>
-  )
+  );
 }
 
-export { AppModalUI }
-export type { ModalButtonProps }
+export { AppModalUI };
+export type { ModalButtonProps };

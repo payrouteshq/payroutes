@@ -1,12 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { Button } from "./button"
-import {
-  ToastCard,
-  Toaster,
-  toast,
-  type ToastType,
-} from "./toast"
+import { Button } from "./button";
+import { ToastCard, type ToastType, Toaster, toast } from "./toast";
 
 const samples: { type: ToastType; title: string; description?: string }[] = [
   {
@@ -29,7 +24,7 @@ const samples: { type: ToastType; title: string; description?: string }[] = [
     title: "Route deployed",
     description: "card-us-east now serving 72% of volume",
   },
-]
+];
 
 const meta: Meta<typeof ToastCard> = {
   title: "UI/Toast",
@@ -39,11 +34,11 @@ const meta: Meta<typeof ToastCard> = {
     title: "Route deployed",
     description: "card-us-east now serving 72% of volume",
   },
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof ToastCard>
+type Story = StoryObj<typeof ToastCard>;
 
 export const Default: Story = {
   render: (args) => (
@@ -51,7 +46,7 @@ export const Default: Story = {
       <ToastCard {...args} />
     </div>
   ),
-}
+};
 
 export const Info: Story = {
   args: samples[0],
@@ -60,7 +55,7 @@ export const Info: Story = {
       <ToastCard {...args} />
     </div>
   ),
-}
+};
 
 export const Error: Story = {
   args: samples[1],
@@ -69,7 +64,7 @@ export const Error: Story = {
       <ToastCard {...args} />
     </div>
   ),
-}
+};
 
 export const Success: Story = {
   args: samples[2],
@@ -78,7 +73,7 @@ export const Success: Story = {
       <ToastCard {...args} />
     </div>
   ),
-}
+};
 
 export const Warning: Story = {
   args: samples[3],
@@ -87,7 +82,7 @@ export const Warning: Story = {
       <ToastCard {...args} />
     </div>
   ),
-}
+};
 
 export const Copy: Story = {
   args: {
@@ -96,7 +91,7 @@ export const Copy: Story = {
     description: undefined,
   },
   render: (args) => <ToastCard {...args} />,
-}
+};
 
 export const Variants: Story = {
   render: () => (
@@ -107,7 +102,7 @@ export const Variants: Story = {
       <ToastCard type="copy" title="Product ID copied" />
     </div>
   ),
-}
+};
 
 export const Interactive: Story = {
   parameters: {
@@ -132,14 +127,10 @@ export const Interactive: Story = {
             {sample.type.charAt(0).toUpperCase() + sample.type.slice(1)}
           </Button>
         ))}
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => toast.add({ type: "copy", title: "Product ID copied" })}
-        >
+        <Button variant="outline" size="sm" onClick={() => toast.add({ type: "copy", title: "Product ID copied" })}>
           Copy
         </Button>
       </div>
     </Toaster>
   ),
-}
+};

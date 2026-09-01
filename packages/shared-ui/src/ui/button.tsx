@@ -43,12 +43,7 @@ type ButtonProps = ButtonPrimitive.Props &
     "data-state"?: "hover";
   };
 
-function Button({
-  className,
-  variant = "default",
-  size = "default",
-  ...props
-}: ButtonProps) {
+function Button({ className, variant = "default", size = "default", ...props }: ButtonProps) {
   return <ButtonPrimitive data-slot="button" className={cn(buttonVariants({ variant, size, className }))} {...props} />;
 }
 

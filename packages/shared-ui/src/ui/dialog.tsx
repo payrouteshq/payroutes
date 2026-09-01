@@ -1,4 +1,4 @@
-import type { ComponentProps } from "react";
+import * as React from "react";
 
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog";
 
@@ -78,11 +78,11 @@ function DialogContent({
   );
 }
 
-function DialogHeader({ className, ...props }: ComponentProps<"div">) {
+function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
   return <div data-slot="dialog-header" className={cn("flex flex-col gap-1.5", className)} {...props} />;
 }
 
-function DialogFooter({ className, ...props }: ComponentProps<"div">) {
+function DialogFooter({ className, ...props }: React.ComponentProps<"div">) {
   return <div data-slot="dialog-footer" className={cn("flex items-center gap-3", className)} {...props} />;
 }
 

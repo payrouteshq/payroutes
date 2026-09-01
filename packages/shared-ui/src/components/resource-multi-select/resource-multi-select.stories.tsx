@@ -1,4 +1,4 @@
-import { useState } from "react";
+import * as React from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -7,7 +7,7 @@ import { ResourceMultiSelect } from "./index";
 const plans = ["Pro plan", "Starter", "Enterprise"];
 
 function DefaultDemo() {
-  const [selected, setSelected] = useState(["Pro plan", "Starter"]);
+  const [selected, setSelected] = React.useState(["Pro plan", "Starter"]);
 
   function toggle(plan: string) {
     setSelected((current) => (current.includes(plan) ? current.filter((item) => item !== plan) : [...current, plan]));

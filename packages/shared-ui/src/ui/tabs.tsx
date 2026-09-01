@@ -1,18 +1,18 @@
-import { createContext, useContext, useId } from "react";
+import * as React from "react";
 
 import { Tabs as TabsPrimitive } from "@base-ui/react/tabs";
 import { LayoutGroup, motion } from "framer-motion";
 
 import { cn } from "../cn";
 
-const TabsLayoutId = createContext("tabs-indicator");
+const TabsLayoutId = React.createContext("tabs-indicator");
 
 function Tabs({ className, ...props }: TabsPrimitive.Root.Props) {
   return <TabsPrimitive.Root data-slot="tabs" className={cn("flex flex-col gap-2", className)} {...props} />;
 }
 
 function TabsList({ className, ...props }: TabsPrimitive.List.Props) {
-  const id = useId();
+  const id = React.useId();
 
   return (
     <TabsLayoutId.Provider value={id}>
@@ -31,7 +31,7 @@ function TabsList({ className, ...props }: TabsPrimitive.List.Props) {
 }
 
 function TabsTrigger({ className, children, ...props }: TabsPrimitive.Tab.Props) {
-  const layoutId = useContext(TabsLayoutId);
+  const layoutId = React.useContext(TabsLayoutId);
 
   return (
     <TabsPrimitive.Tab

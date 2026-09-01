@@ -1,4 +1,4 @@
-import { useState } from "react";
+import * as React from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -44,7 +44,7 @@ function findDestination(id: string) {
 }
 
 function DestinationRowDemo(props: { defaultRow?: Row; showRemove?: boolean; disabled?: boolean }) {
-  const [row, setRow] = useState<Row>(
+  const [row, setRow] = React.useState<Row>(
     props.defaultRow ?? {
       id: "1",
       destinationId: "stripe-global",
@@ -76,7 +76,7 @@ function DestinationRowDemo(props: { defaultRow?: Row; showRemove?: boolean; dis
 }
 
 function DestinationRowsDemo({ defaultRows = figRows }: { defaultRows?: Row[] }) {
-  const [rows, setRows] = useState(defaultRows);
+  const [rows, setRows] = React.useState(defaultRows);
 
   const updateRow = (id: string, next: Partial<Row>) => {
     setRows((current) => current.map((row) => (row.id === id ? { ...row, ...next } : row)));

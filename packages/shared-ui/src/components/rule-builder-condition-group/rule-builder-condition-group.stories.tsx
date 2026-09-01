@@ -1,4 +1,4 @@
-import { useState } from "react";
+import * as React from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -83,8 +83,8 @@ function ConditionRow({
 }
 
 function GroupDemo({ disabled }: { disabled?: boolean }) {
-  const [combinator, setCombinator] = useState("and");
-  const [rows, setRows] = useState<Row[]>([
+  const [combinator, setCombinator] = React.useState("and");
+  const [rows, setRows] = React.useState<Row[]>([
     figRow("1"),
     figRow("2", { resourceId: "customer.email", fieldKey: "", value: "eu" }),
   ]);
@@ -111,9 +111,9 @@ function GroupDemo({ disabled }: { disabled?: boolean }) {
 }
 
 function NestedDemo() {
-  const [combinator, setCombinator] = useState("and");
-  const [outerRows, setOuterRows] = useState([figRow("1")]);
-  const [groups, setGroups] = useState<InnerGroup[]>([
+  const [combinator, setCombinator] = React.useState("and");
+  const [outerRows, setOuterRows] = React.useState([figRow("1")]);
+  const [groups, setGroups] = React.useState<InnerGroup[]>([
     {
       id: "or-1",
       combinator: "or",

@@ -1,10 +1,11 @@
-import type { ComponentProps } from "react";
+import * as React from "react";
 
 import { cn } from "../../cn";
 import { type MixinProps, splitProps } from "../../lib/mixin";
 import { Badge } from "../../ui/badge";
 
-export interface AppConnectionProps extends MixinProps<"container", ComponentProps<"div">>, ComponentProps<"div"> {}
+export interface AppConnectionProps
+  extends MixinProps<"container", React.ComponentProps<"div">>, React.ComponentProps<"div"> {}
 
 function AppConnectionRoot({ children, className, ...mixProps }: AppConnectionProps) {
   const { container, rest } = splitProps(mixProps, "container");
@@ -25,7 +26,7 @@ function AppConnectionRoot({ children, className, ...mixProps }: AppConnectionPr
   );
 }
 
-function AppConnectionIcon({ className, children, ...props }: ComponentProps<"span">) {
+function AppConnectionIcon({ className, children, ...props }: React.ComponentProps<"span">) {
   return (
     <span
       data-slot="app-connection-icon"
@@ -40,7 +41,7 @@ function AppConnectionIcon({ className, children, ...props }: ComponentProps<"sp
   );
 }
 
-function AppConnectionContent({ className, ...props }: ComponentProps<"div">) {
+function AppConnectionContent({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="app-connection-content"
@@ -50,23 +51,23 @@ function AppConnectionContent({ className, ...props }: ComponentProps<"div">) {
   );
 }
 
-function AppConnectionMeta({ className, ...props }: ComponentProps<"div">) {
+function AppConnectionMeta({ className, ...props }: React.ComponentProps<"div">) {
   return <div data-slot="app-connection-meta" className={cn("min-w-0 space-y-1", className)} {...props} />;
 }
 
-function AppConnectionTitle({ className, ...props }: ComponentProps<"p">) {
+function AppConnectionTitle({ className, ...props }: React.ComponentProps<"p">) {
   return (
     <p data-slot="app-connection-title" className={cn("text-foreground text-sm font-semibold", className)} {...props} />
   );
 }
 
-function AppConnectionDescription({ className, ...props }: ComponentProps<"p">) {
+function AppConnectionDescription({ className, ...props }: React.ComponentProps<"p">) {
   return (
     <p data-slot="app-connection-description" className={cn("text-muted-foreground text-sm", className)} {...props} />
   );
 }
 
-function AppConnectionBadge({ className, children = "Live", ...props }: ComponentProps<typeof Badge>) {
+function AppConnectionBadge({ className, children = "Live", ...props }: React.ComponentProps<typeof Badge>) {
   return (
     <Badge data-slot="app-connection-badge" className={cn("shrink-0", className)} {...props}>
       {children}
@@ -74,7 +75,7 @@ function AppConnectionBadge({ className, children = "Live", ...props }: Componen
   );
 }
 
-function AppConnectionActions({ className, ...props }: ComponentProps<"div">) {
+function AppConnectionActions({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="app-connection-actions"

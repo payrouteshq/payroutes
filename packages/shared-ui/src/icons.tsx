@@ -1,4 +1,4 @@
-import type { SVGProps } from "react";
+import * as React from "react";
 
 export function PayroutesLogo({ className }: { className?: string }) {
   return (

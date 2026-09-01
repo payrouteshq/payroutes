@@ -1,4 +1,4 @@
-import type { ComponentProps } from "react";
+import * as React from "react";
 
 import { type VariantProps, cva } from "class-variance-authority";
 
@@ -7,7 +7,7 @@ import { Button, type ButtonProps } from "./button";
 import { Input } from "./input";
 import { Textarea } from "./textarea";
 
-function InputGroup({ className, ...props }: ComponentProps<"div">) {
+function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="input-group"
@@ -55,7 +55,7 @@ function InputGroupAddon({
   className,
   align = "inline-start",
   ...props
-}: ComponentProps<"div"> & VariantProps<typeof inputGroupAddonVariants>) {
+}: React.ComponentProps<"div"> & VariantProps<typeof inputGroupAddonVariants>) {
   return (
     <div
       role="group"
@@ -92,7 +92,7 @@ function InputGroupButton({
   );
 }
 
-function InputGroupText({ className, ...props }: ComponentProps<"span">) {
+function InputGroupText({ className, ...props }: React.ComponentProps<"span">) {
   return (
     <span
       className={cn(
@@ -104,7 +104,7 @@ function InputGroupText({ className, ...props }: ComponentProps<"span">) {
   );
 }
 
-function InputGroupInput({ className, ...props }: ComponentProps<typeof Input>) {
+function InputGroupInput({ className, ...props }: React.ComponentProps<typeof Input>) {
   return (
     <Input
       data-slot="input-group-control"
@@ -117,7 +117,7 @@ function InputGroupInput({ className, ...props }: ComponentProps<typeof Input>) 
   );
 }
 
-function InputGroupTextarea({ className, ...props }: ComponentProps<typeof Textarea>) {
+function InputGroupTextarea({ className, ...props }: React.ComponentProps<typeof Textarea>) {
   return (
     <Textarea
       data-slot="input-group-control"

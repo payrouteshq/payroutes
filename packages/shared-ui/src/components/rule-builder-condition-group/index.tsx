@@ -1,4 +1,4 @@
-import type { ComponentProps, ReactNode } from "react";
+import * as React from "react";
 
 import { cn } from "../../cn";
 import { CloseX, Plus } from "../../icons";
@@ -14,21 +14,21 @@ const DEFAULT_COMBINATORS = [
 
 export interface RuleBuilderConditionGroupProps
   extends
-    MixinProps<"container", ComponentProps<"div">>,
-    MixinProps<"trigger", Omit<ComponentProps<typeof SelectTrigger>, "children">>,
-    MixinProps<"content", Omit<ComponentProps<typeof SelectContent>, "children">>,
-    MixinProps<"addCondition", Omit<ComponentProps<typeof Button>, "children">>,
-    MixinProps<"addGroup", Omit<ComponentProps<typeof Button>, "children">>,
-    MixinProps<"remove", Omit<ComponentProps<typeof Button>, "children">> {
+    MixinProps<"container", React.ComponentProps<"div">>,
+    MixinProps<"trigger", Omit<React.ComponentProps<typeof SelectTrigger>, "children">>,
+    MixinProps<"content", Omit<React.ComponentProps<typeof SelectContent>, "children">>,
+    MixinProps<"addCondition", Omit<React.ComponentProps<typeof Button>, "children">>,
+    MixinProps<"addGroup", Omit<React.ComponentProps<typeof Button>, "children">>,
+    MixinProps<"remove", Omit<React.ComponentProps<typeof Button>, "children">> {
   combinator: string;
   onCombinatorChange: (value: string | null) => void;
   combinators?: { value: string; label: string }[];
-  children?: ReactNode;
+  children?: React.ReactNode;
   onAddCondition?: () => void;
   onAddGroup?: () => void;
   onRemove?: () => void;
-  addConditionLabel?: ReactNode;
-  addGroupLabel?: ReactNode;
+  addConditionLabel?: React.ReactNode;
+  addGroupLabel?: React.ReactNode;
   disabled?: boolean;
 }
 

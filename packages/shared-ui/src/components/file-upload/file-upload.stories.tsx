@@ -1,4 +1,4 @@
-import { type ComponentProps, useRef, useState } from "react";
+import * as React from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -24,11 +24,11 @@ export default meta;
 
 type Story = StoryObj<typeof FileUpload>;
 
-function SimulateUpload(args: ComponentProps<typeof FileUpload>) {
-  const [file, setFile] = useState<FileWithPreview | null>(null);
-  const [progress, setProgress] = useState(0);
-  const [status, setStatus] = useState<"idle" | "uploading" | "success">("idle");
-  const tick = useRef(0);
+function SimulateUpload(args: React.ComponentProps<typeof FileUpload>) {
+  const [file, setFile] = React.useState<FileWithPreview | null>(null);
+  const [progress, setProgress] = React.useState(0);
+  const [status, setStatus] = React.useState<"idle" | "uploading" | "success">("idle");
+  const tick = React.useRef(0);
 
   function stop() {
     window.clearInterval(tick.current);

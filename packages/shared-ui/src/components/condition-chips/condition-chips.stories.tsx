@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import * as React from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -78,10 +78,10 @@ export const Keywords: Story = {
 export const Interactive: Story = {
   parameters: { chromatic: { disableSnapshot: true } },
   render: function InteractiveStory() {
-    const [chips, setChips] = useState(["amount > 500"]);
-    const [combinators, setCombinators] = useState<string[]>([]);
-    const [adding, setAdding] = useState(false);
-    const [query, setQuery] = useState("");
+    const [chips, setChips] = React.useState(["amount > 500"]);
+    const [combinators, setCombinators] = React.useState<string[]>([]);
+    const [adding, setAdding] = React.useState(false);
+    const [query, setQuery] = React.useState("");
     const matches = suggestions.filter(
       (item) => !chips.includes(item) && item.toLowerCase().includes(query.trim().toLowerCase())
     );
@@ -97,7 +97,7 @@ export const Interactive: Story = {
       <ConditionChips>
         <ConditionChips.Keyword>IF</ConditionChips.Keyword>
         {chips.map((chip, index) => (
-          <Fragment key={`${chip}-${index}`}>
+          <React.Fragment key={`${chip}-${index}`}>
             {index > 0 ? (
               <ConditionChips.Keyword
                 onClick={() =>
@@ -110,7 +110,7 @@ export const Interactive: Story = {
               </ConditionChips.Keyword>
             ) : null}
             <ConditionChips.Chip>{chip}</ConditionChips.Chip>
-          </Fragment>
+          </React.Fragment>
         ))}
         {adding ? (
           <SearchField

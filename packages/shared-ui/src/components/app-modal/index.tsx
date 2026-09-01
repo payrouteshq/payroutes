@@ -1,4 +1,4 @@
-import { type ReactNode, useCallback, useEffect, useState } from "react";
+import * as React from "react";
 
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -16,15 +16,15 @@ import {
 } from "../../ui/dialog";
 
 type ModalButtonProps = ButtonProps & {
-  children: ReactNode;
+  children: React.ReactNode;
 };
 
 export interface AppModalOptions {
   title: string;
-  step?: ReactNode;
+  step?: React.ReactNode;
   description?: string;
-  content?: ReactNode;
-  footer?: ReactNode;
+  content?: React.ReactNode;
+  footer?: React.ReactNode;
   primaryButton?: ModalButtonProps;
   secondaryButton?: ModalButtonProps;
   size?: "small" | "medium" | "full";
@@ -70,9 +70,9 @@ function AppModalUI({
   showCloseButton = true,
   onExited,
 }: AppModalUIProps) {
-  const [present, setPresent] = useState(open);
+  const [present, setPresent] = React.useState(open);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (open) setPresent(true);
   }, [open]);
 
@@ -165,20 +165,20 @@ function AppModalUI({
   );
 }
 
-export function AppModalProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<ModalState>({
+export function AppModalProvider({ children }: { children: React.ReactNode }) {
+  const [state, setState] = React.useState<ModalState>({
     open: false,
     config: null,
   });
 
-  useEffect(() => {
+  React.useEffect(() => {
     setGlobalState = setState;
     return () => {
       setGlobalState = null;
     };
   }, []);
 
-  const close = useCallback(() => {
+  const close = React.useCallback(() => {
     setState((prev) => {
       prev.config?.onClose?.();
       return { ...prev, open: false };

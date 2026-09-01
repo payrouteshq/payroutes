@@ -1,4 +1,4 @@
-import { useState } from "react";
+import * as React from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -41,8 +41,8 @@ function ResourceFieldDemo({
   defaultValue?: Resource | null;
   error?: string;
 }) {
-  const [value, setValue] = useState<Resource | null>(defaultValue);
-  const [key, setKey] = useState("region");
+  const [value, setValue] = React.useState<Resource | null>(defaultValue);
+  const [key, setKey] = React.useState("region");
 
   return (
     <ResourceField
@@ -126,7 +126,7 @@ export const Item: Story = {
 
 export const Key: Story = {
   render: function KeyComposer() {
-    const [key, setKey] = useState("region");
+    const [key, setKey] = React.useState("region");
     return (
       <Popover>
         <ResourceFieldKey resource="product.metadata" value={key} onChange={(event) => setKey(event.target.value)} />

@@ -1,4 +1,4 @@
-import type { ComponentProps } from "react";
+import * as React from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -40,7 +40,7 @@ const items = [
   },
 ] as const;
 
-type AccordionRootProps = ComponentProps<typeof Accordion>;
+type AccordionRootProps = React.ComponentProps<typeof Accordion>;
 
 function ProductAccordion(props: AccordionRootProps) {
   return (

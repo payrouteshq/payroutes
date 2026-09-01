@@ -1,4 +1,4 @@
-import { useState } from "react";
+import * as React from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -19,7 +19,7 @@ export default meta;
 type Story = StoryObj<typeof SearchField>;
 
 function SearchingField({ defaultValue = "", defaultOpen = false }: { defaultValue?: string; defaultOpen?: boolean }) {
-  const [value, setValue] = useState(defaultValue);
+  const [value, setValue] = React.useState(defaultValue);
   const query = value.trim().toLowerCase();
   const matches = providers.filter((item) => item.toLowerCase().includes(query));
 

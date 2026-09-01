@@ -1,4 +1,4 @@
-import { useState } from "react";
+import * as React from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -86,7 +86,7 @@ export const Connected: Story = {
 
 export const Interactive: Story = {
   render: function InteractiveStory() {
-    const [connected, setConnected] = useState(false);
+    const [connected, setConnected] = React.useState(false);
 
     return (
       <AppConnection className="w-56">

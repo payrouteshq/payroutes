@@ -1,4 +1,4 @@
-import { type ComponentProps, useMemo } from "react";
+import * as React from "react";
 
 import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import bash from "react-syntax-highlighter/dist/esm/languages/prism/bash";
@@ -23,8 +23,8 @@ type Language = "tsx" | "typescript" | "bash" | "json" | "shell" | "sh" | "zsh";
 
 export interface CodeBlockProps
   extends
-    MixinProps<"container", ComponentProps<"div">>,
-    MixinProps<"copy", Omit<ComponentProps<"button">, "children" | "onClick">> {
+    MixinProps<"container", React.ComponentProps<"div">>,
+    MixinProps<"copy", Omit<React.ComponentProps<"button">, "children" | "onClick">> {
   language?: Language;
   children: string;
   filename?: string;
@@ -47,7 +47,7 @@ function CopyAction({
   onClick: () => void;
   className?: string;
   "data-state"?: "hover" | "copied";
-} & Omit<ComponentProps<"button">, "children" | "onClick" | "className">) {
+} & Omit<React.ComponentProps<"button">, "children" | "onClick" | "className">) {
   const isCopied = copied || dataState === "copied";
 
   return (
@@ -98,7 +98,7 @@ function CodeBlock({
   const showHeader = Boolean(filename || logo);
   const syntaxLanguage = language === "shell" || language === "sh" || language === "zsh" ? "bash" : language;
 
-  const syntaxTheme = useMemo(() => {
+  const syntaxTheme = React.useMemo(() => {
     const base = isDark ? oneDark : oneLight;
     const bg = isDark ? "var(--code)" : "var(--muted)";
 

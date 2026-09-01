@@ -1,4 +1,4 @@
-import type { ComponentProps } from "react";
+import * as React from "react";
 
 import { cn } from "../../cn";
 import { CloseX } from "../../icons";
@@ -15,14 +15,14 @@ const DEFAULT_OPERATORS = [
 
 export interface RuleBuilderConditionRowProps<T>
   extends
-    MixinProps<"container", ComponentProps<"div">>,
-    MixinProps<"trigger", Omit<ComponentProps<typeof SelectTrigger>, "children">>,
-    MixinProps<"content", Omit<ComponentProps<typeof SelectContent>, "children">>,
-    MixinProps<"key", Omit<ComponentProps<typeof Input>, "value" | "onChange">>,
-    MixinProps<"operatorTrigger", Omit<ComponentProps<typeof SelectTrigger>, "children">>,
-    MixinProps<"operatorContent", Omit<ComponentProps<typeof SelectContent>, "children">>,
-    MixinProps<"input", Omit<ComponentProps<typeof Input>, "value" | "onChange">>,
-    MixinProps<"remove", Omit<ComponentProps<typeof Button>, "children">> {
+    MixinProps<"container", React.ComponentProps<"div">>,
+    MixinProps<"trigger", Omit<React.ComponentProps<typeof SelectTrigger>, "children">>,
+    MixinProps<"content", Omit<React.ComponentProps<typeof SelectContent>, "children">>,
+    MixinProps<"key", Omit<React.ComponentProps<typeof Input>, "value" | "onChange">>,
+    MixinProps<"operatorTrigger", Omit<React.ComponentProps<typeof SelectTrigger>, "children">>,
+    MixinProps<"operatorContent", Omit<React.ComponentProps<typeof SelectContent>, "children">>,
+    MixinProps<"input", Omit<React.ComponentProps<typeof Input>, "value" | "onChange">>,
+    MixinProps<"remove", Omit<React.ComponentProps<typeof Button>, "children">> {
   resource: T | null;
   onResourceChange: (value: T | null) => void;
   resources: T[];

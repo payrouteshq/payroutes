@@ -1,4 +1,4 @@
-import { useState } from "react";
+import * as React from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -15,7 +15,7 @@ type Story = StoryObj<typeof Pagination>;
 
 export const Default: Story = {
   render: function DefaultStory() {
-    const [page, setPage] = useState(1);
+    const [page, setPage] = React.useState(1);
     const last = 3;
 
     return (
@@ -56,7 +56,7 @@ export const Default: Story = {
 
 export const Boxed: Story = {
   render: function BoxedStory() {
-    const [page, setPage] = useState(1);
+    const [page, setPage] = React.useState(1);
     const last = 3;
 
     return (

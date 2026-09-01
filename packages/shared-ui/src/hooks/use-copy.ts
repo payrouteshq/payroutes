@@ -1,7 +1,7 @@
-import { useState } from "react";
+import * as React from "react";
 
 export function useCopy(resetDelay = 2000) {
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = React.useState(false);
 
   const copy = async (text: string) => {
     await navigator.clipboard.writeText(text);

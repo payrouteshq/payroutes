@@ -1,4 +1,4 @@
-import { useState } from "react";
+import * as React from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -23,7 +23,7 @@ export const Default: Story = {};
 export const WithLabels: Story = {
   render: (args) => {
     function SliderWithLabels() {
-      const [value, setValue] = useState(args.defaultValue as number[]);
+      const [value, setValue] = React.useState(args.defaultValue as number[]);
 
       return (
         <div className="flex w-80 flex-col gap-2">

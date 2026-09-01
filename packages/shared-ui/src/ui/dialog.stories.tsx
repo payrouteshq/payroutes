@@ -1,4 +1,4 @@
-import { useState } from "react";
+import * as React from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -31,7 +31,7 @@ export const Open: Story = {
     docs: { disable: true },
   },
   render: function OpenStory() {
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = React.useState(true);
     return (
       <div className="min-h-80">
         <Dialog open={open} onOpenChange={setOpen}>

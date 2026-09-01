@@ -1,11 +1,11 @@
-import type { ComponentProps, ReactNode } from "react";
+import * as React from "react";
 
 import { cn } from "../../cn";
 import { Plus } from "../../icons";
 import { type MixinProps, splitProps } from "../../lib/mixin";
 
-export interface ConditionChipsProps extends MixinProps<"container", ComponentProps<"div">> {
-  children?: ReactNode;
+export interface ConditionChipsProps extends MixinProps<"container", React.ComponentProps<"div">> {
+  children?: React.ReactNode;
 }
 
 function ConditionChipsRoot({ children, ...mixProps }: ConditionChipsProps) {
@@ -22,7 +22,7 @@ function ConditionChipsRoot({ children, ...mixProps }: ConditionChipsProps) {
   );
 }
 
-function ConditionChipsKeyword({ className, ...props }: ComponentProps<"button">) {
+function ConditionChipsKeyword({ className, ...props }: React.ComponentProps<"button">) {
   return (
     <button
       type="button"
@@ -38,7 +38,7 @@ function ConditionChipsKeyword({ className, ...props }: ComponentProps<"button">
   );
 }
 
-function ConditionChipsChip({ className, ...props }: ComponentProps<"button">) {
+function ConditionChipsChip({ className, ...props }: React.ComponentProps<"button">) {
   return (
     <button
       type="button"
@@ -54,7 +54,7 @@ function ConditionChipsChip({ className, ...props }: ComponentProps<"button">) {
   );
 }
 
-function ConditionChipsAdd({ className, children = "condition", ...props }: ComponentProps<"button">) {
+function ConditionChipsAdd({ className, children = "condition", ...props }: React.ComponentProps<"button">) {
   return (
     <button
       type="button"

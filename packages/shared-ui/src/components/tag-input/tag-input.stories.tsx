@@ -1,4 +1,4 @@
-import { useState } from "react";
+import * as React from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -19,7 +19,7 @@ type Story = StoryObj<typeof TagInput>;
 
 export const Default: Story = {
   render: function DefaultStory(args) {
-    const [value, setValue] = useState<string[]>([]);
+    const [value, setValue] = React.useState<string[]>([]);
     return <TagInput {...args} value={value} onChange={setValue} />;
   },
 };

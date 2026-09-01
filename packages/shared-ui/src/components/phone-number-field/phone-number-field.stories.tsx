@@ -1,4 +1,4 @@
-import { type ComponentProps, useId, useState } from "react";
+import * as React from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -6,9 +6,9 @@ import { type PhoneNumber, PhoneNumberField } from "./index";
 
 const emptyValue: PhoneNumber = { number: "", countryCode: "US" };
 
-function PhoneFieldDemo(props: Omit<ComponentProps<typeof PhoneNumberField>, "value" | "onChange">) {
-  const id = useId();
-  const [value, setValue] = useState<PhoneNumber>(emptyValue);
+function PhoneFieldDemo(props: Omit<React.ComponentProps<typeof PhoneNumberField>, "value" | "onChange">) {
+  const id = React.useId();
+  const [value, setValue] = React.useState<PhoneNumber>(emptyValue);
   return <PhoneNumberField id={id} value={value} onChange={setValue} {...props} />;
 }
 

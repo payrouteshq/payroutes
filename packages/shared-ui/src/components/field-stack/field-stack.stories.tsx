@@ -1,4 +1,4 @@
-import { useState } from "react";
+import * as React from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -98,7 +98,7 @@ export const Inline: Story = {
 
 export const Conditional: Story = {
   render: function ConditionalStory() {
-    const [operator, setOperator] = useState("between");
+    const [operator, setOperator] = React.useState("between");
 
     return (
       <FieldStack className="w-80">

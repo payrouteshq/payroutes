@@ -1,8 +1,8 @@
-import type { ComponentProps } from "react";
+import * as React from "react";
 
 import { cn } from "../cn";
 
-type TextareaProps = ComponentProps<"textarea"> & {
+type TextareaProps = React.ComponentProps<"textarea"> & {
   "data-state"?: "focus";
 };
 

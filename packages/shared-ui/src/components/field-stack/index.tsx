@@ -1,9 +1,9 @@
-import type { ComponentProps, ReactNode } from "react";
+import * as React from "react";
 
 import { cn } from "../../cn";
 
-export interface FieldStackProps extends ComponentProps<"div"> {
-  children: ReactNode;
+export interface FieldStackProps extends React.ComponentProps<"div"> {
+  children: React.ReactNode;
 }
 
 function FieldStack({ children, className, ...props }: FieldStackProps) {
@@ -14,9 +14,9 @@ function FieldStack({ children, className, ...props }: FieldStackProps) {
   );
 }
 
-export interface EmbeddedFieldRowProps extends ComponentProps<"div"> {
+export interface EmbeddedFieldRowProps extends React.ComponentProps<"div"> {
   when: boolean;
-  children: ReactNode;
+  children: React.ReactNode;
   layout?: "inline" | "stack";
   connectorClassName?: string;
 }
@@ -55,7 +55,7 @@ function EmbeddedFieldRowRoot({
   );
 }
 
-function EmbeddedFieldRowLabel({ className, ...props }: ComponentProps<"span">) {
+function EmbeddedFieldRowLabel({ className, ...props }: React.ComponentProps<"span">) {
   return (
     <span
       data-slot="embedded-field-row-label"
@@ -65,7 +65,7 @@ function EmbeddedFieldRowLabel({ className, ...props }: ComponentProps<"span">) 
   );
 }
 
-function EmbeddedFieldRowSuffix({ className, ...props }: ComponentProps<"span">) {
+function EmbeddedFieldRowSuffix({ className, ...props }: React.ComponentProps<"span">) {
   return (
     <span data-slot="embedded-field-row-suffix" className={cn("text-muted-foreground text-sm", className)} {...props} />
   );

@@ -1,4 +1,4 @@
-import { type ComponentProps, type KeyboardEvent, type ReactNode, useId, useState } from "react";
+import * as React from "react";
 
 import { cn } from "../../cn";
 import { CloseX, Plus } from "../../icons";
@@ -8,15 +8,15 @@ import { Input } from "../../ui/input";
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "../../ui/input-group";
 import { Label } from "../../ui/label";
 
-type InputMixin = Omit<ComponentProps<typeof Input>, "value" | "onChange"> & {
+type InputMixin = Omit<React.ComponentProps<typeof Input>, "value" | "onChange"> & {
   value?: string;
   onChange?: (value: string) => void;
 };
 
-export interface TagProps extends Omit<ComponentProps<typeof Badge>, "children"> {
+export interface TagProps extends Omit<React.ComponentProps<typeof Badge>, "children"> {
   disabled?: boolean;
   onRemove?: () => void;
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 function Tag({ disabled, onRemove, className, children, ...props }: TagProps) {
@@ -51,17 +51,17 @@ function Tag({ disabled, onRemove, className, children, ...props }: TagProps) {
 export interface TagInputProps
   extends
     MixinProps<"input", InputMixin>,
-    MixinProps<"tag", Omit<ComponentProps<typeof Badge>, "children">>,
-    MixinProps<"label", Omit<ComponentProps<typeof Label>, "children">>,
-    MixinProps<"error", Omit<ComponentProps<"p">, "children">>,
-    MixinProps<"helpText", Omit<ComponentProps<"p">, "children">> {
+    MixinProps<"tag", Omit<React.ComponentProps<typeof Badge>, "children">>,
+    MixinProps<"label", Omit<React.ComponentProps<typeof Label>, "children">>,
+    MixinProps<"error", Omit<React.ComponentProps<"p">, "children">>,
+    MixinProps<"helpText", Omit<React.ComponentProps<"p">, "children">> {
   id?: string;
   value?: string[];
   onChange?: (value: string[]) => void;
   placeholder?: string;
-  label?: ReactNode;
-  error?: ReactNode;
-  helpText?: ReactNode;
+  label?: React.ReactNode;
+  error?: React.ReactNode;
+  helpText?: React.ReactNode;
   disabled?: boolean;
   className?: string;
   "data-state"?: "focus";
@@ -80,7 +80,7 @@ function TagInput({
   "data-state": dataState,
   ...restProps
 }: TagInputProps) {
-  const generatedId = useId();
+  const generatedId = React.useId();
   const inputId = id ?? generatedId;
   const {
     input,
@@ -92,8 +92,8 @@ function TagInput({
 
   const { value: pendingValue, onChange: onPendingChange, ...inputRest } = input;
   const isControlled = value !== undefined;
-  const [internalTags, setInternalTags] = useState<string[]>([]);
-  const [internalPending, setInternalPending] = useState("");
+  const [internalTags, setInternalTags] = React.useState<string[]>([]);
+  const [internalPending, setInternalPending] = React.useState("");
   const tags = isControlled ? value : internalTags;
   const pending = pendingValue !== undefined ? pendingValue : internalPending;
 
@@ -114,7 +114,7 @@ function TagInput({
     setPending("");
   };
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" || event.key === ",") {
       event.preventDefault();
       addPending();

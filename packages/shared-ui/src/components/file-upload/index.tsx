@@ -1,4 +1,4 @@
-import { type ComponentProps, type ReactNode, useCallback, useEffect, useState } from "react";
+import * as React from "react";
 
 import { type DropzoneOptions, type FileRejection, useDropzone } from "react-dropzone";
 
@@ -19,8 +19,8 @@ type FileUploadState = "hover" | "drag";
 export interface FileUploadProps
   extends
     MixinProps<"dropzone", Omit<DropzoneOptions, "onDrop" | "disabled"> & { className?: string }>,
-    MixinProps<"label", Omit<ComponentProps<"p">, "children">>,
-    MixinProps<"error", Omit<ComponentProps<"p">, "children">> {
+    MixinProps<"label", Omit<React.ComponentProps<"p">, "children">>,
+    MixinProps<"error", Omit<React.ComponentProps<"p">, "children">> {
   id?: string;
   value?: FileWithPreview | null;
   onFileChange?: (file: FileWithPreview | null) => void;
@@ -30,8 +30,8 @@ export interface FileUploadProps
   progress?: number;
   status?: "idle" | "uploading" | "success";
   hint?: string;
-  error?: ReactNode;
-  label?: ReactNode;
+  error?: React.ReactNode;
+  label?: React.ReactNode;
   disabled?: boolean;
   className?: string;
   enableTransformation?: boolean;
@@ -74,9 +74,9 @@ function DropHint({
   titleClassName,
   hintClassName,
 }: {
-  title: ReactNode;
-  hint?: ReactNode;
-  icon: ReactNode;
+  title: React.ReactNode;
+  hint?: React.ReactNode;
+  icon: React.ReactNode;
   titleClassName?: string;
   hintClassName?: string;
 }) {
@@ -111,15 +111,15 @@ function FileUpload({
 }: FileUploadProps) {
   const { dropzone, label: labelProps, error: errorProps } = splitProps(mixProps, "dropzone", "label", "error");
   const isControlled = value !== undefined;
-  const [internalFile, setInternalFile] = useState<FileWithPreview | null>(null);
-  const [rejectionError, setRejectionError] = useState<ReactNode>(null);
-  const [isTransforming, setIsTransforming] = useState(false);
+  const [internalFile, setInternalFile] = React.useState<FileWithPreview | null>(null);
+  const [rejectionError, setRejectionError] = React.useState<React.ReactNode>(null);
+  const [isTransforming, setIsTransforming] = React.useState(false);
 
   const file = isControlled ? value : internalFile;
   const displayError = error ?? rejectionError;
   const resolvedStatus = status ?? (file ? "success" : "idle");
 
-  const commitFile = useCallback(
+  const commitFile = React.useCallback(
     (next: FileWithPreview | null) => {
       if (!isControlled) setInternalFile(next);
       onFileChange?.(next);
@@ -127,7 +127,7 @@ function FileUpload({
     [isControlled, onFileChange]
   );
 
-  const onDrop = useCallback(
+  const onDrop = React.useCallback(
     async (acceptedFiles: File[], fileRejections: FileRejection[]) => {
       if (fileRejections.length > 0) {
         const tooLarge = fileRejections.some((rejection) =>
@@ -189,7 +189,7 @@ function FileUpload({
     noClick: resolvedStatus === "uploading" || resolvedStatus === "success",
   });
 
-  useEffect(() => {
+  React.useEffect(() => {
     return () => {
       if (file?.preview) URL.revokeObjectURL(file.preview);
     };

@@ -1,14 +1,14 @@
-import { type ComponentProps, Fragment, type ReactNode } from "react";
+import * as React from "react";
 
 import { cn } from "../../cn";
 import { Check } from "../../icons";
 
 export type WizardStepStatus = "complete" | "current" | "upcoming";
 
-export interface WizardStepProps extends ComponentProps<"div"> {
+export interface WizardStepProps extends React.ComponentProps<"div"> {
   status?: WizardStepStatus;
   step: number;
-  label?: ReactNode;
+  label?: React.ReactNode;
 }
 
 function WizardStep({ status = "upcoming", step, label, className, ...props }: WizardStepProps) {
@@ -51,8 +51,8 @@ function WizardStep({ status = "upcoming", step, label, className, ...props }: W
   );
 }
 
-export interface WizardStepperProps extends ComponentProps<"div"> {
-  steps: ReactNode[];
+export interface WizardStepperProps extends React.ComponentProps<"div"> {
+  steps: React.ReactNode[];
   current?: number;
 }
 
@@ -63,7 +63,7 @@ function WizardStepper({ steps, current = 0, className, ...props }: WizardSteppe
         const status: WizardStepStatus = index < current ? "complete" : index === current ? "current" : "upcoming";
 
         return (
-          <Fragment key={index}>
+          <React.Fragment key={index}>
             <WizardStep step={index + 1} status={status} label={label} />
             {index < steps.length - 1 ? (
               <span
@@ -71,7 +71,7 @@ function WizardStepper({ steps, current = 0, className, ...props }: WizardSteppe
                 className={cn("h-px min-w-4 flex-1", status === "complete" ? "bg-primary" : "bg-border")}
               />
             ) : null}
-          </Fragment>
+          </React.Fragment>
         );
       })}
     </div>

@@ -1,11 +1,12 @@
-import type { ComponentProps } from "react";
+import * as React from "react";
 
 import { cn } from "../../cn";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "../../icons";
 import { type MixinProps, splitProps } from "../../lib/mixin";
 import { Button, type ButtonProps } from "../../ui/button";
 
-export interface PaginationProps extends MixinProps<"container", ComponentProps<"nav">>, ComponentProps<"nav"> {}
+export interface PaginationProps
+  extends MixinProps<"container", React.ComponentProps<"nav">>, React.ComponentProps<"nav"> {}
 
 function PaginationRoot({ children, className, ...mixProps }: PaginationProps) {
   const { container, rest } = splitProps(mixProps, "container");
@@ -24,11 +25,11 @@ function PaginationRoot({ children, className, ...mixProps }: PaginationProps) {
   );
 }
 
-function PaginationContent({ className, ...props }: ComponentProps<"ul">) {
+function PaginationContent({ className, ...props }: React.ComponentProps<"ul">) {
   return <ul data-slot="pagination-content" className={cn("flex items-center gap-0.5", className)} {...props} />;
 }
 
-function PaginationItem({ ...props }: ComponentProps<"li">) {
+function PaginationItem({ ...props }: React.ComponentProps<"li">) {
   return <li data-slot="pagination-item" {...props} />;
 }
 
@@ -114,7 +115,7 @@ function PaginationNext({
   );
 }
 
-function PaginationEllipsis({ className, ...props }: ComponentProps<"span">) {
+function PaginationEllipsis({ className, ...props }: React.ComponentProps<"span">) {
   return (
     <span
       aria-hidden

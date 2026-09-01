@@ -1,4 +1,4 @@
-import type { ComponentProps, ReactNode } from "react";
+import * as React from "react";
 
 import { cn } from "../../cn";
 import { CloseX, Cube } from "../../icons";
@@ -6,7 +6,7 @@ import { type MixinProps, splitProps } from "../../lib/mixin";
 import { Checkbox } from "../../ui/checkbox";
 
 export interface ResourceMultiSelectProps
-  extends MixinProps<"container", ComponentProps<"div">>, ComponentProps<"div"> {}
+  extends MixinProps<"container", React.ComponentProps<"div">>, React.ComponentProps<"div"> {}
 
 function ResourceMultiSelectRoot({ children, className, ...mixProps }: ResourceMultiSelectProps) {
   const { container, rest } = splitProps(mixProps, "container");
@@ -23,7 +23,7 @@ function ResourceMultiSelectRoot({ children, className, ...mixProps }: ResourceM
   );
 }
 
-function ResourceMultiSelectTags({ className, ...props }: ComponentProps<"div">) {
+function ResourceMultiSelectTags({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="resource-multi-select-tags"
@@ -39,7 +39,7 @@ function ResourceMultiSelectTag({
   disabled,
   onRemove,
   ...props
-}: ComponentProps<"span"> & {
+}: React.ComponentProps<"span"> & {
   disabled?: boolean;
   onRemove?: () => void;
 }) {
@@ -71,10 +71,12 @@ function ResourceMultiSelectTag({
 }
 
 export interface ResourceMultiSelectRowProps
-  extends Omit<ComponentProps<"label">, "onChange">, MixinProps<"checkbox", ComponentProps<typeof Checkbox>> {
+  extends
+    Omit<React.ComponentProps<"label">, "onChange">,
+    MixinProps<"checkbox", React.ComponentProps<typeof Checkbox>> {
   checked?: boolean;
   onCheckedChange?: (checked: boolean) => void;
-  icon?: ReactNode;
+  icon?: React.ReactNode;
   disabled?: boolean;
 }
 

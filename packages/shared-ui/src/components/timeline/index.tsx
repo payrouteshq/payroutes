@@ -1,4 +1,4 @@
-import { type ComponentType, type ReactNode, useMemo, useState } from "react";
+import * as React from "react";
 
 import { cn } from "../../cn";
 import { Check, ChevronDown, ChevronUp, ClockPlay, CloseX } from "../../icons";
@@ -6,12 +6,12 @@ import { type MixinProps, splitProps } from "../../lib/mixin";
 import { Button } from "../../ui/button";
 import { Skeleton } from "../../ui/skeleton";
 
-type LinkComponentType = ComponentType<{
+type LinkComponentType = React.ComponentType<{
   href: string;
   className?: string;
   target?: string;
   rel?: string;
-  children?: ReactNode;
+  children?: React.ReactNode;
 }>;
 
 const DefaultLink: LinkComponentType = ({ href, children, ...props }) => (
@@ -23,13 +23,13 @@ const DefaultLink: LinkComponentType = ({ href, children, ...props }) => (
 export type TimelineStatus = "success" | "pending" | "error" | "complete";
 
 export interface TimelineEntry {
-  title: ReactNode;
-  date?: ReactNode;
-  source?: ReactNode;
-  description?: ReactNode;
+  title: React.ReactNode;
+  date?: React.ReactNode;
+  source?: React.ReactNode;
+  description?: React.ReactNode;
   status?: TimelineStatus;
   data?: Record<string, unknown> | null;
-  contentOverride?: ReactNode;
+  contentOverride?: React.ReactNode;
   key?: string | number;
   titleClassName?: string;
 }
@@ -89,11 +89,11 @@ function TimelineSummary({
   LinkComponent,
 }: {
   data?: Record<string, unknown> | null;
-  manualContent?: ReactNode;
+  manualContent?: React.ReactNode;
   routeMap?: Record<string, (id: string) => string>;
   LinkComponent: LinkComponentType;
 }) {
-  const summaryItems = useMemo(() => {
+  const summaryItems = React.useMemo(() => {
     if (!data) return [];
 
     return Object.entries(data)
@@ -126,7 +126,7 @@ function TimelineSummary({
 
   return (
     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm leading-relaxed">
-      {summaryItems.reduce<ReactNode[]>(
+      {summaryItems.reduce<React.ReactNode[]>(
         (prev, curr, i) =>
           i === 0
             ? [curr]
@@ -250,7 +250,7 @@ function Timeline<T>({
   linkComponent: LinkComponent = DefaultLink,
   ...mixProps
 }: TimelineProps<T>) {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = React.useState(false);
   const { container } = splitProps(mixProps, "container");
 
   if (isLoading) {

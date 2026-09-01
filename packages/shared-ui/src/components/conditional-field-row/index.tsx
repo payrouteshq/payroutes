@@ -1,4 +1,4 @@
-import { type ComponentProps, type ReactNode, useState } from "react";
+import * as React from "react";
 
 import { cn } from "../../cn";
 import { Label } from "../../ui/label";
@@ -7,17 +7,17 @@ import { EmbeddedFieldRow } from "../field-stack";
 
 export interface ConditionalFieldRowOption {
   value: string;
-  label: ReactNode;
+  label: React.ReactNode;
 }
 
-export interface ConditionalFieldRowProps extends Omit<ComponentProps<"div">, "children"> {
-  label?: ReactNode;
+export interface ConditionalFieldRowProps extends Omit<React.ComponentProps<"div">, "children"> {
+  label?: React.ReactNode;
   options: ConditionalFieldRowOption[];
   value?: string;
   defaultValue?: string;
   onValueChange?: (value: string | null) => void;
   when?: string;
-  children?: ReactNode;
+  children?: React.ReactNode;
 }
 
 function ConditionalFieldRow({
@@ -32,7 +32,7 @@ function ConditionalFieldRow({
   ...props
 }: ConditionalFieldRowProps) {
   const isControlled = value !== undefined;
-  const [internal, setInternal] = useState(defaultValue ?? options[0]?.value ?? "");
+  const [internal, setInternal] = React.useState(defaultValue ?? options[0]?.value ?? "");
   const selected = isControlled ? value : internal;
   const showNested = Boolean(children) && (when ? selected === when : false);
 

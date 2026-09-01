@@ -1,17 +1,17 @@
-import { Children, type ComponentProps, type ReactNode, createContext, useContext, useRef, useState } from "react";
+import * as React from "react";
 
 import { cn } from "../../cn";
 import { CloseX, CornerDownLeft, Search } from "../../icons";
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "../../ui/input-group";
 import { Popover, PopoverContent } from "../../ui/popover";
 
-const SearchFieldClose = createContext<() => void>(() => {});
+const SearchFieldClose = React.createContext<() => void>(() => {});
 
-type SearchFieldProps = Omit<ComponentProps<typeof InputGroupInput>, "type" | "className" | "data-state"> & {
+type SearchFieldProps = Omit<React.ComponentProps<typeof InputGroupInput>, "type" | "className" | "data-state"> & {
   className?: string;
   "data-state"?: "hover" | "focus";
-  children?: ReactNode;
-  empty?: ReactNode;
+  children?: React.ReactNode;
+  empty?: React.ReactNode;
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -32,9 +32,9 @@ function SearchField({
   ...props
 }: SearchFieldProps) {
   const isControlled = open !== undefined;
-  const [internalOpen, setInternalOpen] = useState(defaultOpen);
-  const [anchor, setAnchor] = useState<HTMLDivElement | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [internalOpen, setInternalOpen] = React.useState(defaultOpen);
+  const [anchor, setAnchor] = React.useState<HTMLDivElement | null>(null);
+  const inputRef = React.useRef<HTMLInputElement>(null);
   const resolvedOpen = isControlled ? open : internalOpen;
   const setOpen = (next: boolean) => {
     if (!isControlled) setInternalOpen(next);
@@ -117,7 +117,7 @@ function SearchField({
           className="border-ring w-(--anchor-width) min-w-72 overflow-hidden border-2 p-1"
         >
           <div className="max-h-80 overflow-y-auto">
-            {Children.count(children) > 0 ? (
+            {React.Children.count(children) > 0 ? (
               children
             ) : (
               <p className="text-muted-foreground px-3 py-4 text-center text-xs">{empty}</p>
@@ -137,11 +137,11 @@ function SearchFieldResult({
   onClick,
   onMouseDown,
   ...props
-}: ComponentProps<"button"> & {
+}: React.ComponentProps<"button"> & {
   selected?: boolean;
   onSelect?: () => void;
 }) {
-  const close = useContext(SearchFieldClose);
+  const close = React.useContext(SearchFieldClose);
 
   return (
     <button

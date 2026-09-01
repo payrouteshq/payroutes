@@ -1,4 +1,4 @@
-import type { ComponentProps, ReactNode } from "react";
+import * as React from "react";
 
 import { cn } from "../../cn";
 import { CloseX } from "../../icons";
@@ -10,13 +10,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 
 export interface RuleBuilderDestinationRowProps<T>
   extends
-    MixinProps<"container", ComponentProps<"div">>,
-    MixinProps<"trigger", Omit<ComponentProps<typeof SelectTrigger>, "children">>,
-    MixinProps<"content", Omit<ComponentProps<typeof SelectContent>, "children">>,
-    MixinProps<"input", Omit<ComponentProps<typeof Input>, "value" | "onChange">>,
-    MixinProps<"suffix", Omit<ComponentProps<"span">, "children">>,
-    MixinProps<"badge", Omit<ComponentProps<typeof Badge>, "children">>,
-    MixinProps<"remove", Omit<ComponentProps<typeof Button>, "children">> {
+    MixinProps<"container", React.ComponentProps<"div">>,
+    MixinProps<"trigger", Omit<React.ComponentProps<typeof SelectTrigger>, "children">>,
+    MixinProps<"content", Omit<React.ComponentProps<typeof SelectContent>, "children">>,
+    MixinProps<"input", Omit<React.ComponentProps<typeof Input>, "value" | "onChange">>,
+    MixinProps<"suffix", Omit<React.ComponentProps<"span">, "children">>,
+    MixinProps<"badge", Omit<React.ComponentProps<typeof Badge>, "children">>,
+    MixinProps<"remove", Omit<React.ComponentProps<typeof Button>, "children">> {
   destination: T | null;
   onDestinationChange: (value: T | null) => void;
   destinations: T[];
@@ -24,9 +24,9 @@ export interface RuleBuilderDestinationRowProps<T>
   getItemTitle: (item: T) => string;
   share: string;
   onShareChange: (value: string) => void;
-  suffix?: ReactNode;
+  suffix?: React.ReactNode;
   primary?: boolean;
-  primaryLabel?: ReactNode;
+  primaryLabel?: React.ReactNode;
   onRemove?: () => void;
   disabled?: boolean;
   placeholder?: string;

@@ -1,4 +1,4 @@
-import type { ComponentProps } from "react";
+import * as React from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -10,7 +10,7 @@ const options = [
   { value: "lowest-latency", label: "Lowest latency" },
 ] as const;
 
-type SelectRootProps = ComponentProps<typeof Select>;
+type SelectRootProps = React.ComponentProps<typeof Select>;
 
 function RoutingSelect({
   className = "w-56",

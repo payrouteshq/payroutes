@@ -1,14 +1,4 @@
-import {
-  type ChangeEvent,
-  type ComponentProps,
-  memo,
-  useCallback,
-  useId,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import * as React from "react";
 
 import { Combobox } from "@base-ui/react/combobox";
 import { type TCountryCode, getCountryData } from "countries-list";
@@ -90,17 +80,17 @@ const COUNTRIES_DATA: CountryOption[] = countries.flatMap((countryCode) => {
   }));
 });
 
-type LabelProps = ComponentProps<typeof Label>;
-type ErrorProps = ComponentProps<"p">;
-type FlagProps = ComponentProps<(typeof CountryFlags)["US"]>;
+type LabelProps = React.ComponentProps<typeof Label>;
+type ErrorProps = React.ComponentProps<"p">;
+type FlagProps = React.ComponentProps<(typeof CountryFlags)["US"]>;
 
 export interface PhoneNumberFieldProps
   extends
     MixinProps<"flag", Omit<FlagProps, "children">>,
     MixinProps<"label", Omit<LabelProps, "children">>,
-    MixinProps<"input", Omit<ComponentProps<typeof InputGroupInput>, "onChange" | "value">>,
+    MixinProps<"input", Omit<React.ComponentProps<typeof InputGroupInput>, "onChange" | "value">>,
     MixinProps<"error", Omit<ErrorProps, "children">>,
-    MixinProps<"group", Omit<ComponentProps<typeof InputGroup>, "children">> {
+    MixinProps<"group", Omit<React.ComponentProps<typeof InputGroup>, "children">> {
   id?: string;
   value: PhoneNumber;
   onChange: (value: PhoneNumber) => void;
@@ -115,7 +105,7 @@ export interface PhoneNumberFieldProps
 const flagClassName =
   "inline-flex h-3.5 w-[21px] shrink-0 overflow-hidden rounded-[2px] ring-1 ring-border [&_svg]:block [&_svg]:size-full";
 
-const CountryFlag = memo(function CountryFlag({
+const CountryFlag = React.memo(function CountryFlag({
   countryCode,
   className,
   ...props
@@ -154,15 +144,15 @@ function PhoneNumberField({
   "data-state": dataState,
   ...mixProps
 }: PhoneNumberFieldProps) {
-  const generatedId = useId();
+  const generatedId = React.useId();
   const id = idProp ?? generatedId;
-  const labelId = useId();
-  const [groupEl, setGroupEl] = useState<HTMLDivElement | null>(null);
-  const [countryOpen, setCountryOpen] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const labelId = React.useId();
+  const [groupEl, setGroupEl] = React.useState<HTMLDivElement | null>(null);
+  const [countryOpen, setCountryOpen] = React.useState(false);
+  const inputRef = React.useRef<HTMLInputElement>(null);
   const invalid = Boolean(error);
 
-  useLayoutEffect(() => {
+  React.useLayoutEffect(() => {
     if (!defaultOpen) return;
     const frame = requestAnimationFrame(() => setCountryOpen(true));
     return () => cancelAnimationFrame(frame);
@@ -176,19 +166,19 @@ function PhoneNumberField({
     error: errorProps,
   } = splitProps(mixProps, "label", "flag", "input", "error", "group");
 
-  const selectedCountry = useMemo(
+  const selectedCountry = React.useMemo(
     () =>
       COUNTRIES_DATA.find((country) => country.countryCode === value.countryCode) ??
       COUNTRIES_DATA.find((country) => country.countryCode === DEFAULT_COUNTRY_CODE),
     [value.countryCode]
   );
 
-  const displayNumber = useMemo(
+  const displayNumber = React.useMemo(
     () => (value.number ? formatAsYouType(value.number, value.countryCode) : ""),
     [value.number, value.countryCode]
   );
 
-  const handleCountrySelect = useCallback(
+  const handleCountrySelect = React.useCallback(
     (country: CountryOption | null) => {
       if (!country) return;
       const digits = value.number.replace(/\D/g, "");
@@ -199,8 +189,8 @@ function PhoneNumberField({
     [onChange, value.number]
   );
 
-  const handleNumberChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
+  const handleNumberChange = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
       const raw = event.target.value;
       const newDigits = raw.replace(/\D/g, "");
       const prevDigits = displayNumber.replace(/\D/g, "");

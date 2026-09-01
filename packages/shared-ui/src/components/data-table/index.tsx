@@ -1,4 +1,4 @@
-import { type ComponentProps, type ReactNode, useEffect, useMemo, useState } from "react";
+import * as React from "react";
 
 import {
   type ColumnDef,
@@ -24,30 +24,30 @@ export interface TableAction<TData> {
   onClick: (row: TData) => void;
   variant?: "default" | "destructive";
   when?: (row: TData) => boolean;
-  icon?: ReactNode;
+  icon?: React.ReactNode;
 }
 
 export interface DataTableBulkActionItem<TData> {
-  label: ReactNode;
+  label: React.ReactNode;
   onClick: (rows: TData[]) => void;
   variant?: "default" | "destructive";
 }
 
 export interface DataTableBulkAction<TData> {
-  label: ReactNode;
+  label: React.ReactNode;
   onClick?: (rows: TData[]) => void;
   variant?: "outline" | "destructive";
-  icon?: ReactNode;
+  icon?: React.ReactNode;
   items?: DataTableBulkActionItem<TData>[];
 }
 
 export interface DataTableProps<TData, TValue>
   extends
-    MixinProps<"row", ComponentProps<typeof TableRow>>,
-    MixinProps<"checkbox", ComponentProps<typeof Checkbox>>,
-    MixinProps<"body", ComponentProps<typeof TableBody>>,
-    MixinProps<"cell", ComponentProps<typeof TableCell>>,
-    MixinProps<"container", ComponentProps<"div">> {
+    MixinProps<"row", React.ComponentProps<typeof TableRow>>,
+    MixinProps<"checkbox", React.ComponentProps<typeof Checkbox>>,
+    MixinProps<"body", React.ComponentProps<typeof TableBody>>,
+    MixinProps<"cell", React.ComponentProps<typeof TableCell>>,
+    MixinProps<"container", React.ComponentProps<"div">> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   onRowClick?: (row: TData) => void;
@@ -75,11 +75,11 @@ function DataTable<TData, TValue>({
   onRowSelectionChange,
   ...mixProps
 }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [rowSelection, setRowSelection] = useState<RowSelectionState>(defaultRowSelection ?? {});
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [rowSelection, setRowSelection] = React.useState<RowSelectionState>(defaultRowSelection ?? {});
   const { row, checkbox, body, cell, container } = splitProps(mixProps, "row", "checkbox", "body", "cell", "container");
 
-  const tableColumns = useMemo(() => {
+  const tableColumns = React.useMemo(() => {
     const next = [...columns];
 
     if (enableBulkSelect) {
@@ -178,7 +178,7 @@ function DataTable<TData, TValue>({
 
   const selectedRows = table.getFilteredSelectedRowModel().rows.map((tableRow) => tableRow.original);
 
-  useEffect(() => {
+  React.useEffect(() => {
     onRowSelectionChange?.(selectedRows);
   }, [rowSelection]);
 

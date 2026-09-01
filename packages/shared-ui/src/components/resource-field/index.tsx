@@ -1,4 +1,4 @@
-import { type ComponentProps, type ReactNode, useMemo, useRef, useState } from "react";
+import * as React from "react";
 
 import { cn } from "../../cn";
 import { ChevronDown, ChevronsUpDown, CornerDownLeft, Search } from "../../icons";
@@ -11,22 +11,22 @@ import { Spinner } from "../spinner";
 
 export interface ResourceFieldProps<T>
   extends
-    MixinProps<"container", ComponentProps<"div">>,
-    MixinProps<"popover", ComponentProps<typeof PopoverContent>>,
-    MixinProps<"label", Omit<ComponentProps<typeof Label>, "children">>,
-    MixinProps<"error", Omit<ComponentProps<"p">, "children">> {
+    MixinProps<"container", React.ComponentProps<"div">>,
+    MixinProps<"popover", React.ComponentProps<typeof PopoverContent>>,
+    MixinProps<"label", Omit<React.ComponentProps<typeof Label>, "children">>,
+    MixinProps<"error", Omit<React.ComponentProps<"p">, "children">> {
   value: T | null;
   onChange: (val: T | null) => void;
   items: T[];
   getItemTitle: (item: T) => string;
   getItemGroup?: (item: T) => string;
-  renderSearchItem: (item: T, isSelected: boolean) => ReactNode;
-  renderSummary?: (item: T) => ReactNode;
+  renderSearchItem: (item: T, isSelected: boolean) => React.ReactNode;
+  renderSummary?: (item: T) => React.ReactNode;
   searchFilter: (item: T, query: string) => boolean;
-  renderActions?: ReactNode;
+  renderActions?: React.ReactNode;
   recentLabel?: string;
-  label?: ReactNode;
-  error?: ReactNode;
+  label?: React.ReactNode;
+  error?: React.ReactNode;
   placeholder?: string;
   isLoading?: boolean;
   defaultOpen?: boolean;
@@ -37,7 +37,7 @@ function ResourceFieldItem({
   className,
   children,
   ...props
-}: ComponentProps<"div"> & { selected?: boolean }) {
+}: React.ComponentProps<"div"> & { selected?: boolean }) {
   return (
     <div
       data-slot="resource-field-item"
@@ -69,8 +69,8 @@ function ResourceFieldKey({
   resource,
   className,
   ...inputProps
-}: Omit<ComponentProps<typeof Input>, "className"> & {
-  resource: ReactNode;
+}: Omit<React.ComponentProps<typeof Input>, "className"> & {
+  resource: React.ReactNode;
   className?: string;
 }) {
   return (
@@ -113,14 +113,14 @@ function ResourceField<T>({
     popover: popProps,
   } = splitProps(mixProps, "container", "label", "error", "popover");
 
-  const [open, setOpen] = useState(defaultOpen);
-  const [query, setQuery] = useState("");
-  const [anchor, setAnchor] = useState<HTMLDivElement | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [open, setOpen] = React.useState(defaultOpen);
+  const [query, setQuery] = React.useState("");
+  const [anchor, setAnchor] = React.useState<HTMLDivElement | null>(null);
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
-  const filtered = useMemo(() => items.filter((item) => searchFilter(item, query)), [items, query, searchFilter]);
+  const filtered = React.useMemo(() => items.filter((item) => searchFilter(item, query)), [items, query, searchFilter]);
 
-  const grouped = useMemo(() => {
+  const grouped = React.useMemo(() => {
     if (!getItemGroup) return null;
     const groups = new Map<string, T[]>();
     for (const item of filtered) {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import * as React from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -28,7 +28,7 @@ type Story = StoryObj<typeof ConditionalFieldRow>;
 
 export const Default: Story = {
   render: function DefaultStory(args) {
-    const [value, setValue] = useState("one-time");
+    const [value, setValue] = React.useState("one-time");
     return (
       <ConditionalFieldRow {...args} value={value} onValueChange={(next) => setValue(next ?? "one-time")}>
         <EmbeddedFieldRow.Label>Free trial</EmbeddedFieldRow.Label>

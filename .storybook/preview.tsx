@@ -1,12 +1,19 @@
-import React from "react";
-
 import type { Preview } from "@storybook/react";
 
+import { AppModalProvider } from "../packages/shared-ui/src/components/app-modal";
 import "../packages/shared-ui/src/global.css";
 import "./preview.css";
 
 const preview: Preview = {
+  decorators: [
+    (Story) => (
+      <AppModalProvider>
+        <Story />
+      </AppModalProvider>
+    ),
+  ],
   parameters: {
+    layout: "centered",
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -18,7 +25,7 @@ const preview: Preview = {
       values: [
         {
           name: "light",
-          value: "oklch(0.9843 0.0017 247.8393)",
+          value: "#ffffff",
         },
         {
           name: "dark",
@@ -27,22 +34,6 @@ const preview: Preview = {
       ],
     },
   },
-  decorators: [
-    (Story) => (
-      <div
-        className="bg-background text-foreground antialiased"
-        style={
-          {
-            "--font-dm-sans": '"DM Sans", sans-serif',
-            "--font-instrument-serif": '"Instrument Serif", serif',
-            "--font-jetbrains-mono": '"JetBrains Mono", monospace',
-          } as React.CSSProperties
-        }
-      >
-        <Story />
-      </div>
-    ),
-  ],
 };
 
 export default preview;

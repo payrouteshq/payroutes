@@ -5,11 +5,19 @@ import path from "path";
 const projectRoot = path.resolve(process.cwd());
 
 const config: StorybookConfig = {
-  stories: ["../packages/shared-ui/src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
+  stories: [
+    {
+      directory: "../packages/shared-ui/src",
+      files: "**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    },
+  ],
   addons: ["@storybook/addon-essentials"],
   framework: {
     name: "@storybook/react-vite",
     options: {},
+  },
+  docs: {
+    autodocs: true,
   },
   staticDirs: ["../apps/landing/public"],
   async viteFinal(config) {

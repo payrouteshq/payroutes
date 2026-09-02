@@ -5,7 +5,8 @@
   "packageManager": "pnpm@9.15.0",
   "scripts": {
     "dev": "pnpm --filter @payroutes/landing dev",
-    "build": "pnpm --filter @payroutes/shared-ui build && pnpm --filter @payroutes/landing build",
+    "build": "pnpm --filter @payroutes/shared-ui build && pnpm --filter @payroutes/landing build && rm -rf .next && cp -a apps/landing/.next .next",
+    "vercel-build": "pnpm run build",
     "build:landing": "pnpm --filter @payroutes/landing build",
     "start": "pnpm --filter @payroutes/landing start",
     "lint": "pnpm --filter @payroutes/landing lint",

@@ -5,6 +5,8 @@
   "packageManager": "pnpm@9.15.0",
   "scripts": {
     "dev": "pnpm --filter @payroutes/landing dev",
+    "build": "pnpm --filter @payroutes/shared-ui build && pnpm --filter @payroutes/landing build && rm -rf .next && cp -a apps/landing/.next .next",
+    "vercel-build": "pnpm run build",
     "build:landing": "pnpm --filter @payroutes/landing build",
     "start": "pnpm --filter @payroutes/landing start",
     "lint": "pnpm --filter @payroutes/landing lint",
@@ -25,6 +27,7 @@
     "@types/react": "19.2.15",
     "@types/react-dom": "19.2.3",
     "chromatic": "^18.5.0",
+    "next": "16.2.9",
     "eslint-plugin-storybook": "^10.1.10",
     "prettier": "^3.7.4",
     "prettier-plugin-tailwindcss": "^0.7.2",

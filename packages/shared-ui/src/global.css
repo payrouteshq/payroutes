@@ -87,6 +87,7 @@
   --toast-warning-foreground: var(--amber-orange-100);
   --toast-error: color-mix(in srgb, var(--crimson-red-20) 55%, var(--summit-sky-20));
   --toast-error-foreground: var(--crimson-red-100);
+  --toast-foreground: var(--midnight-black-80);
   --shadow-button-hover: 0 8px 16px -2px color-mix(in srgb, var(--primary) 40%, transparent);
   --shadow-thumb: 0 4px 10px -2px color-mix(in srgb, var(--primary) 60%, transparent);
   --shadow-ring-error: 0 0 0 4px var(--ring-error);
@@ -174,9 +175,9 @@
 
   --background: var(--core-indigo-100);
   --foreground: var(--summit-sky-20);
-  --card: var(--core-indigo-80);
+  --card: var(--core-indigo-100);
   --card-foreground: var(--summit-sky-20);
-  --popover: var(--core-indigo-80);
+  --popover: var(--core-indigo-100);
   --popover-foreground: var(--summit-sky-20);
   --primary: var(--signal-blue-100);
   --primary-foreground: var(--summit-sky-20);
@@ -184,7 +185,7 @@
   --secondary-foreground: var(--summit-sky-20);
   --muted: var(--core-indigo-60);
   --muted-foreground: var(--core-indigo-20);
-  --subtle: #222222;
+  --subtle: var(--core-indigo-100);
   --accent: var(--signal-blue-20);
   --accent-foreground: var(--signal-blue-100);
   --success: var(--forest-green-100);
@@ -286,6 +287,7 @@
   --color-toast-warning-foreground: var(--toast-warning-foreground);
   --color-toast-error: var(--toast-error);
   --color-toast-error-foreground: var(--toast-error-foreground);
+  --color-toast-foreground: var(--toast-foreground);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);

@@ -1,4 +1,5 @@
 import { Toast as ToastPrimitive } from "@base-ui/react/toast";
+import type { ReactNode } from "react";
 import { cva } from "class-variance-authority";
 
 import { cn } from "../cn";
@@ -18,7 +19,7 @@ const toastSurfaceVariants = cva("rounded-xl outline-none", {
       warning:
         "[--toast-accent:var(--warning)] overflow-hidden border border-warning/20 border-l-[5px] border-l-warning bg-toast-warning shadow-sm",
       error:
-        "[--toast-accent:var(--error)] overflow-hidden border border-error/20 border-l-[5px] border-l-error bg-toast-error shadow-sm",
+        "[--toast-accent:var(--error)] overflow-hidden border border-error border-l-[6px] bg-toast-error shadow-sm",
       copy: "w-fit rounded-full border border-primary bg-card shadow-none",
       loading:
         "[--toast-accent:var(--muted-foreground)] overflow-hidden border border-border border-l-[5px] border-l-muted-foreground bg-muted shadow-sm",
@@ -70,15 +71,15 @@ function Toast({ className, toast: toastItem, ...props }: ToastPrimitive.Root.Pr
         "group/toast pointer-events-auto absolute right-0 bottom-0 z-[calc(1000-var(--toast-index))] origin-bottom-right will-change-transform select-none",
         type === "copy" ? "w-fit" : "w-full",
         "[--gap:0.75rem] [--offset-y:calc(var(--toast-offset-y)*-1+calc(var(--toast-index)*var(--gap)*-1)+var(--toast-swipe-movement-y))]",
-        "h-(--toast-height) [transform:translateX(var(--toast-swipe-movement-x))_translateY(var(--offset-y))]",
+        "h-(--toast-height) transform-[translateX(var(--toast-swipe-movement-x))_translateY(var(--offset-y))]",
         "[transition:transform_500ms_cubic-bezier(0.22,1,0.36,1),opacity_500ms,height_150ms]",
         "after:absolute after:top-full after:left-0 after:h-[calc(var(--gap)+1px)] after:w-full after:content-['']",
-        "data-limited:opacity-0 data-starting-style:[transform:translateY(150%)]",
-        "[&[data-ending-style]:not([data-limited]):not([data-swipe-direction])]:[transform:translateY(150%)]",
-        "data-ending-style:data-[swipe-direction=down]:[transform:translateY(calc(var(--toast-swipe-movement-y)+150%))]",
-        "data-ending-style:data-[swipe-direction=left]:[transform:translateX(calc(var(--toast-swipe-movement-x)-150%))_translateY(var(--offset-y))]",
-        "data-ending-style:data-[swipe-direction=right]:[transform:translateX(calc(var(--toast-swipe-movement-x)+150%))_translateY(var(--offset-y))]",
-        "data-ending-style:data-[swipe-direction=up]:[transform:translateY(calc(var(--toast-swipe-movement-y)-150%))]",
+        "data-limited:opacity-0 data-starting-style:transform-[translateY(150%)]",
+        "[&[data-ending-style]:not([data-limited]):not([data-swipe-direction])]:transform-[translateY(150%)]",
+        "data-ending-style:data-[swipe-direction=down]:transform-[translateY(calc(var(--toast-swipe-movement-y)+150%))]",
+        "data-ending-style:data-[swipe-direction=left]:transform-[translateX(calc(var(--toast-swipe-movement-x)-150%))_translateY(var(--offset-y))]",
+        "data-ending-style:data-[swipe-direction=right]:transform-[translateX(calc(var(--toast-swipe-movement-x)+150%))_translateY(var(--offset-y))]",
+        "data-ending-style:data-[swipe-direction=up]:transform-[translateY(calc(var(--toast-swipe-movement-y)-150%))]",
         "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-3",
         toastSurfaceVariants({ type }),
         className
@@ -116,7 +117,7 @@ function ToastDescription({ className, ...props }: ToastPrimitive.Description.Pr
   return (
     <ToastPrimitive.Description
       data-slot="toast-description"
-      className={cn("text-muted-foreground mt-0.5 text-xs leading-4 font-normal", className)}
+      className={cn("text-toast-foreground mt-0.5 text-xs leading-4 font-normal", className)}
       {...props}
     />
   );
@@ -138,7 +139,7 @@ function ToastClose({ className, children, ...props }: ToastPrimitive.Close.Prop
       data-slot="toast-close"
       aria-label="Close toast"
       className={cn(
-        "text-muted-foreground relative -mr-0.5 shrink-0 rounded-md outline-none",
+        "text-toast-foreground relative -mr-0.5 shrink-0 rounded-md outline-none",
         "focus-visible:ring-ring/50 focus-visible:ring-3",
         className
       )}
@@ -149,8 +150,19 @@ function ToastClose({ className, children, ...props }: ToastPrimitive.Close.Prop
   );
 }
 
-function ToastIcon({ type }: { type: string | undefined }) {
+function ToastIcon({ type, icon }: { type: string | undefined; icon?: ReactNode }) {
   const resolved = resolveToastType(type);
+
+  if (icon && resolved !== "copy" && resolved !== "loading") {
+    return (
+      <span
+        data-slot="toast-icon"
+        className="bg-(--toast-accent) text-primary-foreground mt-0.5 inline-flex size-4 shrink-0 items-center justify-center rounded-full [&_svg]:size-2.5"
+      >
+        {icon}
+      </span>
+    );
+  }
 
   if (resolved === "copy") {
     return (
@@ -188,12 +200,14 @@ function ToastCard({
   description,
   className,
   onClose,
+  icon,
 }: {
   type?: ToastType;
   title: string;
   description?: string;
   className?: string;
   onClose?: () => void;
+  icon?: ReactNode;
 }) {
   const isCopy = type === "copy";
 
@@ -209,7 +223,7 @@ function ToastCard({
       )}
     >
       <div className={cn("flex items-start gap-2 px-3.5 py-3", isCopy && "items-center px-3 py-1.5")}>
-        <ToastIcon type={type} />
+        <ToastIcon type={type} icon={icon} />
         <div className="min-w-0 flex-1">
           <p
             className={cn(
@@ -219,14 +233,14 @@ function ToastCard({
             {title}
           </p>
           {description ? (
-            <p className="text-muted-foreground mt-0.5 text-xs leading-4 font-normal">{description}</p>
+            <p className="text-toast-foreground mt-0.5 text-xs leading-4 font-normal">{description}</p>
           ) : null}
         </div>
-        {!isCopy ? (
+        {!isCopy && onClose ? (
           <button
             type="button"
             aria-label="Close toast"
-            className="text-muted-foreground relative -mr-0.5 shrink-0 rounded-md outline-none"
+            className="text-toast-foreground relative -mr-0.5 shrink-0 rounded-md outline-none"
             onClick={onClose}
           >
             <CloseX className="size-3.5" aria-hidden="true" />

@@ -20,7 +20,7 @@ interface AuthLayoutProps {
   headline?: React.ReactNode;
   description?: React.ReactNode;
   bullets?: string[];
-  backLink?: React.ReactNode;
+  topSlot?: React.ReactNode;
   alternateLink?: React.ReactNode;
   error?: AuthError | null;
   onDismissError?: () => void;
@@ -35,7 +35,7 @@ export function AuthLayout({
   headline = "Every payment takes the cheapest road that works.",
   description = "Sign in to route volume across Stripe, Adyen, and Stellar, watch decisions land in real time, and retry the ones that don't.",
   bullets = ["99.99% routing uptime across 14 providers", "SOC 2 Type II · PCI DSS Level 1"],
-  backLink,
+  topSlot,
   alternateLink,
   error,
   onDismissError,
@@ -90,7 +90,7 @@ export function AuthLayout({
         {/* Right — form panel */}
         <div className="bg-subtle flex flex-col justify-center p-10 lg:p-10">
           <div className="mx-auto w-full max-w-lg">
-            {backLink && <div className="mb-5">{backLink}</div>}
+            {topSlot && <div className="mb-5">{topSlot}</div>}
             <h2 className="text-foreground text-3xl font-medium tracking-tight">{title}</h2>
             {alternateLink && <div className="text-muted-foreground mt-2">{alternateLink}</div>}
 

@@ -2,14 +2,17 @@
 
 import * as React from "react";
 
-import { Button, Callout, Input, Label } from "@payroutes/shared-ui";
-import { ArrowLeft, InfoCircle } from "@payroutes/shared-ui/icons";
+import { Button, Callout, Input, Label, cn } from "@payroutes/shared-ui";
+import { ArrowLeft, Clock, InfoCircle, MailCheck } from "@payroutes/shared-ui/icons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { AuthLayout } from "../_shared";
+
+const HEADLINE = "Locked out is fine. Losing money is not.";
+const DESCRIPTION = "Resets never touch live keys or routing rules. Your workspace keeps processing while you get back in.";
 
 const resetSchema = z.object({
   email: z.email("Enter a valid work email"),
@@ -18,6 +21,8 @@ const resetSchema = z.object({
 type ResetFormData = z.infer<typeof resetSchema>;
 
 export default function ResetPassword() {
+  const [sentTo, setSentTo] = React.useState<string | null>(null);
+
   const form = useForm<ResetFormData>({
     resolver: zodResolver(resetSchema),
     defaultValues: { email: "" },
@@ -25,16 +30,20 @@ export default function ResetPassword() {
 
   // ponytail: no auth backend yet — wire the send-reset-link action here when it lands.
   const onSubmit = form.handleSubmit((data) => {
-    console.log("reset password", data);
+    setSentTo(data.email);
   });
+
+  if (sentTo) {
+    return <CheckEmail email={sentTo} onChangeAddress={() => setSentTo(null)} />;
+  }
 
   return (
     <AuthLayout
       title="Reset your password"
-      headline="Locked out is fine. Losing money is not."
-      description="Resets never touch live keys or routing rules. Your workspace keeps processing while you get back in."
+      headline={HEADLINE}
+      description={DESCRIPTION}
       bullets={[]}
-      backLink={
+      topSlot={
         <Link
           href="/signup"
           className="text-primary inline-flex items-center gap-2 text-sm font-medium hover:underline"
@@ -76,6 +85,93 @@ export default function ResetPassword() {
       <Button type="submit" disabled={form.formState.isSubmitting} className="bg-linear-to-r! h-11 w-full font-semibold">
         Send reset link
       </Button>
+    </AuthLayout>
+  );
+}
+
+const NEXT_STEPS = [
+  "Open the link and choose a new password",
+  "Confirm with your two-factor code",
+  "Other sessions sign out automatically",
+];
+
+function CheckEmail({ email, onChangeAddress }: { email: string; onChangeAddress: () => void }) {
+  const [secondsLeft, setSecondsLeft] = React.useState(42);
+
+  React.useEffect(() => {
+    const timer = setInterval(() => setSecondsLeft((s) => (s <= 0 ? 0 : s - 1)), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const canResend = secondsLeft <= 0;
+  const countdown = `${Math.floor(secondsLeft / 60)}:${String(secondsLeft % 60).padStart(2, "0")}`;
+
+  // ponytail: no auth backend yet — resend just restarts the timer until the action lands.
+  const handleResend = () => setSecondsLeft(42);
+
+  return (
+    <AuthLayout
+      title="Check your email"
+      headline={HEADLINE}
+      description={DESCRIPTION}
+      bullets={[]}
+      topSlot={
+        <span className="bg-accent text-primary flex size-11 items-center justify-center rounded-xl">
+          <MailCheck className="size-5" />
+        </span>
+      }
+      alternateLink={
+        <p>
+          We sent a reset link to <span className="text-foreground font-mono">{email}</span>. It expires in 30 minutes
+          and can only be used once.
+        </p>
+      }
+      onSubmit={(e) => e.preventDefault()}
+      footerNote={
+        <span className="flex items-center justify-between">
+          <Link href="/signup" className="text-primary font-medium hover:underline">
+            Back to sign in
+          </Link>
+          <span className="text-muted-foreground">
+            Wrong address?{" "}
+            <button type="button" onClick={onChangeAddress} className="text-primary font-medium hover:underline">
+              Change it
+            </button>
+          </span>
+        </span>
+      }
+    >
+      <div className="border-border bg-card rounded-xl border p-5">
+        <p className="text-muted-foreground text-xs font-semibold tracking-widest uppercase">What happens next</p>
+        <ol className="mt-4 space-y-3.5">
+          {NEXT_STEPS.map((step, i) => (
+            <li key={step} className="flex items-center gap-3">
+              <span className="bg-accent text-primary flex size-6 shrink-0 items-center justify-center rounded-full text-xs font-semibold">
+                {i + 1}
+              </span>
+              <span className="text-foreground text-sm">{step}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div className="border-border bg-card flex items-center justify-between rounded-lg border px-4 py-3">
+        <span className="text-muted-foreground flex items-center gap-2.5 text-sm">
+          <Clock className="size-4 shrink-0" />
+          {canResend ? "Didn't get the email?" : <span>Resend link in <span className="text-foreground font-mono">{countdown}</span></span>}
+        </span>
+        <button
+          type="button"
+          disabled={!canResend}
+          onClick={handleResend}
+          className={cn(
+            "text-sm font-medium",
+            canResend ? "text-primary hover:underline" : "text-muted-foreground cursor-not-allowed"
+          )}
+        >
+          Resend
+        </button>
+      </div>
     </AuthLayout>
   );
 }

@@ -1,4 +1,5 @@
-import { Button, PayroutesLogo } from "@payroutes/shared-ui";
+import { Button } from "@payroutes/shared-ui";
+import { PayroutesLogo } from "@payroutes/shared-ui/icons";
 
 export default function Home() {
   return (

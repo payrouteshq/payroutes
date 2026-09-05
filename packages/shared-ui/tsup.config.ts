@@ -12,7 +12,7 @@ const external = [
 ];
 
 export default defineConfig({
-  entry: ["src/index.ts"],
+  entry: ["src/index.ts", "src/icons.tsx"],
   format: ["cjs", "esm"],
   dts: false,
   clean: true,

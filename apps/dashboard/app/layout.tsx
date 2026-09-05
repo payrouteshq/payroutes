@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 
-import { ThemeProvider } from "./providers";
 import "./globals.css";
+import { ThemeProvider } from "./providers";
 
 const generalSans = localFont({
   variable: "--font-general-sans",

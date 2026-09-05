@@ -2,13 +2,11 @@
 
 import * as React from "react";
 
-import { Button, ToastCard } from "@payroutes/shared-ui";
-import { Exclamation, GoogleIcon, PayroutesLogo } from "@payroutes/shared-ui/icons";
+import { Button, ToastCard, cn } from "@payroutes/shared-ui";
+import { Check, Exclamation, GithubIcon, GoogleIcon, PayroutesLogo } from "@payroutes/shared-ui/icons";
 import Link from "next/link";
 
 import { ModeToggle } from "./_mode-toggle";
-
-
 
 export interface AuthError {
   title: string;
@@ -27,6 +25,7 @@ interface AuthLayoutProps {
   onSubmit: (e: React.FormEvent) => void;
   children: React.ReactNode;
   googleConfig?: { onClick: () => void; label?: string };
+  githubConfig?: { onClick: () => void; label?: string };
   footerNote?: React.ReactNode;
 }
 
@@ -42,32 +41,33 @@ export function AuthLayout({
   onSubmit,
   children,
   googleConfig,
+  githubConfig,
   footerNote = "Protected by two-factor authentication. New devices need a code before they reach live data.",
 }: AuthLayoutProps) {
   return (
     <div className="bg-card min-h-screen">
       <ModeToggle />
       <div className="grid min-h-screen md:grid-cols-2">
-        {/* Left — brand panel */}
-        <div className="from-accent/40 to-card flex flex-col justify-between bg-gradient-to-br p-10 lg:p-14">
+        <div className="from-accent/40 to-card flex-col justify-between bg-gradient-to-br p-10 max-md:hidden md:flex lg:p-14">
           <div className="flex items-center gap-3.5">
-    
-              <PayroutesLogo className="text-primary size-10" />
-         
+            <PayroutesLogo className="text-primary size-10" />
+
             <span className="text-foreground text-2xl font-medium tracking-wide">PAYROUTES</span>
           </div>
 
           <div className="my-10 max-w-md">
-            <h1 className="text-foreground text-4xl leading-[1.1] font-medium  tracking-tight lg:text-5xl">
+            <h1 className="text-foreground text-4xl leading-[1.1] font-medium tracking-tight lg:text-5xl">
               {headline}
             </h1>
-            <p className="text-muted-foreground mt-6 font-normal text-base leading-normal">{description}</p>
+            <p className="text-muted-foreground mt-6 text-base leading-normal font-normal">{description}</p>
 
             {bullets.length > 0 && (
               <ul className="mt-8 space-y-3">
                 {bullets.map((text) => (
                   <li key={text} className="text-foreground flex items-center gap-3">
-                    <CheckBadge />
+                    <span className="bg-accent flex size-5 shrink-0 items-center justify-center rounded-full">
+                      <Check className="text-primary size-3" />
+                    </span>
                     {text}
                   </li>
                 ))}
@@ -108,7 +108,7 @@ export function AuthLayout({
             <form onSubmit={onSubmit} noValidate className="mt-8 space-y-5">
               {children}
 
-              {googleConfig && (
+              {(googleConfig || githubConfig) && (
                 <>
                   <div className="flex items-center gap-4">
                     <span className="bg-border h-px flex-1" />
@@ -116,15 +116,30 @@ export function AuthLayout({
                     <span className="bg-border h-px flex-1" />
                   </div>
 
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={googleConfig.onClick}
-                    className="border-border bg-card text-primary hover:bg-foreground/5 h-11 w-full gap-2.5"
-                  >
-                    <GoogleIcon className="size-5" />
-                    {googleConfig.label ?? "Continue with Google"}
-                  </Button>
+                  <div className={cn("grid gap-3", googleConfig && githubConfig && "sm:grid-cols-2")}>
+                    {googleConfig && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={googleConfig.onClick}
+                        className="border-border bg-card text-primary hover:bg-foreground/5 h-11 w-full gap-2.5"
+                      >
+                        <GoogleIcon className="size-5" />
+                        {googleConfig.label ?? "Continue with Google"}
+                      </Button>
+                    )}
+                    {githubConfig && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={githubConfig.onClick}
+                        className="border-border bg-card text-primary hover:bg-foreground/5 h-11 w-full gap-2.5"
+                      >
+                        <GithubIcon className="text-foreground size-5" />
+                        {githubConfig.label ?? "Continue with GitHub"}
+                      </Button>
+                    )}
+                  </div>
                 </>
               )}
 
@@ -136,16 +151,3 @@ export function AuthLayout({
     </div>
   );
 }
-
-function CheckBadge() {
-  return (
-    <span className="bg-accent flex size-5 shrink-0 items-center justify-center rounded-full">
-      <svg viewBox="0 0 24 24" fill="none" className="text-primary size-3">
-        <path d="M20 6 9 17l-5-5" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    </span>
-  );
-}
-
-
-

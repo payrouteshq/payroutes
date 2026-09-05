@@ -2,17 +2,14 @@
 
 import * as React from "react";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Callout, Input, Label, cn } from "@payroutes/shared-ui";
 import { ArrowLeft, Clock, InfoCircle, MailCheck } from "@payroutes/shared-ui/icons";
-import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { AuthLayout } from "../_shared";
-
-const HEADLINE = "Locked out is fine. Losing money is not.";
-const DESCRIPTION = "Resets never touch live keys or routing rules. Your workspace keeps processing while you get back in.";
 
 const resetSchema = z.object({
   email: z.email("Enter a valid work email"),
@@ -40,19 +37,23 @@ export default function ResetPassword() {
   return (
     <AuthLayout
       title="Reset your password"
-      headline={HEADLINE}
-      description={DESCRIPTION}
+      headline={"Locked out is fine. Losing money is not."}
+      description={
+        "Resets never touch live keys or routing rules. Your workspace keeps processing while you get back in."
+      }
       bullets={[]}
       topSlot={
         <Link
-          href="/signup"
+          href="/signin"
           className="text-primary inline-flex items-center gap-2 text-sm font-medium hover:underline"
         >
           <ArrowLeft className="size-4" />
           Back to sign in
         </Link>
       }
-      alternateLink={<p>Enter the email you use for PayRoutes. We&apos;ll send a link that stays valid for 30 minutes.</p>}
+      alternateLink={
+        <p>Enter the email you use for PayRoutes. We&apos;ll send a link that stays valid for 30 minutes.</p>
+      }
       onSubmit={onSubmit}
       footerNote=""
     >
@@ -61,7 +62,7 @@ export default function ResetPassword() {
         name="email"
         render={({ field, fieldState }) => (
           <div className="space-y-1.5">
-            <Label htmlFor="email" className="text-foreground font-medium text-sm">
+            <Label htmlFor="email" className="text-foreground text-sm font-medium">
               Work email
             </Label>
             <Input
@@ -82,7 +83,11 @@ export default function ResetPassword() {
         If your workspace uses SSO, ask an admin instead — password resets are disabled there.
       </Callout>
 
-      <Button type="submit" disabled={form.formState.isSubmitting} className="bg-linear-to-r! h-11 w-full font-semibold">
+      <Button
+        type="submit"
+        disabled={form.formState.isSubmitting}
+        className="h-11 w-full bg-linear-to-r! font-semibold"
+      >
         Send reset link
       </Button>
     </AuthLayout>
@@ -112,8 +117,10 @@ function CheckEmail({ email, onChangeAddress }: { email: string; onChangeAddress
   return (
     <AuthLayout
       title="Check your email"
-      headline={HEADLINE}
-      description={DESCRIPTION}
+      headline={"Locked out is fine. Losing money is not."}
+      description={
+        "Resets never touch live keys or routing rules. Your workspace keeps processing while you get back in."
+      }
       bullets={[]}
       topSlot={
         <span className="bg-accent text-primary flex size-11 items-center justify-center rounded-xl">
@@ -129,7 +136,7 @@ function CheckEmail({ email, onChangeAddress }: { email: string; onChangeAddress
       onSubmit={(e) => e.preventDefault()}
       footerNote={
         <span className="flex items-center justify-between">
-          <Link href="/signup" className="text-primary font-medium hover:underline">
+          <Link href="/signin" className="text-primary font-medium hover:underline">
             Back to sign in
           </Link>
           <span className="text-muted-foreground">
@@ -158,7 +165,13 @@ function CheckEmail({ email, onChangeAddress }: { email: string; onChangeAddress
       <div className="border-border bg-card flex items-center justify-between rounded-lg border px-4 py-3">
         <span className="text-muted-foreground flex items-center gap-2.5 text-sm">
           <Clock className="size-4 shrink-0" />
-          {canResend ? "Didn't get the email?" : <span>Resend link in <span className="text-foreground font-mono">{countdown}</span></span>}
+          {canResend ? (
+            "Didn't get the email?"
+          ) : (
+            <span>
+              Resend link in <span className="text-foreground font-mono">{countdown}</span>
+            </span>
+          )}
         </span>
         <button
           type="button"

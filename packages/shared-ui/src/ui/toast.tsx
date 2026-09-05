@@ -1,5 +1,6 @@
-import { Toast as ToastPrimitive } from "@base-ui/react/toast";
 import type { ReactNode } from "react";
+
+import { Toast as ToastPrimitive } from "@base-ui/react/toast";
 import { cva } from "class-variance-authority";
 
 import { cn } from "../cn";
@@ -157,7 +158,7 @@ function ToastIcon({ type, icon }: { type: string | undefined; icon?: ReactNode 
     return (
       <span
         data-slot="toast-icon"
-        className="bg-(--toast-accent) text-primary-foreground mt-0.5 inline-flex size-4 shrink-0 items-center justify-center rounded-full [&_svg]:size-2.5"
+        className="text-primary-foreground mt-0.5 inline-flex size-4 shrink-0 items-center justify-center rounded-full bg-(--toast-accent) [&_svg]:size-2.5"
       >
         {icon}
       </span>

@@ -52,6 +52,7 @@
   --foreground: var(--midnight-black-100);
   --card: var(--summit-sky-20);
   --card-foreground: var(--midnight-black-100);
+  --elevated: var(--summit-sky-20);
   --popover: var(--summit-sky-20);
   --popover-foreground: var(--midnight-black-100);
   --primary: var(--signal-blue-100);
@@ -89,6 +90,7 @@
   --toast-error-foreground: var(--crimson-red-100);
   --toast-foreground: var(--midnight-black-80);
   --shadow-button-hover: 0 8px 16px -2px color-mix(in srgb, var(--primary) 40%, transparent);
+  --shadow-button-glow: 0 0 26px -6px color-mix(in srgb, var(--signal-blue-100) 80%, transparent);
   --shadow-thumb: 0 4px 10px -2px color-mix(in srgb, var(--primary) 60%, transparent);
   --shadow-ring-error: 0 0 0 4px var(--ring-error);
   --shadow-elevation-md: 0px 10px 20px -30px color-mix(in srgb, var(--signal-blue-100) 20%, transparent);
@@ -171,12 +173,13 @@
   --crimson-red-20: #f2d6d4;
 
   --gradient-start: var(--signal-blue-80);
-  --gradient-end: #19609a;
+  --gradient-end: var(--signal-blue-100);
 
   --background: var(--core-indigo-100);
   --foreground: var(--summit-sky-20);
   --card: var(--core-indigo-100);
   --card-foreground: var(--summit-sky-20);
+  --elevated: color-mix(in srgb, var(--core-indigo-100) 75%, var(--core-indigo-80));
   --popover: var(--core-indigo-100);
   --popover-foreground: var(--summit-sky-20);
   --primary: var(--signal-blue-100);
@@ -250,6 +253,7 @@
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
+  --color-elevated: var(--elevated);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
@@ -320,6 +324,7 @@
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
   --shadow-button-hover: var(--shadow-button-hover);
+  --shadow-button-glow: var(--shadow-button-glow);
   --shadow-thumb: var(--shadow-thumb);
   --shadow-ring-error: var(--shadow-ring-error);
   --shadow-elevation-md: var(--shadow-elevation-md);

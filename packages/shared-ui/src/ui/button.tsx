@@ -9,7 +9,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-linear-to-b from-gradient-start to-gradient-end text-primary-foreground hover:shadow-button-hover data-[state=hover]:shadow-button-hover disabled:from-disabled disabled:to-disabled disabled:text-disabled-foreground",
+          "relative overflow-hidden bg-linear-to-r from-gradient-start to-gradient-end text-primary-foreground shadow-button-glow before:pointer-events-none before:absolute before:inset-0 before:content-[''] before:bg-linear-to-r before:from-transparent before:via-white/20 before:to-transparent hover:shadow-button-hover data-[state=hover]:shadow-button-hover disabled:from-disabled disabled:to-disabled disabled:text-disabled-foreground disabled:shadow-none disabled:before:hidden",
         outline:
           "border-primary bg-background text-primary hover:shadow-button-hover data-[state=hover]:shadow-button-hover disabled:border-disabled-foreground disabled:text-disabled-foreground",
         ghost:

@@ -8,6 +8,7 @@
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
+  --color-elevated: var(--elevated);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
@@ -16,6 +17,7 @@
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+  --color-subtle: var(--subtle);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
@@ -37,7 +39,7 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-general-sans);
   --font-mono: var(--font-geist-mono);
 
   --radius-sm: calc(var(--radius) - 4px);
@@ -50,8 +52,23 @@
   * {
     @apply border-border outline-ring/50;
   }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  em {
+    font-family: var(--font-general-sans);
+  }
+
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-general-sans);
     letter-spacing: var(--tracking-normal);
+  }
+
+  html {
+    scroll-padding-top: 4rem;
   }
 }

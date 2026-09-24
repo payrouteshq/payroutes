@@ -1,6 +1,3 @@
-// Icons
-export { PayroutesLogo } from "./icons";
-
 export { cn } from "./cn";
 export { splitProps } from "./lib/mixin";
 export type { MixinProps } from "./lib/mixin";
@@ -32,6 +29,7 @@ export * from "./ui/accordion";
 export * from "./ui/avatar";
 export * from "./ui/badge";
 export * from "./ui/button";
+export * from "./ui/callout";
 export * from "./ui/checkbox";
 export * from "./ui/dialog";
 export * from "./ui/dropdown-menu";

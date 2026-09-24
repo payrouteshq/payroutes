@@ -1,4 +1,4 @@
-import { PayroutesLogo } from "@payroutes/shared-ui";
+import { PayroutesLogo } from "@payroutes/shared-ui/icons";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 
@@ -83,9 +83,6 @@ const team = [
     },
   },
 ];
-
-// ─── Page ────────────────────────────────────────────────────────────────────
-
 export default function Home() {
   return (
     <div className="bg-background text-foreground min-h-screen">

@@ -4,8 +4,9 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "prepare": "tsup --no-dts && tailwindcss -i ./src/global.css -o ./dist/output.css --minify",
-    "build": "tsup && tsc --project tsconfig.build.json && tailwindcss -i ./src/global.css -o ./dist/output.css --minify && for f in dist/index.mjs dist/index.js; do { printf '\"use client\";\\n'; cat \"$f\"; } > \"${f}.tmp\" && mv \"${f}.tmp\" \"$f\"; done",
+    "prepare": "tsup --no-dts && pnpm use-client && tailwindcss -i ./src/global.css -o ./dist/output.css --minify",
+    "build": "tsup && tsc --project tsconfig.build.json && pnpm use-client && tailwindcss -i ./src/global.css -o ./dist/output.css --minify",
+    "use-client": "for f in dist/index.mjs dist/index.js; do { printf '\"use client\";\\n'; cat \"$f\"; } > \"${f}.tmp\" && mv \"${f}.tmp\" \"$f\"; done",
     "build:css": "tailwindcss -i ./src/global.css -o ./dist/output.css --minify",
     "dev": "tsup --watch",
     "type-check": "tsc --noEmit"
@@ -15,6 +16,11 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
+    },
+    "./icons": {
+      "types": "./dist/icons.d.ts",
+      "import": "./dist/icons.mjs",
+      "require": "./dist/icons.js"
     },
     "./src/global.css": "./src/global.css",
     "./dist/output.css": "./dist/output.css"
